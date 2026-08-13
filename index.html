@@ -703,6 +703,7 @@ const PAGES = [
   {id:'relatives', group:'Doshas & Relations', label:'Relatives from Houses'},
   {id:'dasha', group:'Timing', label:'Vimshottari Dasha'},
   {id:'predictions', group:'Timing', label:'Prediction Framework'},
+  {id:'prediction-details', group:'Timing', label:'Wealth, Marriage, Health & Longevity'},
   {id:'marriage', group:'Compatibility', label:'Marriage Matching'},
   {id:'hora', group:'Extras', label:'Hora'},
   {id:'numerology', group:'Extras', label:'Numerology'},
@@ -1291,6 +1292,259 @@ function buildPredictions(){
   return p;
 }
 
+
+function buildPredictionDetails(){
+  const p = el('div');
+  p.appendChild(el('p',{class:'eyebrow'},'Timing • Detailed Prediction'));
+  p.appendChild(el('h2',{class:'page-title'},'Prediction — Wealth, Marriage, Health & Longevity'));
+  p.appendChild(el('p',{class:'lede'},
+    'A structured reference for predicting major life areas using the houses, bhava lords, planetary strength, aspects, yogas, divisional charts, and Dasha/Bhukti timing from the source notes.'));
+
+  function section(title, subtitle){
+    const sec=el('div',{class:'section'});
+    sec.appendChild(el('h3',{},title));
+    if(subtitle) sec.appendChild(el('p',{class:'sub'},subtitle));
+    p.appendChild(sec);
+    return sec;
+  }
+  function table(headers, rows){
+    const wrap=el('div',{class:'table-wrap'});
+    const t=el('table');
+    const tr=el('tr');
+    headers.forEach(h=>tr.appendChild(el('th',{},h)));
+    t.appendChild(tr);
+    rows.forEach(row=>{
+      const r=el('tr');
+      row.forEach((v,i)=>r.appendChild(el(i===0?'th':'td',{},v)));
+      t.appendChild(r);
+    });
+    wrap.appendChild(t); return wrap;
+  }
+
+  const any=section('How to Predict Any House',
+    'For any bhava, first establish its promise and strength, then use timing systems to determine when the result is activated.');
+  const stepsBox=el('div',{class:'steps'});
+  [
+    ['1','Placement of the bhava lord'],
+    ['2','Strength, aspects, and conjunctions affecting the bhava lord'],
+    ['3','Strength of the house itself — natural qualities, occupying planets, and aspects received'],
+    ['4','Shadbala of the bhava lord + Bhava Bala of the house'],
+    ['5','Any yogas altering the house’s influence'],
+    ['6','Analysis from Moon; Navamsa/divisional charts as needed'],
+    ['7','Dasha/Bhukti of the bhava lord and any planet occupying that bhava'],
+    ['8','Kala, Desa, Patra — age, location/status, sex of the subject']
+  ].forEach(([n,d])=>{
+    const st=el('div',{class:'step'});
+    st.appendChild(el('div',{class:'num'},n));
+    st.appendChild(el('div',{},[el('h5',{},d)]));
+    stepsBox.appendChild(st);
+  });
+  any.appendChild(stepsBox);
+
+  section('Predicting Major Events');
+  p.lastElementChild.appendChild(table(
+    ['Area of Analysis','Bhavas to be Studied','Key Planets','Notes'],
+    [
+      ['Wealth','2nd, 11th','Jupiter','The Lagna lord should be strong'],
+      ['Siblings','3rd, 11th','Mars',''],
+      ['Education','4th, 5th','Jupiter, Mercury','4th house — formal education; 5th house — intelligence'],
+      ['Vehicles, ornaments, properties/homes','4th, 2nd, 11th, 9th, 12th','Venus, Mars, Moon','The Lagna lord should be strong'],
+      ['Children','5th, 9th','Jupiter',''],
+      ['Speculative gains','4th, 5th, 8th','Mercury, Jupiter','The Lagna lord should be strong'],
+      ['Health','Lagna, 6th','Sun, Moon',''],
+      ['Marriage life','7th, 2nd, 12th','Venus','The 9th lord (Bhagya) indicates auspicious events in life'],
+      ['Longevity','8th, 2nd, 7th, 3rd, 12th','Saturn',''],
+      ['Foreign travel','3rd, 9th, 12th','Jupiter, Rahu/Ketu','7th house represents travel in general'],
+      ['Government/private jobs','10th, 6th, 8th, 2nd, 11th','Sun, Moon, Mars','3rd house also rules competitive exams'],
+      ['Business','10th, 2nd, 11th','Mercury','The Lagna lord should be strong and free from affliction from 12th lord']
+    ]
+  ));
+
+  section('Wealth','Thumb rules for predicting wealth, property and income.');
+  p.lastElementChild.appendChild(table(
+    ['House / Planet','Signifies'],
+    [
+      ['4th House','Immovable property, home, vehicles, ornaments'],
+      ['2nd House','Wealth (accumulated)'],
+      ['11th House','Gains, income'],
+      ['6th House','Debts'],
+      ['12th House','Losses, expenses'],
+      ['8th House','Impediments, obstacles'],
+      ['Venus','Karaka for house/property, ornaments'],
+      ['Mars','Karaka for land'],
+      ['Moon','Karaka for a beautiful house'],
+      ['Jupiter','Dhana Karaka (wealth)']
+    ]
+  ));
+
+  section('Property & Immovable Asset');
+  p.lastElementChild.appendChild(table(
+    ['Condition','Result'],
+    [
+      ['4th lord, Venus, Mars, Moon all well placed','Many properties, vehicles, beautiful houses'],
+      ['4th lord/Venus with 12th & 6th lord + afflicted by malefics','Loss of property (in that Dasha/Bhukti)'],
+      ['4th, 5th, and 8th lords well placed','Windfall gains'],
+      ['4th lord well placed in 9th house, OR 12th lord (4th-from-9th) well placed in Lagna','Inherits father’s property'],
+      ['Lagna lord + 4th lord + 7th lord (4th-from-4th) relate to 11th lord','Inherits mother’s property']
+    ]
+  ));
+
+  section('Wealth & Income');
+  p.lastElementChild.appendChild(table(
+    ['Condition','Result'],
+    [
+      ['Lagna lord strong; 2nd & 11th lord well placed, unafflicted','Smooth financial gains lifelong'],
+      ['2nd & 11th lord get Parivarthana + Lagna lord strong','Gains through business'],
+      ['2nd & 12th lord conjoin in Lagna + Lagna lord in 12th (or 2nd/12th Parivarthana + Lagna lord weak)','Huge business losses (in that Dasha/Bhukti)'],
+      ['2nd lord weak + conjoined with 12th lord','Expenses exceed income'],
+      ['Weak 2nd lord occupies 6th house','Huge debts (in that Dasha/Bhukti)']
+    ]
+  ));
+
+  section('Marriage','Marriage is assessed through the 7th house and supporting houses and significators.');
+  p.lastElementChild.appendChild(table(
+    ['House / Planet','Signifies'],
+    [
+      ['7th House','Marriage, spouse, partnerships'],
+      ['2nd House','Family life'],
+      ['12th House','Conjugal life'],
+      ['9th House','Bhagya sthana (fortune related to marriage)'],
+      ['Venus','Kalatra Karaka (significator of spouse)']
+    ]
+  ));
+
+  section('Marriage Timing');
+  p.lastElementChild.appendChild(table(
+    ['Trigger','Indicates'],
+    [
+      ['Dasa/Bhukti of 7th, 2nd, 12th, or 9th lord','Marriage timing'],
+      ['Venus Dasa/Bhukti, or Dasa/Bhukti of planets occupying 7th/2nd/12th/9th house','Marriage timing'],
+      ['Jupiter transits 2nd, 7th, 9th, or 12th house from Moon (or aspects these houses)','Marriage year indicator']
+    ]
+  ));
+
+  section('Spouse Background & Nature');
+  p.lastElementChild.appendChild(table(
+    ['Condition','Result'],
+    [
+      ['7th lord strong, placed in 11th house, or conjoined with 11th lord','Spouse from well-settled background'],
+      ['7th lord well placed in 10th house, or 4th lord (10th-from-7th) well placed','Spouse will be working'],
+      ['Traditional direction-of-spouse rule','May not work well in modern context']
+    ]
+  ));
+
+  section('Nature of Marriage & Married Life');
+  p.lastElementChild.appendChild(table(
+    ['Condition','Result'],
+    [
+      ['7th lord/2nd lord/Venus conjoined or aspected by Mars, Saturn, or Rahu/Ketu','Unconventional marriage'],
+      ['7th, 2nd, or 8th house occupied by Rahu/Ketu, Mars, or Saturn','Delayed marriage'],
+      ['7th lord conjoined/aspected by benefics; or 7th house occupied/aspected by benefics','Harmony in married life'],
+      ['7th lord conjoined/aspected by malefics; or 7th house occupied/aspected by malefics','Minor conflicts in married life'],
+      ['7th lord conjoined with 6th lord (12th-from-7th), 2nd lord, and 12th lord','Chances of separation after marriage'],
+      ['7th lord/7th bhava/Venus/12th lord/house heavily afflicted by debilitated planets','Multiple relationships possible (predict with caution)']
+    ]
+  ));
+
+  section('Health','The source notes identify the Lagna and 6th house as primary health factors.');
+  p.lastElementChild.appendChild(table(
+    ['House / Planet','Signifies'],
+    [
+      ['6th House','Disease'],
+      ['Mars','Roga Karaka (significator of disease)'],
+      ['Saturn','Roga Bhavathipathi (lord of disease house)'],
+      ['Sun','Heart'],
+      ['Moon','Mind'],
+      ['Mars','Head & blood'],
+      ['Mercury','ENT (ear, nose, throat)'],
+      ['Jupiter','Thighs, digestive organs'],
+      ['Saturn','Legs & feet'],
+      ['Rahu/Ketu','Bacteria and viruses']
+    ]
+  ));
+
+  section('Dosha (Constitution Groupings)');
+  p.lastElementChild.appendChild(table(
+    ['Dosha','Dominant Planets'],
+    [['Pitta (Heat)','Sun, Mars'],['Kapha (Watery)','Moon, Jupiter'],['Vata (Wind)','Saturn, Venus']]
+  ));
+
+  section('Health — Conditions & Results');
+  p.lastElementChild.appendChild(table(
+    ['Condition','Result'],
+    [
+      ['Lagna lord or Lagna afflicted by Mars, Saturn, or Rahu/Ketu','Constant health issues throughout life'],
+      ['Weak 6th lord afflicted by malefics','Health issues during those Dasa/Bhuktis'],
+      ['Lagna lord, Lagna, 6th lord, or 6th house aspected by Jupiter','Short recovery time']
+    ]
+  ));
+
+  section('Disease by Afflicted Planet');
+  p.lastElementChild.appendChild(table(
+    ['Planet/Node','Possible Diseases if Afflicted'],
+    [
+      ['Sun','Heart disease, fever with pains, sudden falls, skin diseases'],
+      ['Moon','Watery diseases, irregular sleep, depression, anxiety, irregular menstrual cycle'],
+      ['Mars','Heat-related diseases, head injury, wounds/cuts, blood pressure, itching'],
+      ['Mercury','Nervous troubles, high fever, speech defects, throat/nose diseases'],
+      ['Jupiter','Diabetes, fainting, stomach diseases, thigh troubles'],
+      ['Venus','Skin troubles, eye diseases, sexual diseases, body swelling'],
+      ['Saturn','Leg diseases, pains & aches, deafness, blindness'],
+      ['Rahu/Ketu','Foot diseases, leprosy, multiple disorders, undiagnosable illness']
+    ]
+  ));
+
+  section('Longevity','The source notes use the 3rd and 8th as houses of life, 2nd and 7th as houses of death, and Saturn as Ayulkaraka.');
+  p.lastElementChild.appendChild(table(
+    ['House / Planet','Signifies'],
+    [
+      ['3rd & 8th','Houses of life'],
+      ['2nd & 7th','Houses of death'],
+      ['Saturn','Ayulkaraka (significator of lifespan)']
+    ]
+  ));
+
+  section('Longevity Classification');
+  p.lastElementChild.appendChild(table(
+    ['Longevity Class','Age Range'],
+    [
+      ['Balarishta (Early death)','Up to 8 years (critical ages: 1, 3, 5, 7)'],
+      ['Alpayu (Short life)','8–32 years'],
+      ['Madhyayu (Middle life)','32–75 years'],
+      ['Purnayu (Full life)','75–120 years']
+    ]
+  ));
+
+  section('Maraka Planets');
+  const marakaSec=p.lastElementChild;
+  marakaSec.appendChild(el('div',{class:'callout'},
+    'Maraka Dasa/Bhukti does not always mean death — it can also indicate severe health issues, accidents, or hospitalizations.'));
+  marakaSec.appendChild(table(
+    ['Maraka Type','Lords/Planets'],
+    [
+      ['Primary Maraka','Lords of 2nd & 7th house, and planets associated with them'],
+      ['Secondary Maraka','Lords of 3rd, 8th, & 12th house, and planets associated with them']
+    ]
+  ));
+
+  section('Example — Steve Jobs');
+  p.lastElementChild.appendChild(table(
+    ['Element','Detail'],
+    [
+      ['Health significators (his chart)','Sun, Saturn, Mars, Mercury'],
+      ['Health event indicated','October 2003 → Sun/Rahu Dasa-Bhukti'],
+      ['Maraka significators (his chart)','Mercury, Saturn, Venus, Jupiter, Moon'],
+      ['Maraka event indicated','October 2011 → Moon/Jupiter Dasa-Bhukti (matches his passing, Oct 2011)']
+    ]
+  ));
+
+  p.appendChild(el('div',{class:'hero-quote'},[
+    document.createTextNode('For prediction, first establish the promise through the relevant houses, lords and significators; then assess strength, yogas and afflictions; finally use Dasa/Bhukti and transit to time the result.'),
+    el('span',{},'Prediction workflow from the source notes')
+  ]));
+  return p;
+}
+
 function buildMarriage(){
   const p = el('div');
   p.appendChild(el('p',{class:'eyebrow'},'Compatibility'));
@@ -1584,6 +1838,7 @@ const BUILDERS = {
   relatives: buildRelatives,
   dasha: buildDasha,
   predictions: buildPredictions,
+  'prediction-details': buildPredictionDetails,
   marriage: buildMarriage,
   hora: buildHora,
   numerology: buildNumerology,
