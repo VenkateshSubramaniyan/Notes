@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graha Yuti (Planetary Conjunction) Reference</title>
+<style>
+  :root {
+    --bg: #fbf7ef;
+    --panel: #ffffff;
+    --ink: #2b2320;
+    --muted: #6b5f52;
+    --accent: #8c3b2e;
+    --accent-soft: #f3e3d3;
+    --line: #e4d6c3;
+    --gold: #a9822f;
+    --strong: #2f6b3a;
+    --strong-bg: #e8f3e9;
+    --weak: #9c2b2b;
+    --weak-bg: #f8e9e8;
+    --rare: #3d3b6b;
+    --rare-bg: #eceafa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    line-height: 1.55;
+    padding: 0 0 60px 0;
+  }
+  header {
+    background: linear-gradient(135deg, var(--accent) 0%, #6e2c22 100%);
+    color: #fbf7ef;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: 2.1em;
+    letter-spacing: 0.02em;
+  }
+  header p {
+    margin: 0;
+    color: #f0dfc9;
+    font-size: 1.05em;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .om-symbol {
+    font-size: 1.6em;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--gold);
+  }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-top: 28px;
+    box-shadow: 0 2px 10px rgba(140, 59, 46, 0.06);
+  }
+  h2 {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent-soft);
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.4em;
+  }
+  h3 {
+    color: var(--gold);
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 1.12em;
+    letter-spacing: 0.01em;
+  }
+  .framework-note {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-size: 0.98em;
+  }
+  .legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: 14px 0 4px;
+    font-size: 0.9em;
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot {
+    width: 11px; height: 11px; border-radius: 50%; display: inline-block;
+  }
+  .dot-strong { background: var(--strong); }
+  .dot-weak { background: var(--weak); }
+  .dot-rare { background: var(--rare); }
+  .codes-note {
+    font-size: 0.88em;
+    color: var(--muted);
+    margin: 10px 0 0;
+    font-family: sans-serif;
+  }
+  .codes-note code {
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 8px;
+    font-size: 0.9em;
+    table-layout: fixed;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  th, td {
+    padding: 9px 9px;
+    border: 1px solid var(--line);
+    vertical-align: top;
+    text-align: left;
+    word-wrap: break-word;
+  }
+  th {
+    background: var(--accent);
+    color: #fff;
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    font-size: 0.92em;
+  }
+  tr:nth-child(even) td.general-col {
+    background: #faf3e8;
+  }
+  .pair-col {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.1em;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  .yoga-tag {
+    display: block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.62em;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin: 4px auto 0;
+    font-family: sans-serif;
+    width: fit-content;
+  }
+  td.strong-col {
+    background: var(--strong-bg);
+    color: #234a2a;
+  }
+  td.weak-col {
+    background: var(--weak-bg);
+    color: #6e2020;
+  }
+  td.rarity-col {
+    background: var(--rare-bg);
+    color: #2b2960;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.85em;
+  }
+  th.strong-th { background: var(--strong); }
+  th.weak-th { background: var(--weak); }
+  th.rare-th { background: var(--rare); }
+  .rarity-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 0.82em;
+    white-space: nowrap;
+  }
+  .r-verycommon { background: #d9ecd7; color: #245b28; }
+  .r-common { background: #dbe8f5; color: #1f4c78; }
+  .r-occasional { background: #f5ecd6; color: #7a5a10; }
+  .r-uncommon { background: #f0ddf0; color: #6a2470; }
+  .r-rare { background: #f5d9d9; color: #7a1f1f; }
+  .lagna-col {
+    font-weight: bold;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85em;
+    margin-top: 40px;
+    padding: 0 20px;
+  }
+  .caveat {
+    margin-top: 20px;
+    font-size: 0.92em;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px dashed var(--line);
+    padding-top: 14px;
+  }
+  @media (max-width: 800px) {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute; top: -9999px; left: -9999px; }
+    tr { border: 1px solid var(--line); margin-bottom: 14px; border-radius: 6px; overflow: hidden; }
+    td { border: none; border-bottom: 1px solid var(--line); position: relative; padding-left: 42%; min-height: 24px; }
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      top: 9px;
+      width: 38%;
+      font-weight: bold;
+      color: var(--muted);
+      font-size: 0.82em;
+      white-space: normal;
+    }
+    .pair-col { text-align: left; }
+    .yoga-tag { margin: 4px 0 0; }
+    header { padding: 36px 16px 28px; }
+    section { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="om-symbol">&#x0950;</span>
+  <h1>Graha Yuti — Two-Planet Conjunction Reference</h1>
+  <p>Classical characteristics of all 35 planetary conjunctions — how rare each pairing is in the sky, and how it reads when strong versus weak — with lagna-wise notes on when they rise into full yogas.</p>
+</header>
+
+<main>
+
+  <section>
+    <h2>Framework — Lagna, Rarity, and Strength</h2>
+    <div class="framework-note">
+      A conjunction's <strong>core nature</strong> is constant across every chart; <strong>lagna</strong> changes which
+      houses the two planets rule; <strong>strength</strong> (exalted/own sign/kendra-trikona vs. debilitated/combust/dusthana/afflicted)
+      decides whether it shows its best or worst face. <strong>Rarity</strong> reflects how often the two planets
+      actually return to conjunction in the sky (their synodic cycle) — not the odds of it landing in any one person's
+      chart. Fast-moving grahas (Moon, Mercury, Venus, Sun) catch up to almost anything within months, so most
+      conjunctions involving them recur often. The three slow-movers — Jupiter, Saturn, and the lunar nodes — take
+      years to decades to meet each other again, which is why Jupiter–Saturn ("the Great Conjunction") is genuinely rare.
+      Each Rarity cell also shows <strong>Together</strong> — roughly how long the pair stays within the same sign
+      once conjunct, set by whichever of the two planets is faster (it moves on first, ending the conjunction).
+      Retrograde loops can stretch these windows well beyond the average shown.
+    </div>
+    <div class="legend">
+      <span><span class="dot dot-rare"></span> Rarity — how often this pairing recurs in the sky</span>
+      <span><span class="dot dot-strong"></span> Strong placement — best-case expression</span>
+      <span><span class="dot dot-weak"></span> Weak / afflicted placement — difficult expression</span>
+    </div>
+    <p class="codes-note">Planet codes: <code>SU</code> Sun · <code>MO</code> Moon · <code>MA</code> Mars · <code>ME</code> Mercury · <code>JU</code> Jupiter · <code>VE</code> Venus · <code>SA</code> Saturn · <code>RA</code> Rahu · <code>KE</code> Ketu</p>
+  </section>
+
+  <section>
+    <h2>The 35 Planetary Conjunctions</h2>
+
+    <h3>Sun Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-MO<span class="yoga-tag">Amavasya</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~2–3 days</em></td>
+          <td class="general-col" data-label="General">Strong will but internal conflict between ego and mind; can indicate a diminished parental presence.</td>
+          <td class="strong-col" data-label="If Strong">Confident, decisive personality that unifies heart and head; good instinct for leadership and public roles.</td>
+          <td class="weak-col" data-label="If Weak">Deep inner conflict, indecisiveness, strained relationship with one or both parents, low self-worth.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-MA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~2 years<br><em>Together: ~2–4 weeks</em></td>
+          <td class="general-col" data-label="General">Fiery, combative, high energy; courage paired with quick temper.</td>
+          <td class="strong-col" data-label="If Strong">Bold, disciplined courage; excellent for leadership, sport, military, or entrepreneurship.</td>
+          <td class="weak-col" data-label="If Weak">Reckless aggression, ego-driven conflict, accidents, burns, authority clashes.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-ME<span class="yoga-tag">Budha-Aditya</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>3–4x/year<br><em>Together: ~2–4 weeks (longer if Mercury retrograde)</em></td>
+          <td class="general-col" data-label="General">Sharp intellect and confident communication; classic yoga for analytical success.</td>
+          <td class="strong-col" data-label="If Strong">Genuine Budha-Aditya effect: brilliant analytical mind, articulate, respected in administration or academia.</td>
+          <td class="weak-col" data-label="If Weak">Deep combustion mutes Mercury — nervous or hesitant speech, scattered intellect, self-doubt in communication.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-JU</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~annual<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Wisdom fused with authority; respected teacher/advisor figures.</td>
+          <td class="strong-col" data-label="If Strong">Genuinely wise, ethical authority; teacher, mentor, or statesman figure with real influence.</td>
+          <td class="weak-col" data-label="If Weak">Dogmatic or self-righteous ego, hollow moral posturing, overconfidence without substance.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~1.5 years<br><em>Together: ~3–4 weeks (longer if Venus retrograde)</em></td>
+          <td class="general-col" data-label="General">Creative and charming, but Venus combusts easily here.</td>
+          <td class="strong-col" data-label="If Strong">Charismatic, artistic, magnetic personality; comfortable balancing duty and pleasure.</td>
+          <td class="weak-col" data-label="If Weak">Combust Venus weakens relationships and finances; vanity, romantic disappointment, strained marriage.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~annual<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Tension between ego and discipline; delayed recognition.</td>
+          <td class="strong-col" data-label="If Strong">Hard-earned, durable authority; disciplined leadership; respected for endurance and fairness.</td>
+          <td class="weak-col" data-label="If Weak">Chronic friction with authority/father, isolation, depression, repeated setbacks to ambition.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~2x/year<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Amplified ambition, unconventional rise to power, reputation swings.</td>
+          <td class="strong-col" data-label="If Strong">Bold, unconventional success; rises through foreign/unorthodox routes; magnetic public image.</td>
+          <td class="weak-col" data-label="If Weak">Grahan-style affliction — scandal, deceit, sudden falls from status, health issues tied to vitality/eyes.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SU-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~2x/year<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Detachment from ego-driven pursuits; spiritual, introspective authority.</td>
+          <td class="strong-col" data-label="If Strong">Genuine humility and inner authority; spiritually mature, uninterested in worldly status games.</td>
+          <td class="weak-col" data-label="If Weak">Confused sense of identity, absent/distant father figure, directionless ambition, isolation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Moon Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-MA<span class="yoga-tag">Chandra-Mangal</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Emotional intensity and business acumen.</td>
+          <td class="strong-col" data-label="If Strong">Genuine wealth-yoga: shrewd business instinct, decisive emotions, strong entrepreneurial drive.</td>
+          <td class="weak-col" data-label="If Weak">Emotional volatility, impulsive money decisions, temper flare-ups, turbulent home life.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-ME</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Witty, articulate, emotionally intelligent.</td>
+          <td class="strong-col" data-label="If Strong">Quick, adaptable mind with genuine emotional intelligence; strong for writing, media, counseling.</td>
+          <td class="weak-col" data-label="If Weak">Restless, overthinking mind; anxiety; difficulty settling emotionally on any one decision.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-JU<span class="yoga-tag">Gaja-Kesari*</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Nurturing wisdom, optimism, popularity. (*Full yoga needs kendra placement.)</td>
+          <td class="strong-col" data-label="If Strong">Genuinely wise, generous, well-liked; good fortune in domestic life and public reputation.</td>
+          <td class="weak-col" data-label="If Weak">Naive over-optimism, weight/health issues from indulgence, wasted generosity, poor judgment of people.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Charming, emotionally warm, artistic.</td>
+          <td class="strong-col" data-label="If Strong">Graceful, emotionally secure, genuinely artistic; happy domestic and romantic life.</td>
+          <td class="weak-col" data-label="If Weak">Emotional over-indulgence, dependency in relationships, mood swings tied to romantic disappointment.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-SA<span class="yoga-tag">Vish yoga</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~monthly<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Emotional heaviness, pessimism, delayed fulfillment.</td>
+          <td class="strong-col" data-label="If Strong">Emotional maturity and quiet resilience; disciplined, dependable, unaffected by others' moods.</td>
+          <td class="weak-col" data-label="If Weak">Chronic sadness or depression, loneliness, mother's health/relationship strained, self-doubt.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~27 days<br><em>Together: ~1 day</em></td>
+          <td class="general-col" data-label="General">Emotional restlessness, obsessive imagination.</td>
+          <td class="strong-col" data-label="If Strong">Vivid imagination channeled productively; magnetic public presence; comfort with unconventional paths.</td>
+          <td class="weak-col" data-label="If Weak">Anxiety, obsessive thought loops, phobias, unstable home environment, illusion-driven decisions.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MO-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~27 days<br><em>Together: ~1 day</em></td>
+          <td class="general-col" data-label="General">Emotionally detached, intuitive, psychically sensitive.</td>
+          <td class="strong-col" data-label="If Strong">Genuine intuitive/spiritual depth; calm detachment that aids meditation and inner peace.</td>
+          <td class="weak-col" data-label="If Weak">Emotional numbness, isolation, unexplained anxiety, sense of not belonging anywhere.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Mars Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-ME</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~3–4 mo<br><em>Together: ~2–4 weeks</em></td>
+          <td class="general-col" data-label="General">Sharp, argumentative intellect; quick decisions.</td>
+          <td class="strong-col" data-label="If Strong">Precise, fast analytical mind; excels in surgery, engineering, competitive debate.</td>
+          <td class="weak-col" data-label="If Weak">Rash, cutting speech; arguments and disputes; impulsive decisions without enough thought.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-JU<span class="yoga-tag">Guru-Mangal</span></td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~2.2 years<br><em>Together: ~4–8 weeks</em></td>
+          <td class="general-col" data-label="General">Courage guided by principle.</td>
+          <td class="strong-col" data-label="If Strong">Genuine Raja-yoga-like strength: righteous, protective leadership in law, military, or enterprise.</td>
+          <td class="weak-col" data-label="If Weak">Self-righteous aggression, legal disputes, reckless "principled" conflicts, overreach.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~9–12 mo<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Passionate but volatile romantic/creative energy.</td>
+          <td class="strong-col" data-label="If Strong">Passionate, creative drive; magnetic charisma; strong physical vitality in relationships.</td>
+          <td class="weak-col" data-label="If Weak">Jealousy, possessiveness, volatile relationships, impulsive romantic/financial decisions.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~2 years<br><em>Together: ~4–8 weeks</em></td>
+          <td class="general-col" data-label="General">Friction between impulse and restraint.</td>
+          <td class="strong-col" data-label="If Strong">Disciplined physical stamina and mechanical skill; excels in engineering, mining, structured labor.</td>
+          <td class="weak-col" data-label="If Weak">Chronic frustration, accidents, injuries, blocked ambition, simmering resentment.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~1.7 years<br><em>Together: ~4–8 weeks</em></td>
+          <td class="general-col" data-label="General">Aggressive ambition, risk-taking, sudden explosive action.</td>
+          <td class="strong-col" data-label="If Strong">Bold, strategic risk-taking that pays off; pioneering in unconventional or high-stakes fields.</td>
+          <td class="weak-col" data-label="If Weak">Reckless, reputation-damaging aggression; accidents, sudden conflicts, manipulation by or of others.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">MA-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~1.7 years<br><em>Together: ~4–8 weeks</em></td>
+          <td class="general-col" data-label="General">Sharp but directionless energy; sudden cuts or endings.</td>
+          <td class="strong-col" data-label="If Strong">Skilled, detached precision in technical or occult fields; fearless in confronting problems.</td>
+          <td class="weak-col" data-label="If Weak">Sudden injuries or surgeries, self-destructive impulsiveness, unresolved anger turned inward.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Mercury Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">ME-JU</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~quarterly<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Excellent for teaching, law, writing, philosophy.</td>
+          <td class="strong-col" data-label="If Strong">Genuinely wise, articulate scholar; strong for higher education, publishing, or advisory roles.</td>
+          <td class="weak-col" data-label="If Weak">Scattered, unfocused learning; knows a little about everything but masters little; indecisive advice.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">ME-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>multiple/yr<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Refined communication, artistic and diplomatic skill.</td>
+          <td class="strong-col" data-label="If Strong">Elegant writing/speaking, strong negotiation and design skill, tasteful creative output.</td>
+          <td class="weak-col" data-label="If Weak">Superficial charm, flattery over substance, indecision in relationships or creative work.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">ME-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~quarterly<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Methodical, disciplined thinking.</td>
+          <td class="strong-col" data-label="If Strong">Rigorous, detail-oriented mind; excellent for research, accounting, structured engineering work.</td>
+          <td class="weak-col" data-label="If Weak">Delayed speech development, chronic self-doubt, overly rigid or pessimistic thinking.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">ME-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~quarterly<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Unconventional or highly clever intellect.</td>
+          <td class="strong-col" data-label="If Strong">Innovative, persuasive thinker; strong in technology, media, or unconventional research fields.</td>
+          <td class="weak-col" data-label="If Weak">Manipulative or exaggerated speech, rumor-spreading, deceptive dealings, mental restlessness.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">ME-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-verycommon">Very Common</span><br>~quarterly<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Intuitive but scattered intellect.</td>
+          <td class="strong-col" data-label="If Strong">Deep, intuitive research ability; skilled in hidden/technical subjects; sees patterns others miss.</td>
+          <td class="weak-col" data-label="If Weak">Difficulty articulating thoughts, disinterest in formal study, absent-mindedness, confusion.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Jupiter Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">JU-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~8 months<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Refined values, wealth through ethical/creative means.</td>
+          <td class="strong-col" data-label="If Strong">Genuine prosperity and an auspicious, harmonious marriage; ethical wealth-building.</td>
+          <td class="weak-col" data-label="If Weak">Overindulgence, extravagance, weight gain, unrealistic romantic or financial expectations.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">JU-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-rare">Rare</span><br>~20 years<br><em>Together: several months (up to ~1 year)</em></td>
+          <td class="general-col" data-label="General">Tension between expansion and restriction.</td>
+          <td class="strong-col" data-label="If Strong">Durable, well-earned wisdom; excellent for law, governance, institution-building; patient success.</td>
+          <td class="weak-col" data-label="If Weak">Pessimism about one's own beliefs, delayed success turning into stagnation, rigid dogma.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">JU-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~7 years<br><em>Together: ~4–6 months</em></td>
+          <td class="general-col" data-label="General">Unconventional wisdom, foreign teachings.</td>
+          <td class="strong-col" data-label="If Strong">Genuinely expansive, unorthodox wisdom; success through foreign connections or new belief systems.</td>
+          <td class="weak-col" data-label="If Weak">False gurus, inflated or fraudulent beliefs, unstable rapid rise followed by a fall.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">JU-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~7 years<br><em>Together: ~4–6 months</em></td>
+          <td class="general-col" data-label="General">Spiritual wisdom, renunciation of convention.</td>
+          <td class="strong-col" data-label="If Strong">Genuine moksha-oriented wisdom; comfortable letting go of material ambition for inner growth.</td>
+          <td class="weak-col" data-label="If Weak">Confused belief system, disinterest bordering on cynicism, lack of direction in life purpose.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Venus Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">VE-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~7–8 mo<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Delayed but lasting relationships/marriage.</td>
+          <td class="strong-col" data-label="If Strong">Loyal, enduring partnerships; disciplined creative or artistic output; steady long-term wealth.</td>
+          <td class="weak-col" data-label="If Weak">Emotional coldness, loveless or duty-bound marriage, chronic romantic disappointment or delay.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">VE-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~7 months<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Intense, unconventional desires.</td>
+          <td class="strong-col" data-label="If Strong">Magnetic charm, glamorous success in creative/luxury fields, unconventional but fulfilling relationships.</td>
+          <td class="weak-col" data-label="If Weak">Obsessive attachment, scandal, affairs, overspending, addiction to sensory pleasure.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">VE-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~7 months<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Detachment from material pleasures or relationships.</td>
+          <td class="strong-col" data-label="If Strong">Refined, non-attached relationship to beauty and love; contentment without material dependence.</td>
+          <td class="weak-col" data-label="If Weak">Dissatisfaction despite good taste, relationship disappointments, feeling unloved or unfulfilled.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Saturn Conjunctions</h3>
+    <table>
+      <thead><tr><th style="width:10%">Pair</th><th class="rare-th" style="width:16%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:25%">If Strong</th><th class="weak-th" style="width:25%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Pair">SA-RA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~11 years<br><em>Together: several months (up to ~1 year)</em></td>
+          <td class="general-col" data-label="General">Harsh, chronic struggles or fears.</td>
+          <td class="strong-col" data-label="If Strong">Extreme discipline channeled into major long-term achievement; strategic patience.</td>
+          <td class="weak-col" data-label="If Weak">Chronic fear, obsessive anxiety, underhanded ambition, prolonged hardship or isolation.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Pair">SA-KE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~11 years<br><em>Together: several months (up to ~1 year)</em></td>
+          <td class="general-col" data-label="General">Heavy detachment, karmic isolation.</td>
+          <td class="strong-col" data-label="If Strong">Deep spiritual discipline and endurance; comfortable with solitude; genuine renunciate strength.</td>
+          <td class="weak-col" data-label="If Weak">Loneliness, chronic pessimism, hard early life with little support, sense of karmic burden.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="caveat">Note: RA-KE (Rahu-Ketu) never conjoin — they are always exactly 180° apart. Rarity figures are approximate synodic cycles (how often the pair returns to the same sky position), rounded for readability — actual dates shift slightly due to retrograde loops.</p>
+  </section>
+
+  <section>
+    <h2>Lagna-Wise: When a Conjunction Becomes a Major Yoga</h2>
+    <table>
+      <caption>Which conjunctions gain extra force for each ascendant, based on house lordship</caption>
+      <thead><tr><th style="width:13%">Lagna</th><th style="width:20%">Yogakaraka</th><th>Conjunctions Activated as Strong Yogas</th></tr></thead>
+      <tbody>
+        <tr><td class="lagna-col" data-label="Lagna">Aries</td><td data-label="Yogakaraka">None — a movable lagna, so no single planet rules both a kendra and a trikona.</td><td data-label="Conjunctions">SU-JU or SU-SA gain weight since Sun rules the 5th; MA-SU is natural strength as own-sign lagna lord combinations.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Taurus</td><td data-label="Yogakaraka"><strong>Saturn</strong> — rules the 9th (Capricorn) and 10th (Aquarius), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">SA-VE is powerful since Saturn is yogakaraka here; any conjunction involving Saturn gains extra weight.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Gemini</td><td data-label="Yogakaraka">None — a dual lagna, so no single yogakaraka; benefics ruling the 9th/10th act as functional benefics instead.</td><td data-label="Conjunctions">VE-SA is strong (Venus rules 5th &amp; 12th, Saturn rules 8th &amp; 9th); ME conjunctions carry extra weight as lagna lord.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Cancer</td><td data-label="Yogakaraka"><strong>Mars</strong> — rules the 5th (Scorpio) and 10th (Aries), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">MA-JU is the classic Raja yoga — 5th and 9th lords together — and any conjunction involving Mars is amplified by its yogakaraka status.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Leo</td><td data-label="Yogakaraka"><strong>Mars</strong> — rules the 4th (Scorpio) and 9th (Aries), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">MA-JU is strong here too (Mars rules the 9th, Jupiter rules the 5th), further boosted by Mars's yogakaraka status.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Virgo</td><td data-label="Yogakaraka">None — a dual lagna; no single kendra+trikona lord.</td><td data-label="Conjunctions">VE-SA is powerful (Venus rules 2nd &amp; 9th, Saturn rules 5th &amp; 6th — check placement); ME conjunctions carry extra force as lagna lord.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Libra</td><td data-label="Yogakaraka"><strong>Saturn</strong> — rules the 4th (Capricorn) and 5th (Aquarius), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">Saturn is yogakaraka here; SA-MO or SA-ME conjunctions gain unusual strength.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Scorpio</td><td data-label="Yogakaraka">None — a fixed lagna without a dual kendra+trikona lord; the Moon (9th lord) and Jupiter (2nd/5th lord) act as the strongest natural benefics instead.</td><td data-label="Conjunctions">JU-MO is strong (Jupiter rules 2nd &amp; 5th, Moon rules the 9th).</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Sagittarius</td><td data-label="Yogakaraka">None — a dual lagna; no single kendra+trikona lord.</td><td data-label="Conjunctions">MA-SU is strong (Mars rules the 5th, Sun rules the 9th).</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Capricorn</td><td data-label="Yogakaraka"><strong>Venus</strong> — rules the 5th (Taurus) and 10th (Libra), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">VE-ME is strong (Venus rules 5th &amp; 10th, Mercury rules 11th &amp; 8th — check house), and Venus's yogakaraka status lifts any conjunction it joins.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Aquarius</td><td data-label="Yogakaraka"><strong>Venus</strong> — rules the 4th (Taurus) and 9th (Libra), a genuine kendra + trikona lord.</td><td data-label="Conjunctions">Venus is yogakaraka here; VE-ME or VE-SA conjunctions carry extra auspiciousness.</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Pisces</td><td data-label="Yogakaraka">None — a dual lagna; no single kendra+trikona lord.</td><td data-label="Conjunctions">MO-MA is strong (Moon rules the 5th, Mars rules 2nd &amp; 9th).</td></tr>
+      </tbody>
+    </table>
+    <p class="caveat">
+      Caveat: house placement, nakshatra, aspects, and combustion distance all modify these general readings significantly.
+      A conjunction in a dusthana (6th/8th/12th) behaves very differently from the same pair in a kendra/trikona,
+      regardless of lagna — and the If Strong / If Weak columns above should always be weighed together with this lagna context.
+      True yogakarakas (one planet ruling both a kendra and a trikona) only arise for six lagnas —
+      Taurus, Cancer, Leo, Libra, Capricorn, and Aquarius — via Mars, Saturn, or Venus as shown above.
+      The remaining six lagnas (the movable and dual signs: Aries, Gemini, Virgo, Scorpio, Sagittarius, Pisces)
+      simply don't produce one, so their strongest conjunctions come from ordinary raja-yoga-forming lord
+      combinations instead.
+    </p>
+  </section>
+
+  <section>
+    <h2>Three-Planet Combinations (Triple Yuti)</h2>
+    <div class="framework-note">
+      When three grahas share a sign, the chart concentrates unusual focus into that one house — read it as the
+      dominant two-planet dynamic above, intensified and complicated by the third planet's agenda. These triple
+      conjunctions are naturally rarer than any of their constituent pairs, since all three must overlap at once.
+      A selection of the most classically discussed three-planet combinations follows; Rahu and Ketu can never
+      appear in the same trio since they are always opposite each other.
+    </div>
+    <table>
+      <thead><tr><th style="width:10%">Trio</th><th class="rare-th" style="width:14%">Rarity</th><th style="width:24%">General</th><th class="strong-th" style="width:26%">If Strong</th><th class="weak-th" style="width:26%">If Weak</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Trio">SU-ME-VE</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-common">Common</span><br>~2–3x/year<br><em>Together: ~2–3 weeks</em></td>
+          <td class="general-col" data-label="General">The classic "planetary stellium" near the Sun — intellect, charm, and ego bundled tightly together.</td>
+          <td class="strong-col" data-label="If Strong">Magnetic, articulate, creatively confident personality; strong for public-facing communication or the arts.</td>
+          <td class="weak-col" data-label="If Weak">Both Mercury and Venus deeply combust — muted charm, anxious self-expression, ego overshadowing genuine talent.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">SU-MO-ME</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~yearly window<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Near-Amavasya birth with Mercury folded in — mind, ego, and intellect compressed into one narrow focus.</td>
+          <td class="strong-col" data-label="If Strong">Unusually integrated thinker — decisive, articulate, and emotionally self-aware all at once.</td>
+          <td class="weak-col" data-label="If Weak">Overloaded, conflicted inner world; indecision that looks like confidence but isn't; strained early family communication.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">MO-MA-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~every 2 years<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">Emotion, impulse, and restriction pulling against each other in one place — a genuinely difficult combination.</td>
+          <td class="strong-col" data-label="If Strong">Hard-won emotional discipline; capacity to act decisively under pressure without losing composure.</td>
+          <td class="weak-col" data-label="If Weak">Chronic frustration, suppressed anger, emotional coldness alternating with volatility; accident-prone periods.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">MA-JU-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-rare">Rare</span><br>~every 20+ years<br><em>Together: several months</em></td>
+          <td class="general-col" data-label="General">The "karma triangle" — courage, wisdom, and discipline all forced to reconcile in one house; often called on for major life restructuring.</td>
+          <td class="strong-col" data-label="If Strong">Genuine, hard-earned mastery; capacity to lead large, long-term efforts (institutions, law, engineering at scale).</td>
+          <td class="weak-col" data-label="If Weak">Prolonged struggle between ambition, ethics, and limitation; legal or authority conflicts that take years to resolve.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">SU-JU-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-rare">Rare</span><br>~every 20+ years<br><em>Together: ~3–4 weeks</em></td>
+          <td class="general-col" data-label="General">Ego, wisdom, and discipline together — authority that must be earned rather than assumed.</td>
+          <td class="strong-col" data-label="If Strong">Statesmanlike authority — respected, principled, and durable; strong for governance, law, or senior leadership.</td>
+          <td class="weak-col" data-label="If Weak">Rigid self-righteousness, friction with father/authority figures, delayed and hard-fought recognition.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">MO-VE-JU</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-occasional">Occasional</span><br>~yearly window<br><em>Together: ~1–2 days</em></td>
+          <td class="general-col" data-label="General">A benefic cluster — emotional warmth, wisdom, and charm reinforcing each other.</td>
+          <td class="strong-col" data-label="If Strong">Genuinely fortunate, generous, well-liked; strong domestic happiness and creative or relational success.</td>
+          <td class="weak-col" data-label="If Weak">Indulgence without discernment, over-optimism, difficulty saying no, wasted goodwill.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">ME-VE-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-uncommon">Uncommon</span><br>~every 1–2 years<br><em>Together: ~2–3 weeks</em></td>
+          <td class="general-col" data-label="General">Intellect and charm reined in by discipline — refined output that takes real effort to produce.</td>
+          <td class="strong-col" data-label="If Strong">Meticulous, tasteful craftsmanship; excellent for design, structured writing, or long-form creative work.</td>
+          <td class="weak-col" data-label="If Weak">Creative self-doubt, delayed recognition for talent, joylessness in work that should be pleasurable.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Trio">JU-VE-SA</td>
+          <td class="rarity-col" data-label="Rarity"><span class="rarity-badge r-rare">Rare</span><br>~every 15–20 years<br><em>Together: several months</em></td>
+          <td class="general-col" data-label="General">A classic "Dhana yoga" triad — expansion, refinement, and discipline all reinforcing durable material growth.</td>
+          <td class="strong-col" data-label="If Strong">Ethical, patient wealth-building; harmonious long-term partnerships; success that compounds slowly and holds.</td>
+          <td class="weak-col" data-label="If Weak">Overextension followed by austerity, values in conflict with means, relationships strained by financial pressure.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="caveat">
+      This is a representative selection, not the full C(9,3)=84 possible trios — the same lagna-lordship,
+      strength, and dusthana principles from the two-planet tables above apply here, just compounded across three
+      planets rather than two.
+    </p>
+  </section>
+
+  <section>
+    <h2>Jaimini Astrology — The Chara Karakas</h2>
+    <div class="framework-note">
+      Where Parashari astrology assigns each planet a fixed role (Sun = father, Moon = mother, always), Jaimini
+      astrology layers on a second, chart-specific system: the <strong>Chara Karakas</strong> ("variable significators").
+      For every birth chart, the seven classical planets (Sun through Saturn, excluding the always-opposite lunar
+      nodes by default) are ranked purely by their degree within their own sign — highest degree first, lowest last —
+      regardless of which sign or house they sit in. Whichever planet lands in each rank position takes on that
+      role's meaning for that specific person. Some traditions extend the ranking to include Rahu, producing an
+      8-karaka scheme instead of 7; both approaches are used by different lineages.
+    </div>
+
+    <h3>The Eight Chara Karakas, by Degree Rank</h3>
+    <table>
+      <thead><tr><th style="width:8%">Rank</th><th style="width:20%">Karaka</th><th>What It Governs</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Rank">1</td>
+          <td class="general-col" data-label="Karaka"><strong>Atmakaraka (AK)</strong><br>Soul Significator</td>
+          <td class="general-col" data-label="Meaning">The planet at the highest degree. Represents the soul's core drive and the central lesson of this incarnation — the "king" planet whose house and sign placement colors the whole life's direction.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">2</td>
+          <td class="general-col" data-label="Karaka"><strong>Amatyakaraka (AmK)</strong><br>Minister / Career</td>
+          <td class="general-col" data-label="Meaning">Second-highest degree. The chief indicator of career, professional direction, and the skills or resources that serve the soul's purpose set by the Atmakaraka.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">3</td>
+          <td class="general-col" data-label="Karaka"><strong>Bhratrikaraka (BK)</strong><br>Siblings / Courage</td>
+          <td class="general-col" data-label="Meaning">Third-highest degree. Points to siblings, close colleagues, personal courage, and mentor or guru figures who offer guidance.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">4</td>
+          <td class="general-col" data-label="Karaka"><strong>Matrikaraka (MK)</strong><br>Mother / Inner Peace</td>
+          <td class="general-col" data-label="Meaning">Fourth-highest degree. Signifies the mother, home, property, and — on a psychological level — whatever brings genuine inner security and comfort.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">5</td>
+          <td class="general-col" data-label="Karaka"><strong>Pitrikaraka (PiK)</strong><br>Father / Authority</td>
+          <td class="general-col" data-label="Meaning">Fifth-highest degree, used mainly in the 8-karaka scheme. Represents the father, bosses, and figures of authority or inherited tradition. In the 7-karaka scheme this role often merges into Bhratrikaraka.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">6</td>
+          <td class="general-col" data-label="Karaka"><strong>Putrakaraka (PK)</strong><br>Children / Creativity</td>
+          <td class="general-col" data-label="Meaning">Sixth-highest degree (fifth in the 7-karaka scheme). Governs children, creative and intellectual output, education, and what a person leaves behind as legacy.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">7</td>
+          <td class="general-col" data-label="Karaka"><strong>Gnatikaraka (GK)</strong><br>Relatives / Obstacles</td>
+          <td class="general-col" data-label="Meaning">Seventh-highest degree (sixth in the 7-karaka scheme). Extended relatives, rivals, and the obstacles a person must push through — often framed as the resistance that builds real strength.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Rank">8 (lowest)</td>
+          <td class="general-col" data-label="Karaka"><strong>Darakaraka (DK)</strong><br>Spouse / Partnerships</td>
+          <td class="general-col" data-label="Meaning">The lowest degree of all. Points to the marriage partner, key business partners, and how a person engages with the public — the counterbalance to the Atmakaraka's soul agenda.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="caveat">
+      A few practical notes: the Chara Karakas don't replace a planet's usual Parashari significations, they add a
+      soul-specific layer on top — the Moon is still the general signifier of mind and mother, but whichever planet
+      becomes someone's Matrikaraka shows the particular karmic flavor of that mother relationship. Whether to use
+      the 7-karaka scheme (excluding Rahu) or the 8-karaka scheme (including Rahu) is a genuine, long-standing split
+      between traditional lineages — both are considered valid starting points for analysis. Ketu is generally
+      excluded from the ranking in either scheme.
+    </p>
+    <p class="caveat">
+      To calculate your own Chara Karakas from an exact birth date, time, and place, use the free calculator at
+      <a href="https://panchangbodh.com/chara-karakas-calculator" target="_blank" rel="noopener noreferrer">panchangbodh.com/chara-karakas-calculator</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Functional Roles — Benefic &amp; Malefic Planets by Lagna (Parashari)</h2>
+    <div class="framework-note">
+      A planet's <strong>natural</strong> nature (Jupiter and Venus are naturally benefic; Mars, Saturn, the Sun,
+      Rahu, and Ketu are naturally malefic) is only the starting point. In Parashari astrology, what actually
+      matters for a given birth chart is its <strong>functional</strong> nature — decided by which houses it rules
+      from that specific lagna. A planet ruling a trikona (5th/9th) turns favorable almost regardless of its
+      natural character; a planet ruling only a dusthana (6th/8th/12th) turns unfavorable almost regardless of its
+      natural character. A natural benefic that rules <em>only</em> a kendra (4th/7th/10th) with no trikona loses
+      much of its benefic strength; a natural malefic in the same position loses much of its malefic sting. The
+      2nd and 7th lords carry additional "maraka" (life-force-testing) weight in their dashas, independent of this
+      benefic/malefic classification.
+    </div>
+    <table>
+      <thead><tr><th style="width:12%">Lagna</th><th class="strong-th" style="width:30%">Functional Benefics</th><th class="weak-th" style="width:30%">Functional Malefics</th><th style="width:28%">Neutral / Mixed</th></tr></thead>
+      <tbody>
+        <tr><td class="lagna-col" data-label="Lagna">Aries</td><td class="strong-col" data-label="Benefics">Mars (1st), Sun (5th), Jupiter (9th &amp; 12th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Mercury (6th), Venus (2nd &amp; 7th, maraka)</td><td data-label="Neutral">Moon (4th only), Saturn (10th &amp; 11th)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Taurus</td><td class="strong-col" data-label="Benefics">Saturn (9th &amp; 10th, yogakaraka), Mercury (5th), Venus (1st)</td><td class="weak-col" data-label="Malefics">Jupiter (8th &amp; 11th), Mars (7th &amp; 12th)</td><td data-label="Neutral">Moon (3rd only), Sun (4th only)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Gemini</td><td class="strong-col" data-label="Benefics">Mercury (1st &amp; 4th), Venus (5th), Saturn (9th &amp; 8th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Mars (6th &amp; 11th), Sun (3rd)</td><td data-label="Neutral">Jupiter (7th &amp; 10th, kendra only), Moon (2nd, maraka)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Cancer</td><td class="strong-col" data-label="Benefics">Moon (1st), Mars (5th &amp; 10th, yogakaraka), Jupiter (9th &amp; 6th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Saturn (7th &amp; 8th, also maraka), Mercury (3rd &amp; 12th)</td><td data-label="Neutral">Venus (4th &amp; 11th), Sun (2nd, maraka)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Leo</td><td class="strong-col" data-label="Benefics">Sun (1st), Mars (4th &amp; 9th, yogakaraka), Jupiter (5th &amp; 8th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Saturn (6th &amp; 7th, also maraka), Moon (12th), Mercury (2nd &amp; 11th)</td><td data-label="Neutral">Venus (3rd &amp; 10th)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Virgo</td><td class="strong-col" data-label="Benefics">Mercury (1st &amp; 10th), Venus (9th &amp; 2nd — trikona dominates), Saturn (5th &amp; 6th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Mars (3rd &amp; 8th), Sun (12th)</td><td data-label="Neutral">Jupiter (4th &amp; 7th, kendra only), Moon (11th only)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Libra</td><td class="strong-col" data-label="Benefics">Venus (1st &amp; 8th), Saturn (4th &amp; 5th, yogakaraka), Mercury (9th &amp; 12th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Jupiter (3rd &amp; 6th), Mars (2nd &amp; 7th, also maraka)</td><td data-label="Neutral">Moon (10th only), Sun (11th only)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Scorpio</td><td class="strong-col" data-label="Benefics">Mars (1st), Moon (9th), Jupiter (5th &amp; 2nd — trikona dominates)</td><td class="weak-col" data-label="Malefics">Mercury (8th &amp; 11th), Venus (7th &amp; 12th)</td><td data-label="Neutral">Sun (10th only, favorable), Saturn (3rd &amp; 4th, favorable)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Sagittarius</td><td class="strong-col" data-label="Benefics">Jupiter (1st &amp; 4th), Sun (9th), Mars (5th &amp; 12th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Venus (6th &amp; 11th), Moon (8th), Saturn (2nd &amp; 3rd)</td><td data-label="Neutral">Mercury (7th &amp; 10th, kendra only)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Capricorn</td><td class="strong-col" data-label="Benefics">Saturn (1st &amp; 2nd), Venus (5th &amp; 10th, yogakaraka), Mercury (9th &amp; 6th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Sun (8th), Jupiter (3rd &amp; 12th)</td><td data-label="Neutral">Moon (7th only), Mars (4th &amp; 11th, favorable)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Aquarius</td><td class="strong-col" data-label="Benefics">Saturn (1st &amp; 12th), Venus (4th &amp; 9th, yogakaraka), Mercury (5th &amp; 8th — trikona dominates)</td><td class="weak-col" data-label="Malefics">Moon (6th), Mars (3rd &amp; 10th), Jupiter (2nd &amp; 11th)</td><td data-label="Neutral">Sun (7th only, favorable, also maraka)</td></tr>
+        <tr><td class="lagna-col" data-label="Lagna">Pisces</td><td class="strong-col" data-label="Benefics">Jupiter (1st &amp; 10th), Moon (5th), Mars (9th, favorable)</td><td class="weak-col" data-label="Malefics">Saturn (11th &amp; 12th), Venus (3rd &amp; 8th), Sun (6th)</td><td data-label="Neutral">Mercury (4th &amp; 7th, kendra only)</td></tr>
+      </tbody>
+    </table>
+    <p class="caveat">
+      Where a planet rules two houses of conflicting nature (e.g. a trikona and a dusthana together), the general
+      convention is that trikona and lagna lordship dominate the result, so the planet is listed as a benefic —
+      but its results carry a mixed flavor and reward closer individual analysis rather than a blanket reading.
+    </p>
+  </section>
+
+  <section>
+    <h2>The Natural Significators (Naisargika Karakas)</h2>
+    <div class="framework-note">
+      This is the third layer, and the oldest one — fixed significations every planet carries in every chart,
+      regardless of lagna or degree. Where the Chara Karakas (Jaimini) are unique to each birth chart and the
+      functional benefic/malefic table above depends on lagna, the Naisargika Karakas below never change: they are
+      the baseline vocabulary Parashari astrology uses to read what each planet, in general, actually represents.
+    </div>
+    <table>
+      <thead><tr><th style="width:12%">Planet</th><th style="width:20%">Primary Signifies</th><th>Also Governs</th></tr></thead>
+      <tbody>
+        <tr><td class="pair-col" data-label="Planet">Sun (Surya)</td><td class="general-col" data-label="Primary">Soul (Atman), father, self-confidence</td><td data-label="Also">Government &amp; authority, vitality, bones, general health, status</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Moon (Chandra)</td><td class="general-col" data-label="Primary">Mind (Manas), mother, emotions</td><td data-label="Also">Public/masses, fluids in the body, general happiness and mental peace</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Mars (Mangal)</td><td class="general-col" data-label="Primary">Siblings (especially younger), courage, energy</td><td data-label="Also">Land &amp; property, blood, accidents/surgery, military &amp; police professions</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Mercury (Budha)</td><td class="general-col" data-label="Primary">Intellect, communication, speech</td><td data-label="Also">Education, business/trade, skin, maternal relatives, analytical skill</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Jupiter (Guru)</td><td class="general-col" data-label="Primary">Wisdom, knowledge, children</td><td data-label="Also">Husband (in a woman's chart), wealth &amp; fortune, dharma, teachers/gurus, liver</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Venus (Shukra)</td><td class="general-col" data-label="Primary">Spouse (in a man's chart), love, relationships</td><td data-label="Also">Luxury, vehicles, comforts, artistic &amp; creative talent, reproductive health</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Saturn (Shani)</td><td class="general-col" data-label="Primary">Longevity, discipline, hardship</td><td data-label="Also">Servants &amp; labor, career/karma over the long term, chronic conditions, old age, delays</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Rahu (North Node)</td><td class="general-col" data-label="Primary">Obsession, worldly desire, foreign connections</td><td data-label="Also">Sudden events, technology &amp; innovation, illusion, unconventional ambition</td></tr>
+        <tr><td class="pair-col" data-label="Planet">Ketu (South Node)</td><td class="general-col" data-label="Primary">Detachment, moksha, past-life karma</td><td data-label="Also">Losses, occult &amp; spiritual knowledge, sudden endings, isolation</td></tr>
+      </tbody>
+    </table>
+    <p class="caveat">
+      How the three layers work together in practice: the Naisargika Karaka tells you what a planet generally
+      means; the functional benefic/malefic table tells you whether that planet is likely to help or hinder in
+      this specific lagna; and the Chara Karaka tells you which planet is playing which soul-role in this specific
+      chart based on degree. All three are read together, not in isolation.
+    </p>
+  </section>
+
+  <section>
+    <h2>Worked Example — A Personal Chara Karaka Reading</h2>
+    <div class="framework-note">
+      To show the framework in action, here is one calculated chart's 8-karaka ranking (8-karaka scheme, Rahu
+      included), read the way it's actually applied — each planet's role interpreted through both its karaka
+      position and the sign it occupies.
+    </div>
+    <table>
+      <thead><tr><th style="width:16%">Karaka</th><th style="width:12%">Planet</th><th style="width:14%">Sign</th><th style="width:10%">Degree</th><th>Reading</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Atmakaraka (AK)</td>
+          <td class="general-col" data-label="Planet">Moon</td>
+          <td class="general-col" data-label="Sign">Taurus</td>
+          <td class="general-col" data-label="Degree">29.57°</td>
+          <td class="general-col" data-label="Reading">Soul purpose centers on emotional mastery rather than intellectual or material achievement — the core life lesson is learning to stay steady and self-nurturing regardless of external emotional weather. Taurus adds a practical, comfort-seeking, patient flavor to that inner work; at nearly the last degree of the sign, this theme has been building toward resolution for a long time.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Amatyakaraka (AmK)</td>
+          <td class="general-col" data-label="Planet">Rahu</td>
+          <td class="general-col" data-label="Sign">Scorpio</td>
+          <td class="general-col" data-label="Degree">28.26°</td>
+          <td class="general-col" data-label="Reading">Career runs through unconventional, research-driven, or transformation-heavy territory rather than a traditional path — technology, foreign connections, deep investigation, or crisis-adjacent work all fit. Scorpio sharpens this into an appetite for the hidden, the intense, and the high-stakes; success comes from leaning into that instinct rather than fighting it.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Bhratrikaraka (BK)</td>
+          <td class="general-col" data-label="Planet">Venus</td>
+          <td class="general-col" data-label="Sign">Aries</td>
+          <td class="general-col" data-label="Degree">24.01°</td>
+          <td class="general-col" data-label="Reading">Siblings, close colleagues, and mentors tend to arrive through creative, relationship-oriented, or diplomatic channels. Aries adds directness and initiative to that dynamic — mentors or siblings who are bold and quick to act rather than passive.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Matrikaraka (MK)</td>
+          <td class="general-col" data-label="Planet">Jupiter</td>
+          <td class="general-col" data-label="Sign">Libra</td>
+          <td class="general-col" data-label="Degree">17.76°</td>
+          <td class="general-col" data-label="Reading">The mother relationship — and the deeper source of inner security — is tied to wisdom, faith, and higher learning. Libra brings a diplomatic, harmony-seeking, relationship-conscious quality to that comfort, suggesting peace is found through balance and fairness rather than solitude.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Pitrikaraka (PiK)</td>
+          <td class="general-col" data-label="Planet">Mercury</td>
+          <td class="general-col" data-label="Sign">Pisces</td>
+          <td class="general-col" data-label="Degree">17.70°</td>
+          <td class="general-col" data-label="Reading">The father/authority relationship is intellectual and communication-based rather than purely disciplinarian. Mercury in Pisces softens the usual sharp analytical edge with intuition and imagination — the connection to the father figure likely runs through ideas that are more fluid and empathetic than rigidly logical.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Putrakaraka (PK)</td>
+          <td class="general-col" data-label="Planet">Saturn</td>
+          <td class="general-col" data-label="Sign">Aquarius</td>
+          <td class="general-col" data-label="Degree">15.10°</td>
+          <td class="general-col" data-label="Reading">Children, creative output, and legacy-building come with real structure and patience attached — nothing arrives quickly, but what's built lasts. Saturn in its own sign Aquarius steadies this further, favoring unconventional, humanitarian, or systems-oriented creative work over purely personal expression.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Gnatikaraka (GK)</td>
+          <td class="general-col" data-label="Planet">Mars</td>
+          <td class="general-col" data-label="Sign">Pisces</td>
+          <td class="general-col" data-label="Degree">7.40°</td>
+          <td class="general-col" data-label="Reading">The main obstacles show up as impulsiveness, rivalry, or property/asset disputes — the "resistance training" this chart uses to build resilience. Mars in Pisces (a sign it doesn't sit comfortably in) suggests that aggression here is often diffuse or self-undermining rather than direct, so the growth lesson is channeling drive with more focus rather than less.</td>
+        </tr>
+        <tr>
+          <td class="pair-col" data-label="Karaka">Darakaraka (DK)</td>
+          <td class="general-col" data-label="Planet">Sun</td>
+          <td class="general-col" data-label="Sign">Aries</td>
+          <td class="general-col" data-label="Degree">2.27°</td>
+          <td class="general-col" data-label="Reading">The spouse/partnership energy sought is confident, authoritative, and takes the lead — someone comfortable holding status or visibility. Sun in its exaltation sign Aries strengthens this considerably: the partner this chart is drawn to balance against is likely to have real presence and self-assurance, and mutual respect (rather than dependency) is what makes the pairing work.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="caveat">
+      Note the Atmakaraka and Amatyakaraka sit at 29.57° and 28.26° — both very late in their signs. Some Jaimini
+      lineages treat a karaka past ~28-29° as carrying extra intensity or urgency ("about to change sign"), since
+      it's nearing the end of that degree-based cycle; this is a secondary refinement worth knowing but not part
+      of the core ranking rule itself.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  Compiled as a classical Parashari reference — for deeper chart-specific analysis, cross-reference divisional charts and dashas.
+</footer>
+
+</body>
+</html>
