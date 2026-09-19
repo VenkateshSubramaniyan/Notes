@@ -366,6 +366,23 @@ const OPPOSITES = [
   ['Jupiter (Wisdom)','Mercury (Quick intelligence)']
 ];
 
+const NATURAL_BENIFICS = [
+  ['Jupiter (Guru)','The greatest benefic, representing wisdom, expansion, and luck.'],
+  ['Venus (Shukra)',' Represents love, beauty, wealth, and material comforts.'],
+  ['Waxing Moon (Valarpiral)','The Moon is benefic when it grows bright and strong, moving away from the Su'],
+  ['Mercury (Budh)','Considered a benefic as long as it is unaffiliated or unassociated with any malefic planets.']
+
+];
+const NATURAL_MALEFICS = [
+  ['Saturn (Shani)', Represents delay, hard work, sorrow, and deep karmic lessons'],
+  ['Mars',' Represents aggression, fire, conflict, and energy.'],
+  ['Mars','Considered a mild malefic or "cruel" (krūra) planet because of its intense, separating heat.'],
+  ['Waning Moon(Theipirai)','The Moon is weak and mildly malefic when it shrinks toward the New Moon.'],
+  ['Afflicted Mercury','Mercury takes on the quality of the planets it conjoins  or receives aspects from;']
+];
+
+
+
 const SPEEDS = [
   ['Moon','~2.25 days'],['Mercury','~2–4 weeks (variable, retrograde)'],['Venus','~3–5 weeks'],
   ['Sun','~1 month'],['Mars','~1.5–2 months'],['Jupiter','~1 year'],['Saturn','~2.5 years'],
@@ -706,6 +723,13 @@ function buildPlanets(){
   sec3.appendChild(el('p',{class:'sub'},'Opposite forces — in astrology the Sun stands in place of Earth for this reckoning; things like land are checked via the Sun.'));
   sec3.appendChild(table(['Planet','Opposite'], OPPOSITES));
   p.appendChild(sec3);
+
+  const sec31 = el('div',{class:'section'});
+  sec31.appendChild(el('h3',{},'Nature of Planets'));
+  sec31.appendChild(el('p',{class:'sub'},'Natural nature of planets.'));
+  sec31.appendChild(table(['Benific','nature'], NATURAL_BENIFICS));
+  sec31.appendChild(table(['Malefic','nature'], NATURAL_MALEFICS));
+  p.appendChild(sec31);
 
   const sec4 = el('div',{class:'section'});
   sec4.appendChild(el('h3',{},'Exaltation, Debilitation & Moolatrikona'));
