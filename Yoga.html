@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yogas of Vedic Astrology (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#100F1A;
+    --bg-alt:#15142280;
+    --panel:#1B1A2C;
+    --panel-border:#302E48;
+    --card-good:#1C2420;
+    --card-good-border:#33452F;
+    --card-bad:#241A1F;
+    --card-bad-border:#43262A;
+    --gold:#C8A45E;
+    --gold-soft:#8E7A4A;
+    --rust:#B4593F;
+    --ink:#ECE6D6;
+    --ink-dim:#A79FC2;
+    --ink-faint:#716A8C;
+    --line:#2B2941;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Source Sans 3', -apple-system, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: radial-gradient(1px 1px at 20% 30%, #ffffff22 0, transparent 50%),
+                       radial-gradient(1px 1px at 70% 15%, #ffffff1a 0, transparent 50%),
+                       radial-gradient(1.5px 1.5px at 85% 60%, #ffffff20 0, transparent 50%),
+                       radial-gradient(1px 1px at 40% 80%, #ffffff18 0, transparent 50%),
+                       radial-gradient(1px 1px at 10% 65%, #ffffff15 0, transparent 50%),
+                       radial-gradient(1.5px 1.5px at 55% 45%, #ffffff1a 0, transparent 50%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  header.hero{
+    padding:96px 28px 64px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    animation: fadeIn 1.1s ease-out;
+  }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion: reduce){ header.hero{animation:none;} }
+
+  .hero-ring{
+    width:120px; height:120px; margin:0 auto 28px;
+    border:1px solid var(--gold-soft);
+    border-radius:50%;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-ring::before{
+    content:""; position:absolute; inset:16px;
+    border:1px solid var(--line); border-radius:50%;
+  }
+  .hero-ring span{
+    font-family:'Cormorant Garamond', serif;
+    font-size:2.4rem; color:var(--gold);
+  }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    margin:0 0 14px;
+    color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  h1 em{ color:var(--gold); font-style:italic; }
+  .hero-sub{
+    max-width:560px; margin:0 auto;
+    color:var(--ink-dim);
+    font-size:1.05rem;
+  }
+  .kp-note{
+    max-width:620px; margin:28px auto 0;
+    padding:14px 20px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    color:var(--ink-faint);
+    font-size:0.92rem;
+  }
+
+  nav.jump{
+    display:flex; gap:26px; justify-content:center; flex-wrap:wrap;
+    padding:18px 28px 8px;
+    font-size:0.85rem;
+  }
+  nav.jump a{
+    color:var(--ink-dim); text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+  }
+  nav.jump a:hover{ color:var(--gold); border-bottom-color:var(--gold-soft); }
+
+  section{ padding:64px 28px; }
+  .section-head{ max-width:620px; margin:0 auto 40px; text-align:center; }
+  .section-head h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:2.1rem;
+    margin:0 0 10px;
+  }
+  .section-head.good h2{ color:#BFD3AE; }
+  .section-head.bad h2{ color:#D9A190; }
+  .section-head p{ color:var(--ink-dim); font-size:0.98rem; margin:0; }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:18px;
+    max-width:1080px; margin:0 auto;
+  }
+  .card{
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    padding:22px 24px;
+    border-radius:2px;
+  }
+  .card.good{ background:var(--card-good); border-color:var(--card-good-border); }
+  .card.bad{ background:var(--card-bad); border-color:var(--card-bad-border); }
+  .card-name{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.35rem;
+    margin:0 0 2px;
+    color:var(--ink);
+  }
+  .card-name .sa{ color:var(--gold); }
+  .card.bad .card-name .sa{ color:var(--rust); }
+  .card-rule{
+    font-size:0.82rem;
+    text-transform:none;
+    color:var(--ink-faint);
+    margin:0 0 12px;
+    font-style:italic;
+  }
+  .card-body{ font-size:0.95rem; color:var(--ink-dim); margin:0; }
+
+  /* example chart section */
+  .example{
+    display:grid;
+    grid-template-columns:minmax(280px,380px) 1fr;
+    gap:44px;
+    max-width:980px; margin:0 auto;
+    align-items:start;
+  }
+  @media (max-width:760px){ .example{ grid-template-columns:1fr; } }
+
+  .chart{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:repeat(4, 1fr);
+    aspect-ratio:1/1;
+    border:1px solid var(--gold-soft);
+    background:#15142A;
+  }
+  .cell{
+    border:1px solid var(--line);
+    padding:6px 8px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    font-size:0.72rem;
+    position:relative;
+    min-height:0;
+  }
+  .cell .rashi{ color:var(--ink-faint); letter-spacing:0.02em; }
+  .cell .house-no{ position:absolute; top:5px; right:7px; color:var(--ink-faint); font-size:0.65rem; }
+  .cell .planets{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.05rem;
+    color:var(--gold);
+    line-height:1.25;
+  }
+  .cell .planets .ex{ font-size:0.6em; color:#9DBE8E; vertical-align:super; }
+  .cell .planets .db{ font-size:0.6em; color:var(--rust); vertical-align:super; }
+  .mini-heading{
+    font-family:'Cormorant Garamond', serif; font-weight:500;
+    font-size:1.3rem; color:var(--gold); text-align:center;
+    max-width:980px; margin:0 auto;
+  }
+  .mini-examples{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(420px,1fr));
+    gap:40px 56px; max-width:1080px; margin:28px auto 0;
+  }
+  .mini-example{ display:grid; grid-template-columns:minmax(200px,240px) 1fr; gap:24px; align-items:start; }
+  @media (max-width:560px){ .mini-example{ grid-template-columns:1fr; } }
+  .mini-example .chart{ font-size:0.62rem; }
+  .mini-example .callout p{ font-size:0.88rem; }
+  .cell.lagna{ border-color:var(--gold); }
+  .cell.lagna::after{
+    content:"";
+    position:absolute; top:0; left:0;
+    border-top:16px solid var(--gold);
+    border-right:16px solid transparent;
+  }
+  .cell.lagna .lag-tag{
+    position:absolute; top:1px; left:2px;
+    font-size:0.5rem; color:var(--bg); z-index:1; font-weight:700;
+  }
+  .cell.center{
+    grid-column:2 / span 2; grid-row:2 / span 2;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .cell.center .om{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--ink-faint); font-size:0.85rem; text-align:center; line-height:1.5;
+  }
+
+  .callouts{ display:flex; flex-direction:column; gap:18px; }
+  .callout{
+    border-left:2px solid var(--gold-soft);
+    padding-left:16px;
+  }
+  .callout.warn{ border-left-color:var(--rust); }
+  .callout h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:1.15rem;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .callout p{ margin:0; color:var(--ink-dim); font-size:0.92rem; }
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:10px 18px;
+    margin-top:18px;
+    font-size:0.76rem; color:var(--ink-faint);
+  }
+
+  .table-wrap{
+    max-width:1080px; margin:0 auto;
+    overflow-x:auto;
+    border:1px solid var(--panel-border);
+  }
+  table.yoga-table{
+    width:100%; border-collapse:collapse;
+    font-size:0.88rem;
+    background:var(--panel);
+    min-width:760px;
+  }
+  table.yoga-table thead th{
+    text-align:left;
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--gold);
+    background:#221F36;
+    padding:12px 18px;
+    border-bottom:1px solid var(--gold-soft);
+    position:sticky; top:0;
+  }
+  table.yoga-table td{
+    padding:12px 18px;
+    border-bottom:1px solid var(--line);
+    color:var(--ink-dim);
+    vertical-align:top;
+  }
+  table.yoga-table td.name{ color:var(--ink); font-weight:600; white-space:nowrap; }
+  table.yoga-table tbody tr.bad td.name{ color:#D9A190; }
+  table.yoga-table tbody tr:nth-child(even){ background:#1E1D30; }
+  table.yoga-table tbody tr:hover{ background:#25233B; }
+
+  .caveat{
+    max-width:680px; margin:52px auto 0;
+    padding-top:24px; border-top:1px solid var(--line);
+    font-size:0.88rem; color:var(--ink-faint); text-align:center;
+  }
+
+  footer{
+    text-align:center; padding:40px 28px 64px;
+    color:var(--ink-faint); font-size:0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-ring"><span>ॐ</span></div>
+    <h1>Yogas of <em>Jyotisha</em></h1>
+    <p class="hero-sub">A working reference to the planetary combinations classical Vedic astrology treats as auspicious (Shubha) and inauspicious (Ashubha) — with a South Indian style horoscope showing several of them in one chart.</p>
+    <p class="kp-note">Sign-based yoga rules are the classical (Parashari) layer. In KP, the same houses are re-examined through star-lord significators — a planet can carry a yoga's promise only if its nakshatra lord also signifies the relevant houses, which is why two charts with an identical sign-based yoga can still play out very differently.</p>
+  </div>
+</header>
+
+<nav class="jump">
+  <a href="#good">Auspicious yogas</a>
+  <a href="#bad">Inauspicious yogas</a>
+  <a href="#table">Quick reference</a>
+  <a href="#example">Chart example</a>
+</nav>
+
+<section id="good">
+  <div class="section-head good">
+    <h2>Shubha Yogas — auspicious combinations</h2>
+    <p>Formed mainly by kendra (1,4,7,10) and trikona (1,5,9) lords supporting one another, or by planets reaching own sign or exaltation in strong houses.</p>
+  </div>
+  <div class="grid">
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Raja Yoga</span></p>
+      <p class="card-rule">Kendra lord and trikona lord conjunct, in mutual aspect, or exchanging signs</p>
+      <p class="card-body">The broadest category of "power yoga." It links a house of action (kendra) with a house of fortune (trikona), and is read as authority, rank, or a life that rises above its starting conditions — strength depends on how well-placed and unafflicted both lords are.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Dhana Yoga</span></p>
+      <p class="card-rule">Lords of 2, 5, 9, or 11 conjunct, exchanged, or mutually aspecting</p>
+      <p class="card-body">The standard wealth-combination family. The 2nd (accumulated wealth), 11th (gains), 5th and 9th (fortune) lords reinforcing each other point to financial ease, though timing still runs through the dasha of the involved planets.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Gajakesari Yoga</span></p>
+      <p class="card-rule">Moon and Jupiter in mutual kendra (1st, 4th, 7th, or 10th from each other), including conjunction</p>
+      <p class="card-body">One of the most cited yogas — traditionally read as intelligence, a good reputation, and steady respect from others. Its strength is graded by whether Moon and Jupiter are also well-disposed by sign and house.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Panch Mahapurusha Yogas</span></p>
+      <p class="card-rule">Mars, Mercury, Jupiter, Venus, or Saturn in its own sign or exaltation, posited in a kendra from the Lagna</p>
+      <p class="card-body">Five yogas in one family — Ruchaka (Mars), Bhadra (Mercury), Hamsa (Jupiter), Malavya (Venus), and Sasa (Saturn) — each said to give a pronounced, almost archetypal strength in that planet's domain: drive, intellect, wisdom, refinement, or discipline respectively.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Budhaditya Yoga</span></p>
+      <p class="card-rule">Sun and Mercury conjunct in the same house</p>
+      <p class="card-body">Read as sharp analytical ability and communication skill. Its result softens considerably if Mercury sits too close to the Sun and is combust rather than simply conjunct.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Chandra-Mangal Yoga</span></p>
+      <p class="card-rule">Moon and Mars conjunct, unafflicted by malefic aspect</p>
+      <p class="card-body">Traditionally tied to business acumen and the ability to generate wealth through initiative and hard work, rather than inheritance.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Neechabhanga Raja Yoga</span></p>
+      <p class="card-rule">A debilitated planet's weakness is cancelled — e.g. its dispositor is in a kendra, or the sign lord of its exaltation sign is angular</p>
+      <p class="card-body">A reversal yoga: a planet that looks weak by sign becomes a source of unusually strong, often delayed rise — commonly described as success built after early struggle.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Adhi Yoga</span> <span style="font-size:0.68rem; color:var(--ink-faint); font-style:italic;">(Chandra Adhi Yoga)</span></p>
+      <p class="card-rule">Natural benefics (Jupiter, Venus, unafflicted Mercury) occupying the 6th, 7th, and 8th houses from the Moon</p>
+      <p class="card-body">Associated with leadership and lasting prosperity — the benefics effectively "guard" the houses on either side of the 7th from the Moon.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Vipreeta Raja Yoga</span></p>
+      <p class="card-rule">Lords of the 6th, 8th, and 12th houses conjoining or exchanging among themselves</p>
+      <p class="card-body">A paradox yoga: houses that are ordinarily difficult (loss, disease, expenditure) end up strengthening each other instead of the native, producing gain that comes specifically out of overcoming adversity.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Amala Yoga</span></p>
+      <p class="card-rule">A benefic planet alone in the 10th house from the Lagna or from the Moon</p>
+      <p class="card-body">Reputation that stays largely untarnished over a lifetime — "amala" means spotless, and the yoga is read as consistent public standing rather than a single dramatic rise.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Maha Dhana Yoga</span></p>
+      <p class="card-rule">Lords of the 2nd, 9th, and 11th houses connected by conjunction, mutual aspect, or exchange, and posited together</p>
+      <p class="card-body">The most concentrated of the wealth combinations — treasury (2nd), fortune (9th), and gains (11th) all reinforcing one house or one another, traditionally read as substantial and lasting affluence rather than a single windfall.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Sunapha Yoga</span></p>
+      <p class="card-rule">Any planet other than the Sun placed in the 2nd house from the Moon</p>
+      <p class="card-body">One of the five Chandra yogas — read as self-earned wealth, reputation, and intelligence, built through the native's own effort rather than inheritance.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Anapha Yoga</span></p>
+      <p class="card-rule">Any planet other than the Sun placed in the 12th house from the Moon</p>
+      <p class="card-body">The counterpart to Sunapha — traditionally linked to good health, a well-formed physique, and a contented, comfortable temperament.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Durudhara Yoga</span></p>
+      <p class="card-rule">Planets other than the Sun occupying both the 2nd and 12th houses from the Moon</p>
+      <p class="card-body">Combines Sunapha and Anapha in one chart — read as wealth accompanied by a strong circle of support, since "durudhara" evokes being held up on both sides.</p>
+    </div>
+
+    <div class="card good">
+      <p class="card-name"><span class="sa">Harsha · Sarala · Vimala Yogas</span></p>
+      <p class="card-rule">The 6th, 8th, or 12th lord respectively placed in another dusthana (6th, 8th, or 12th house)</p>
+      <p class="card-body">Three named variants of the same Vipreeta Raja Yoga principle — Harsha (6th lord), Sarala (8th lord), and Vimala (12th lord) — each describing which dusthana lord lands in a dusthana, with the specific pairing said to color the flavor of the reversal.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="bad" style="background:linear-gradient(180deg, transparent, #1A121600, transparent);">
+  <div class="section-head bad">
+    <h2>Ashubha Yogas — inauspicious combinations</h2>
+    <p>Formed mainly through dusthana (6,8,12) involvement, isolation of the Moon, or affliction from Rahu and Ketu.</p>
+  </div>
+  <div class="grid">
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Kemadruma Yoga</span></p>
+      <p class="card-rule">No planets (other than the Sun) in the 2nd or 12th house from the Moon, and the Moon unaspected in a kendra</p>
+      <p class="card-body">Reads as an isolated Moon — instability of mind and a lack of steady support from circumstances or people, though the yoga is fully cancelled if any planet sits in a kendra from the Lagna or the Moon.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Kaal Sarp Yoga</span></p>
+      <p class="card-rule">All seven classical planets hemmed on one side of the Rahu–Ketu axis</p>
+      <p class="card-body">Popularly the most talked-about dosha — read as recurring obstacles and a sense of fated delay, with outcomes said to depend heavily on which houses Rahu and Ketu themselves occupy.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Shakat Yoga</span></p>
+      <p class="card-rule">Moon in the 6th, 8th, or 12th house from Jupiter</p>
+      <p class="card-body">Traditionally linked to sharp financial ups and downs across life — periods of comfort followed by unexpected reversal, rather than steady loss.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Guru Chandal Yoga</span></p>
+      <p class="card-rule">Jupiter conjunct Rahu</p>
+      <p class="card-body">Jupiter's role as the significator of wisdom and ethics gets "clouded" by Rahu's amplifying, boundary-crossing nature — read as unconventional beliefs, or wisdom gained through unorthodox or difficult means rather than tradition.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Angarak Yoga</span></p>
+      <p class="card-rule">Mars conjunct Rahu</p>
+      <p class="card-body">An intensifying combination — impulsiveness, accident-proneness, or conflict-seeking energy, especially in the house where it falls.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Grahan Yoga</span></p>
+      <p class="card-rule">Sun or Moon conjunct Rahu or Ketu</p>
+      <p class="card-body">The luminary is "eclipsed" — vitality and confidence (Sun) or peace of mind (Moon) are said to fluctuate or feel obscured, particularly during that planet's dasha.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Daridra Yoga</span></p>
+      <p class="card-rule">The 11th lord placed in the 6th, 8th, or 12th house, or conjunct a dusthana lord</p>
+      <p class="card-body">A drain on gains — income arrives but leaks out through debt, health costs, or hidden expenses rather than accumulating.</p>
+    </div>
+
+    <div class="card bad">
+      <p class="card-name"><span class="sa">Vish Yoga</span></p>
+      <p class="card-rule">Moon conjunct Saturn</p>
+      <p class="card-body">Read as an emotionally heavy, self-critical temperament — Saturn's restriction acting directly on the mind — though it can also indicate unusual discipline once matured.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="table">
+  <div class="section-head">
+    <h2 style="color:var(--gold);">Quick reference</h2>
+    <p>Every yoga on this page, split by which point in the chart it's measured from.</p>
+  </div>
+
+  <p class="mini-heading" style="text-align:left; max-width:1080px; margin:0 auto 14px;">Chandra (Moon-based) yogas</p>
+  <div class="table-wrap" style="margin-bottom:52px;">
+    <table class="yoga-table">
+      <thead>
+        <tr><th>Yoga</th><th>How to read it (rule)</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Gajakesari Yoga</td><td>Moon and Jupiter in mutual kendra (1st, 4th, 7th, 10th from each other), incl. conjunction</td><td>Intelligence, good reputation, steady respect</td></tr>
+        <tr><td class="name">Chandra-Mangal Yoga</td><td>Moon and Mars conjunct, unafflicted by malefic aspect</td><td>Business acumen, wealth through initiative rather than inheritance</td></tr>
+        <tr><td class="name">Adhi Yoga (Chandra Adhi)</td><td>Natural benefics (Jupiter, Venus, unafflicted Mercury) in the 6th, 7th, 8th from the Moon</td><td>Leadership and lasting prosperity</td></tr>
+        <tr><td class="name">Sunapha Yoga</td><td>Any planet other than the Sun in the 2nd house from the Moon</td><td>Self-earned wealth, reputation, intelligence</td></tr>
+        <tr><td class="name">Anapha Yoga</td><td>Any planet other than the Sun in the 12th house from the Moon</td><td>Good health, well-formed physique, contented temperament</td></tr>
+        <tr><td class="name">Durudhara Yoga</td><td>Planets other than the Sun in both the 2nd and 12th houses from the Moon</td><td>Wealth accompanied by a strong circle of support</td></tr>
+        <tr class="bad"><td class="name">Kemadruma Yoga</td><td>No planets (besides Sun) in the 2nd/12th from Moon, and Moon unaspected in a kendra</td><td>Instability of mind, lack of steady support (cancelled if a planet sits in a kendra)</td></tr>
+        <tr class="bad"><td class="name">Shakat Yoga</td><td>Moon in the 6th, 8th, or 12th house from Jupiter</td><td>Sharp financial ups and downs across life</td></tr>
+        <tr class="bad"><td class="name">Vish Yoga</td><td>Moon conjunct Saturn</td><td>Emotionally heavy, self-critical temperament; can mature into discipline</td></tr>
+        <tr class="bad"><td class="name">Grahan Yoga</td><td>Sun or Moon conjunct Rahu or Ketu</td><td>Vitality/confidence or peace of mind fluctuates, especially in that dasha</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="mini-heading" style="text-align:left; max-width:1080px; margin:0 auto 14px;">Lagna (Ascendant-based) yogas</p>
+  <div class="table-wrap">
+    <table class="yoga-table">
+      <thead>
+        <tr><th>Yoga</th><th>How to read it (rule)</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Raja Yoga</td><td>Kendra lord and trikona lord conjunct, in mutual aspect, or exchanging signs</td><td>Authority, rank, a life that rises above its starting conditions</td></tr>
+        <tr><td class="name">Dhana Yoga</td><td>Lords of 2, 5, 9, or 11 conjunct, exchanged, or mutually aspecting</td><td>Financial ease, timed by the involved planets' daśā</td></tr>
+        <tr><td class="name">Panch Mahapurusha Yogas</td><td>Mars, Mercury, Jupiter, Venus, or Saturn in own sign/exaltation, in a kendra from Lagna</td><td>Pronounced strength in that planet's domain — drive, intellect, wisdom, refinement, or discipline</td></tr>
+        <tr><td class="name">Budhaditya Yoga</td><td>Sun and Mercury conjunct in the same house</td><td>Sharp analytical ability and communication skill</td></tr>
+        <tr><td class="name">Neechabhanga Raja Yoga</td><td>A debilitated planet's weakness cancelled — its dispositor in a kendra, or its exaltation sign's lord angular</td><td>Unusually strong, often delayed rise — success after early struggle</td></tr>
+        <tr><td class="name">Vipreeta Raja Yoga</td><td>Lords of the 6th, 8th, and 12th houses conjoining or exchanging among themselves</td><td>Gain that comes specifically out of overcoming adversity</td></tr>
+        <tr><td class="name">Amala Yoga</td><td>A benefic planet alone in the 10th house from the Lagna (or from the Moon)</td><td>Reputation that stays largely spotless over a lifetime</td></tr>
+        <tr><td class="name">Maha Dhana Yoga</td><td>Lords of the 2nd, 9th, and 11th connected (conjunction/aspect/exchange) and posited together</td><td>Substantial, lasting affluence rather than a single windfall</td></tr>
+        <tr><td class="name">Harsha / Sarala / Vimala Yogas</td><td>The 6th, 8th, or 12th lord respectively placed in another dusthana (6th/8th/12th)</td><td>Reversal-based gain — the specific pairing colors the flavor</td></tr>
+        <tr class="bad"><td class="name">Kaal Sarp Yoga</td><td>All seven classical planets hemmed on one side of the Rahu–Ketu axis</td><td>Recurring obstacles, a sense of fated delay</td></tr>
+        <tr class="bad"><td class="name">Guru Chandal Yoga</td><td>Jupiter conjunct Rahu</td><td>Unconventional beliefs, or wisdom gained through difficult means</td></tr>
+        <tr class="bad"><td class="name">Angarak Yoga</td><td>Mars conjunct Rahu</td><td>Impulsiveness, accident-proneness, conflict-seeking energy</td></tr>
+        <tr class="bad"><td class="name">Daridra Yoga</td><td>11th lord in the 6th, 8th, or 12th house, or conjunct a dusthana lord</td><td>Income arrives but leaks out rather than accumulating</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="example">
+  <div class="section-head">
+    <h2 style="color:var(--gold);">A worked chart, South Indian style</h2>
+    <p>An illustrative Aries-Lagna chart, constructed to show several yogas together clearly. Rashis are fixed to their boxes; the Lagna is marked, not the boxes themselves.</p>
+  </div>
+
+  <div class="example">
+    <div class="chart">
+      <div class="cell"><span class="house-no">12H</span><span class="rashi">Pisces</span><span class="planets">Ke</span></div>
+      <div class="cell lagna"><span class="lag-tag">LAG</span><span class="house-no">1H</span><span class="rashi">Aries</span><span class="planets">&nbsp;</span></div>
+      <div class="cell"><span class="house-no">2H</span><span class="rashi">Taurus</span><span class="planets">Ra</span></div>
+      <div class="cell"><span class="house-no">3H</span><span class="rashi">Gemini</span><span class="planets">Ma</span></div>
+
+      <div class="cell"><span class="house-no">11H</span><span class="rashi">Aquarius</span><span class="planets">&nbsp;</span></div>
+      <div class="cell center"><span class="om">Rāśi<br>Chart</span></div>
+      <div class="cell"><span class="house-no">4H</span><span class="rashi">Cancer</span><span class="planets">Mo&nbsp;Ju<span class="ex">Ex</span></span></div>
+
+      <div class="cell"><span class="house-no">10H</span><span class="rashi">Capricorn</span><span class="planets">&nbsp;</span></div>
+      <div class="cell"><span class="house-no">5H</span><span class="rashi">Leo</span><span class="planets">Su</span></div>
+
+      <div class="cell"><span class="house-no">9H</span><span class="rashi">Sagittarius</span><span class="planets">&nbsp;</span></div>
+      <div class="cell"><span class="house-no">8H</span><span class="rashi">Scorpio</span><span class="planets">&nbsp;</span></div>
+      <div class="cell"><span class="house-no">7H</span><span class="rashi">Libra</span><span class="planets">Ve&nbsp;Sa<span class="ex">Ex</span></span></div>
+      <div class="cell"><span class="house-no">6H</span><span class="rashi">Virgo</span><span class="planets">Me</span></div>
+    </div>
+    <div class="legend">
+      <span>Su Sun · Mo Moon · Ma Mars · Me Mercury</span>
+      <span>Ju Jupiter · Ve Venus · Sa Saturn</span>
+      <span>Ra Rahu · Ke Ketu · Ex exalted</span>
+    </div>
+    </div>
+
+    <div class="callouts">
+      <div class="callout">
+        <h3>Gajakesari Yoga</h3>
+        <p>Moon and Jupiter conjunct in the 4th house — a kendra from the Lagna — satisfying the mutual-kendra rule directly through conjunction.</p>
+      </div>
+      <div class="callout">
+        <h3>Hamsa Mahapurusha Yoga</h3>
+        <p>Jupiter is exalted in Cancer and sits in a kendra (4th) from the Lagna — the full condition for this Mahapurusha yoga.</p>
+      </div>
+      <div class="callout">
+        <h3>Malavya + Sasa Mahapurusha Yoga</h3>
+        <p>Venus (own sign, Libra) and Saturn (exalted in Libra) share the 7th house, a kendra — two Mahapurusha yogas overlapping in one house.</p>
+      </div>
+      <div class="callout warn">
+        <h3>Kaal Sarp Yoga</h3>
+        <p>Every other planet — Mars, Moon, Jupiter, Sun, Mercury, Venus, Saturn — falls within houses 3 through 7, entirely on one side of the Rahu (2nd house) to Ketu (12th house) axis, with nothing occupying the Lagna to break the hem.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="mini-heading" style="margin-top:64px;">A few more, one yoga at a time</p>
+  <div class="mini-examples">
+
+    <div class="mini-example">
+      <div class="chart">
+        <div class="cell"><span class="house-no">8H</span><span class="rashi">Pisces</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">9H</span><span class="rashi">Aries</span><span class="planets">Sa<span class="db">Db</span></span></div>
+        <div class="cell"><span class="house-no">10H</span><span class="rashi">Taurus</span><span class="planets">Ma</span></div>
+        <div class="cell"><span class="house-no">11H</span><span class="rashi">Gemini</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">7H</span><span class="rashi">Aquarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell center"><span class="om">Leo<br>Lagna</span></div>
+        <div class="cell"><span class="house-no">12H</span><span class="rashi">Cancer</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">6H</span><span class="rashi">Capricorn</span><span class="planets">&nbsp;</span></div>
+        <div class="cell lagna"><span class="lag-tag">LAG</span><span class="house-no">1H</span><span class="rashi">Leo</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">5H</span><span class="rashi">Sagittarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">4H</span><span class="rashi">Scorpio</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">3H</span><span class="rashi">Libra</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">2H</span><span class="rashi">Virgo</span><span class="planets">Su&nbsp;Me</span></div>
+      </div>
+      <div class="callout">
+        <h3>Budhaditya + Neechabhanga Raja Yoga</h3>
+        <p>Leo Lagna. Sun and Mercury conjunct in the 2nd house — Budhaditya Yoga. Separately, Saturn is debilitated in the 9th (Aries), but its dispositor Mars sits in the 10th (Taurus), a kendra — cancelling the debility (Neechabhanga) and turning it into a rise-after-struggle placement instead.</p>
+      </div>
+    </div>
+
+    <div class="mini-example">
+      <div class="chart">
+        <div class="cell"><span class="house-no">3H</span><span class="rashi">Pisces</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">4H</span><span class="rashi">Aries</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">5H</span><span class="rashi">Taurus</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">6H</span><span class="rashi">Gemini</span><span class="planets">Me</span></div>
+        <div class="cell"><span class="house-no">2H</span><span class="rashi">Aquarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell center"><span class="om">Capricorn<br>Lagna</span></div>
+        <div class="cell"><span class="house-no">7H</span><span class="rashi">Cancer</span><span class="planets">&nbsp;</span></div>
+        <div class="cell lagna"><span class="lag-tag">LAG</span><span class="house-no">1H</span><span class="rashi">Capricorn</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">8H</span><span class="rashi">Leo</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">12H</span><span class="rashi">Sagittarius</span><span class="planets">Me</span></div>
+        <div class="cell"><span class="house-no">11H</span><span class="rashi">Scorpio</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">10H</span><span class="rashi">Libra</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">9H</span><span class="rashi">Virgo</span><span class="planets">&nbsp;</span></div>
+      </div>
+      <div class="callout">
+        <h3>Harsha Yoga</h3>
+        <p>Capricorn Lagna. Mercury, lord of the 6th house (Gemini), is placed in the 12th house (Sagittarius) — a dusthana lord landing in another dusthana. This is Harsha Yoga, the 6th-lord variant of Vipreeta Raja Yoga: a difficult house's lord finding strength precisely by sitting somewhere equally difficult.</p>
+      </div>
+    </div>
+
+    <div class="mini-example">
+      <div class="chart">
+        <div class="cell"><span class="house-no">4H</span><span class="rashi">Pisces</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">5H</span><span class="rashi">Aries</span><span class="planets">Ma&nbsp;Sa&nbsp;Ke</span></div>
+        <div class="cell"><span class="house-no">6H</span><span class="rashi">Taurus</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">7H</span><span class="rashi">Gemini</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">3H</span><span class="rashi">Aquarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell center"><span class="om">Sagittarius<br>Lagna</span></div>
+        <div class="cell"><span class="house-no">8H</span><span class="rashi">Cancer</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">2H</span><span class="rashi">Capricorn</span><span class="planets">Su&nbsp;Me&nbsp;Ve</span></div>
+        <div class="cell lagna"><span class="lag-tag">LAG</span><span class="house-no">1H</span><span class="rashi">Sagittarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">12H</span><span class="rashi">Scorpio</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">11H</span><span class="rashi">Libra</span><span class="planets">Ju&nbsp;Ra</span></div>
+        <div class="cell"><span class="house-no">10H</span><span class="rashi">Virgo</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">9H</span><span class="rashi">Leo</span><span class="planets">Mo</span></div>
+      </div>
+      <div class="callout warn">
+        <h3>Kemadruma Yoga</h3>
+        <p>Sagittarius Lagna. The Moon sits alone in the 9th (Leo) — the houses on either side of it (2nd and 12th from the Moon) are empty, and no planet occupies a kendra from either the Moon or the Lagna. Nothing "supports" the Moon, so the isolation reading applies in full.</p>
+      </div>
+    </div>
+
+    <div class="mini-example">
+      <div class="chart">
+        <div class="cell"><span class="house-no">10H</span><span class="rashi">Pisces</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">11H</span><span class="rashi">Aries</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">12H</span><span class="rashi">Taurus</span><span class="planets">&nbsp;</span></div>
+        <div class="cell lagna"><span class="lag-tag">LAG</span><span class="house-no">1H</span><span class="rashi">Gemini</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">9H</span><span class="rashi">Aquarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell center"><span class="om">Gemini<br>Lagna</span></div>
+        <div class="cell"><span class="house-no">2H</span><span class="rashi">Cancer</span><span class="planets">Ke</span></div>
+        <div class="cell"><span class="house-no">8H</span><span class="rashi">Capricorn</span><span class="planets">Ma&nbsp;Ju&nbsp;Ra</span></div>
+        <div class="cell"><span class="house-no">3H</span><span class="rashi">Leo</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">7H</span><span class="rashi">Sagittarius</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">6H</span><span class="rashi">Scorpio</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">5H</span><span class="rashi">Libra</span><span class="planets">&nbsp;</span></div>
+        <div class="cell"><span class="house-no">4H</span><span class="rashi">Virgo</span><span class="planets">&nbsp;</span></div>
+      </div>
+      <div class="callout warn">
+        <h3>Guru Chandal + Angarak Yoga</h3>
+        <p>Gemini Lagna. Mars, Jupiter, and Rahu all sit together in the 8th house (Capricorn) — Mars-Rahu forms Angarak Yoga (impulsiveness, conflict) while Jupiter-Rahu forms Guru Chandal Yoga (clouded judgement) in the same breath, both intensified by falling in a dusthana.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="caveat">These charts are teaching constructions, stacked with yogas for clarity — real horoscopes rarely show this many at once. Even here, each yoga's actual strength would still depend on shadbala, aspects from other planets, house lordship of the sign involved, and the timing of the relevant daśā before it could be called strong or weak.</p>
+</section>
+
+<footer>Reference compiled from classical Parashari yoga rules — for study purposes, not predictive use.</footer>
+
+</body>
+</html>
