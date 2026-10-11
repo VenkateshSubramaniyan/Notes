@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vedic Astrology Reference</title>
+<style>
+:root{--navy:#12345a;--line:#d7e0ec;--bg:#f4f7fb;--blue:#dceeff;--green:#e2f7e5;--orange:#fff0d5;--red:#ffe3e5;--purple:#eee5ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#19253a;font:15px/1.45 system-ui,Arial,sans-serif}main{max-width:1200px;margin:auto;padding:22px 14px 40px}header{background:linear-gradient(120deg,#10294a,#28588f);color:white;padding:24px;border-radius:16px}h1{margin:0 0 6px;font-size:clamp(25px,4vw,36px)}header p{margin:0;color:#e4edff}h2{margin:25px 0 6px;font-size:22px}.sub{color:#617087;margin:0 0 12px}.mobile-hint{display:none;font-size:12px;color:#526782;margin:-5px 0 9px}.card{background:white;border:1px solid var(--line);border-radius:13px;overflow:hidden}.scroll{display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain} .scroll table{width:100%;min-width:0}table{border-collapse:collapse} .scroll th,.scroll td{white-space:normal} .scroll table.relationships,.scroll table.dignities{min-width:0;width:100%;table-layout:fixed} .scroll::-webkit-scrollbar{height:8px} .scroll::-webkit-scrollbar-thumb{background:#9eafc4;border-radius:8px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--navy);color:white;font-size:13px}tbody tr:nth-child(even){background:#f8faff}tr:last-child td{border-bottom:0}.planet{font-weight:800;white-space:nowrap}.chip{display:inline-block;padding:3px 7px;border-radius:6px;margin:2px;font-size:12px;font-weight:700}.friend{background:var(--blue);color:#174c86}.enemy{background:var(--red);color:#97252d}.neutral{background:#edf0f5;color:#4d5a70}.ex{background:var(--green)}.moo{background:var(--orange)}.deb{background:var(--red)}.controls{padding:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}select{padding:8px 10px;border:1px solid #bdc9da;border-radius:8px;font:inherit}.chart{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(112px,auto));gap:4px;padding:6px;background:#e0e7f0}.cell{background:#fff;border:1px solid #cbd6e4;border-radius:6px;padding:0;min-width:0;min-height:0;overflow:hidden}.house-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(30px,.52fr);height:100%;min-height:108px}.house-main{padding:8px;min-width:0}.house-roles{border-left:1px solid #d7dfeb;background:#f7f9fc;padding:6px 3px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;min-width:0}.house-roles .role-tag{font-size:10px;padding:3px 4px;margin:0;min-width:25px;text-align:center}.house-roles .status{font-size:9px;padding:3px 4px;margin:0;line-height:1.2;max-width:100%;text-align:center;overflow-wrap:anywhere}.house-roles:empty{display:none}.house-split:has(.house-roles:empty){grid-template-columns:1fr}.house-split:has(.house-roles:empty) .house-main{padding:8px}.center{position:absolute;left:25%;top:25%;width:50%;height:50%;z-index:2;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#f8faff;border:2px solid #b8c8da;border-radius:8px;padding:12px;pointer-events:none;box-shadow:0 2px 8px #18304a10}.house{font-size:11px;color:#27568b;font-weight:800}.sign{font-weight:800;font-size:14px}.meta{font-size:12px;color:#5b687d}.status{display:inline-block;border-radius:5px;padding:2px 5px;margin-top:6px;font-size:10px;font-weight:800}.role-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}.role-tag{display:inline-block;padding:2px 4px;border-radius:4px;font-size:10px;font-weight:850;background:#e8e7ff;color:#44358b}.role-tag.mk{background:#ffe3e5;color:#97252d}.role-tag.bk{background:#fff0d5;color:#80520b}.role-tag.tk{background:#e8edf4;color:#45556c}.subha{background:#ddf6e4;color:#17623b}.paapa{background:#ffe4e4;color:#972a2a}.mixed{background:#fff0cd;color:#80530c}.legend{padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap}.note{padding:12px 14px;background:#f8faff;border-top:1px solid var(--line);font-size:13px;color:#5b687d}footer{font-size:12px;color:#5b687d;margin-top:18px}@media(max-width:600px){.mobile-hint{display:block} .scroll table.relationships,.scroll table.dignities{min-width:0;table-layout:fixed} .scroll table.relationships th,.scroll table.relationships td,.scroll table.dignities th,.scroll table.dignities td{padding:7px 5px;font-size:11px;overflow-wrap:anywhere} .scroll table.relationships th,.scroll table.dignities th{font-size:10px} main{padding:12px 7px}.chart{grid-template-rows:repeat(4,minmax(88px,auto));gap:2px;padding:3px}.house-split{grid-template-columns:minmax(0,1fr) minmax(24px,.45fr);min-height:86px}.house-main{padding:4px}.house-roles{padding:4px 2px;gap:3px}.house-roles .role-tag{font-size:9px;padding:2px 3px;min-width:21px}.house-roles .status{font-size:8px;padding:2px 3px}.house-split:has(.house-roles:empty) .house-main{padding:4px}.sign{font-size:11px}.meta{font-size:10px}.house{font-size:9px}.status{font-size:9px;padding:2px 3px}.center{font-size:11px;padding:5px}}
+h3{font-size:1.05rem;margin:1rem 0 .5rem}.nested-chart-section{margin-top:.8rem}
+
+.planetary-reference{width:100%;min-width:760px;table-layout:auto}
+.planetary-reference th{white-space:normal;position:sticky;top:0}
+.planetary-reference td{min-width:90px}
+main h3{margin:18px 0 8px;font-size:17px;color:#24466f}
+
+
+.classification-chart{grid-template-rows:repeat(4,minmax(116px,auto));margin:8px 0 10px}
+.classification-chart .cell{padding:0}
+.classification-chart .class-cell{display:flex;flex-direction:column;gap:3px;padding:8px;height:100%;font-size:11px;line-height:1.25;overflow-wrap:anywhere}
+.classification-chart .class-cell b{font-size:13px;color:#173b65;margin-bottom:2px}
+.classification-chart .center{font-size:15px}
+.elem-fire{background:#ffe0df!important}.elem-earth{background:#ead8c4!important}.elem-air{background:#d9eaff!important}.elem-water{background:#c9f0f2!important}
+@media(max-width:600px){.classification-chart{grid-template-rows:repeat(4,minmax(98px,auto));gap:2px;padding:3px}.classification-chart .class-cell{padding:4px 3px;gap:2px;font-size:9px}.classification-chart .class-cell b{font-size:10px}.classification-chart .center{padding:5px;font-size:11px}.classification-chart .center .meta{font-size:9px}}
+
+
+/* Refined sign-classification charts */
+.classification-chart{grid-template-rows:repeat(4,minmax(142px,auto));gap:5px;padding:7px;border-radius:12px;background:#e7edf5;margin:10px 0 14px}
+.classification-chart .cell{border:1px solid #d2dce9;border-radius:9px;box-shadow:0 2px 5px #1b35500a;transition:transform .15s ease,box-shadow .15s ease}
+.classification-chart .cell:not(.center):hover{transform:translateY(-1px);box-shadow:0 5px 12px #1b355018}
+.classification-chart .class-cell{display:flex;flex-direction:column;gap:5px;padding:9px;height:100%;font-size:11px;line-height:1.28;overflow-wrap:anywhere}
+.classification-chart .class-cell>b{font-size:14px;color:#173b65;padding-bottom:5px;border-bottom:1px solid #d7e0ec;margin-bottom:1px}
+.classification-chart .detail{display:flex;flex-direction:column;gap:1px}
+.classification-chart .detail i{font-style:normal;text-transform:uppercase;letter-spacing:.045em;font-size:8px;font-weight:800;color:#65758c}
+.classification-chart .detail strong{font-size:10px;font-weight:650;color:#26374c}
+.classification-chart .center{background:linear-gradient(145deg,#fff,#f0f5fb);border:2px solid #c2d1e3;box-shadow:0 5px 16px #173b6510;border-radius:12px;gap:5px}
+.classification-chart .center>b{font-size:16px;color:#173b65}
+.classification-chart .center .meta{font-size:11px;line-height:1.3}
+.classification-chart .bio{background:linear-gradient(160deg,#ffffff,#f1f6fc)}
+.classification-chart .karma{background:linear-gradient(160deg,#ffffff,#f7f2ff)}
+.classification-chart .bio .class-cell>b{color:#22605c}
+.classification-chart .karma .class-cell>b{color:#5b4388}
+.classification-chart .sign-class-cell{min-width:0}
+@media(max-width:700px){
+ .classification-chart{grid-template-rows:repeat(4,minmax(124px,auto));gap:3px;padding:4px}
+ .classification-chart .class-cell{padding:5px 4px;gap:4px}
+ .classification-chart .class-cell>b{font-size:11px;padding-bottom:3px}
+ .classification-chart .detail i{font-size:7px}
+ .classification-chart .detail strong{font-size:9px}
+ .classification-chart .center{padding:5px}
+ .classification-chart .center>b{font-size:11px}
+ .classification-chart .center .meta{font-size:8px}
+}
+
+
+
+/* Redesigned chart controls and sign board */
+.classification-toolbar{padding:18px;background:linear-gradient(135deg,#f9fbff,#eef3fb);border-bottom:1px solid #d9e2ef}
+.classification-toggle{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.view-toggle{display:flex;align-items:center;gap:10px;text-align:left;min-width:0;padding:12px;border:1px solid #d6e0ed;border-radius:12px;background:#fff;color:#293a51;cursor:pointer;font:inherit;transition:all .18s ease}
+.view-toggle:hover{border-color:#91aac9;transform:translateY(-1px)}
+.view-toggle.active{border-color:#234e7d;background:#173b65;color:#fff;box-shadow:0 5px 15px #173b6526}
+.view-toggle .toggle-number{display:flex;align-items:center;justify-content:center;flex:0 0 32px;height:32px;border-radius:9px;background:#eaf0f8;color:#254b77;font-size:11px;font-weight:850;letter-spacing:.04em}
+.view-toggle.active .toggle-number{background:#ffffff24;color:#fff}
+.view-toggle strong,.view-toggle small{display:block}
+.view-toggle strong{font-size:13px;line-height:1.2}
+.view-toggle small{font-size:10px;opacity:.75;margin-top:3px;line-height:1.2}
+.classification-current{display:flex;align-items:baseline;gap:10px;margin-top:13px;flex-wrap:wrap}
+.current-kicker{font-size:9px;letter-spacing:.13em;font-weight:850;color:#6b7d94}
+.classification-current strong{font-size:14px;color:#1b3c63}
+.classification-legend{padding:12px 16px 3px;gap:7px}
+.classification-legend .chip{padding:5px 9px;border-radius:999px;font-size:11px}
+.merged-classification-chart{position:relative;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(118px,auto));gap:4px;padding:6px;background:linear-gradient(135deg,#e7edf5,#dfe7f1);margin:0;border-radius:0}
+.merged-classification-chart .cell{border:1px solid #d3deeb;border-radius:11px;overflow:hidden;box-shadow:0 3px 8px #203b590a;min-width:0;transition:box-shadow .18s ease,transform .18s ease}
+.merged-classification-chart .cell:not(.center):hover{box-shadow:0 7px 16px #203b591b;transform:translateY(-2px);z-index:1}
+.merged-classification-chart .class-cell{display:flex;flex-direction:column;gap:3px;padding:8px;height:100%;font-size:11px;line-height:1.2;overflow-wrap:anywhere}
+.merged-classification-chart .class-cell>b{display:flex;align-items:center;gap:6px;font-size:13px;color:#173b65;padding-bottom:5px;border-bottom:1px solid #cbd8e7;margin-bottom:1px}
+.merged-classification-chart .detail{display:grid;grid-template-columns:minmax(58px,.8fr) minmax(0,1.2fr);align-items:start;gap:5px;padding:3px 0;border-bottom:1px solid #dce4ee99}
+.merged-classification-chart .detail i{font-style:normal;text-transform:uppercase;letter-spacing:.045em;font-size:8px;font-weight:850;color:#65758c;line-height:1.25}
+.merged-classification-chart .detail strong{font-size:10px;font-weight:700;color:#25374c;line-height:1.25}
+.merged-classification-chart .elem-fire{background:linear-gradient(145deg,#fff6f3,#ffe4df)!important}
+.merged-classification-chart .elem-earth{background:linear-gradient(145deg,#fffaf3,#efe0cd)!important}
+.merged-classification-chart .elem-air{background:linear-gradient(145deg,#f6faff,#dfebff)!important}
+.merged-classification-chart .elem-water{background:linear-gradient(145deg,#f3ffff,#d8f2f1)!important}
+.merged-classification-chart .bio,.merged-classification-chart .karma{background:inherit}
+.merged-classification-chart .class-cell>b{color:#173b65}
+.merged-classification-chart .center{background:radial-gradient(circle at top right,#f8fbff,#eaf1fa 70%);border:2px solid #b9cbe0;border-radius:16px;box-shadow:0 8px 22px #173b6518;gap:8px;padding:14px}
+.merged-classification-chart .center>b{font-size:17px;line-height:1.25;color:#173b65}
+.merged-classification-chart .center .meta{font-size:11px;line-height:1.4;color:#5c6f87}
+.merged-classification-chart.view-elemental .center:before{content:"✦";font-size:22px;color:#6485ac}
+.merged-classification-chart.view-biological .center:before,.merged-classification-chart.view-spiritual .center:before{content:"✦";font-size:22px;color:#6485ac}
+#classificationNote{margin:0;padding:13px 16px;background:#f8faff;border-top:1px solid #dbe4ef;line-height:1.5}
+@media(max-width:700px){
+ .classification-toolbar{padding:10px}
+ .classification-toggle{gap:5px}
+ .view-toggle{display:block;text-align:center;padding:8px 4px;border-radius:9px}
+ .view-toggle .toggle-number{margin:0 auto 5px;width:27px;height:27px}
+ .view-toggle strong{font-size:10px}
+ .view-toggle small{font-size:8px}
+ .classification-current{margin-top:9px;gap:6px}
+ .classification-current strong{font-size:12px}
+ .merged-classification-chart{grid-template-rows:repeat(4,minmax(106px,auto));gap:3px;padding:4px}
+ .merged-classification-chart .class-cell{padding:5px 4px;gap:3px}
+ .merged-classification-chart .class-cell>b{font-size:11px;padding-bottom:4px}
+ .merged-classification-chart .detail{grid-template-columns:minmax(43px,.8fr) minmax(0,1.2fr);gap:3px;padding:2px 0}.merged-classification-chart .detail i{font-size:7px;letter-spacing:0}
+ .merged-classification-chart .detail strong{font-size:9px}
+ .merged-classification-chart .center{padding:5px;gap:3px}
+ .merged-classification-chart .center>b{font-size:11px}
+ .merged-classification-chart .center .meta{font-size:8px}
+}
+@media(max-width:380px){
+ .merged-classification-chart{grid-template-rows:repeat(4,minmax(96px,auto))}
+ .merged-classification-chart .class-cell{padding:4px 3px;gap:2px}.merged-classification-chart .detail{grid-template-columns:minmax(36px,.75fr) minmax(0,1.25fr);gap:2px}
+ .merged-classification-chart .class-cell>b{font-size:10px}
+ .merged-classification-chart .detail strong{font-size:8px}
+}
+
+
+/* Compact key-value rows: save vertical space in each sign cell */
+.merged-classification-chart .detail i{overflow-wrap:anywhere}
+.merged-classification-chart .detail strong{overflow-wrap:anywhere}
+@media(max-width:700px){
+ .merged-classification-chart .detail{grid-template-columns:minmax(42px,.8fr) minmax(0,1.2fr)}
+}
+
+
+/* Semantic text colors shared by all chart views */
+.token-fire{color:#a62d2d!important}
+.token-earth{color:#79502c!important}
+.token-air{color:#245caa!important}
+.token-water{color:#087e86!important}
+.token-chara{color:#b45309!important}
+.token-sthira{color:#166534!important}
+.token-dual{color:#6d28d9!important}
+.token-guna-sattva{color:#087f8c!important}
+.token-guna-rajas{color:#b45309!important}
+.token-guna-tamas{color:#5b3b8a!important}
+.token-varna-brahmin{color:#6d28d9!important}
+.token-varna-kshatriya{color:#b91c1c!important}
+.token-varna-vaishya{color:#a16207!important}
+.token-varna-shudra{color:#2563a6!important}
+.token-day{color:#b45309!important}
+.token-night{color:#4338a8!important}
+.token-direction{color:#334155!important}
+.token-male{color:#1d4ed8!important}
+.token-female{color:#be185d!important}
+
+
+/* Biological-view text colors: consistent category colors */
+.bio-body{color:#9a3412!important}
+.bio-animal{color:#166534!important}
+.bio-habitat{color:#0369a1!important}
+.bio-shirshodaya{color:#6d28d9!important}
+.bio-prishtodaya{color:#b45309!important}
+.bio-ubhayodaya{color:#0f766e!important}
+
+</style></head><body><main>
+<header><h1>Vedic Astrology Reference</h1><p>Separate tables for natural planetary relationships and dignities, plus a fixed-sign South Indian Rasi chart.</p></header>
+
+
+<h2>South Indian Rasi Chart — Sign Classifications</h2>
+<p class="sub">One fixed-sign South Indian chart with three selectable views. Each sign keeps the same element-based color in every view; only the information changes.</p>
+<div class="card">
+  <div class="classification-toolbar">
+    <div class="classification-toggle" role="group" aria-label="Choose chart view">
+      <button type="button" class="view-toggle active" data-view="elemental" aria-pressed="true"><span class="toggle-number">01</span><span><strong>Elemental</strong><small>Physical dynamics</small></span></button>
+      <button type="button" class="view-toggle" data-view="biological" aria-pressed="false"><span class="toggle-number">02</span><span><strong>Biological</strong><small>Structure &amp; nature</small></span></button>
+      <button type="button" class="view-toggle" data-view="spiritual" aria-pressed="false"><span class="toggle-number">03</span><span><strong>Spiritual</strong><small>Mental &amp; karmic</small></span></button>
+    </div>
+    <div class="classification-current"><span class="current-kicker">CURRENT VIEW</span><strong id="classificationDescription">Elemental &amp; Physical Dynamics</strong></div>
+  </div>
+  <div id="elementLegend" class="legend classification-legend">
+    <span class="chip elem-fire">Fire · Agni</span>
+    <span class="chip elem-earth">Earth · Prithvi</span>
+    <span class="chip elem-air">Air · Vayu</span>
+    <span class="chip elem-water">Water · Jala</span>
+  </div>
+  <div class="chart classification-chart merged-classification-chart" id="mergedClassificationChart" aria-label="South Indian sign classification chart">
+    <div class="cell" data-rasi="Pisces"></div><div class="cell" data-rasi="Aries"></div><div class="cell" data-rasi="Taurus"></div><div class="cell" data-rasi="Gemini"></div>
+    <div class="cell" data-rasi="Aquarius"></div><div class="cell" data-rasi="Cancer"></div>
+    <div class="cell" data-rasi="Capricorn"></div><div class="cell" data-rasi="Leo"></div>
+    <div class="cell" data-rasi="Sagittarius"></div><div class="cell" data-rasi="Scorpio"></div><div class="cell" data-rasi="Libra"></div><div class="cell" data-rasi="Virgo"></div>
+    <div class="center"><b id="classificationCenterTitle">Elemental &amp; Physical Dynamics</b><span class="meta" id="classificationCenterSub">Mobility · element · direction · gender</span></div>
+  </div>
+  <p class="note" id="classificationNote">Male signs are odd-numbered; female signs are even-numbered. Directional conventions may vary by source.</p>
+</div>
+<script>
+(function(){
+  const signs = [
+    {name:"Aries", element:"Fire · Agni", mobility:"Movable · Chara", direction:"East", gender:"Male (+)", body:"Head", animal:"Quadruped", habitat:"Dry, rocky terrain", rising:"Prishtodaya · hind-rising", purushartha:"Dharma", guna:"Rajas", varna:"Kshatriya", strength:"Day sign · Divabali"},
+    {name:"Taurus", element:"Earth · Prithvi", mobility:"Fixed · Sthira", direction:"South", gender:"Female (−)", body:"Face, neck", animal:"Quadruped", habitat:"Fields / grazing land", rising:"Prishtodaya · hind-rising", purushartha:"Artha", guna:"Tamas", varna:"Vaishya", strength:"Night sign · Ratribali"},
+    {name:"Gemini", element:"Air · Vayu", mobility:"Dual · Dvisvabhava", direction:"West", gender:"Male (+)", body:"Arms, shoulders", animal:"Biped / human", habitat:"Towns / inhabited places", rising:"Shirshodaya · head-rising", purushartha:"Kama", guna:"Sattva", varna:"Shudra", strength:"Day sign · Divabali"},
+    {name:"Cancer", element:"Water · Jala", mobility:"Movable · Chara", direction:"North", gender:"Female (−)", body:"Chest, breasts", animal:"Water-dwelling", habitat:"Rivers, lakes, marshes", rising:"Prishtodaya · hind-rising", purushartha:"Moksha", guna:"Rajas", varna:"Brahmin", strength:"Night sign · Ratribali"},
+    {name:"Leo", element:"Fire · Agni", mobility:"Fixed · Sthira", direction:"East", gender:"Male (+)", body:"Heart, upper abdomen", animal:"Quadruped", habitat:"Forests / hills", rising:"Shirshodaya · head-rising", purushartha:"Dharma", guna:"Tamas", varna:"Kshatriya", strength:"Day sign · Divabali"},
+    {name:"Virgo", element:"Earth · Prithvi", mobility:"Dual · Dvisvabhava", direction:"South", gender:"Female (−)", body:"Abdomen, intestines", animal:"Biped / human", habitat:"Cultivated land", rising:"Shirshodaya · head-rising", purushartha:"Artha", guna:"Sattva", varna:"Vaishya", strength:"Day sign · Divabali"},
+    {name:"Libra", element:"Air · Vayu", mobility:"Movable · Chara", direction:"West", gender:"Male (+)", body:"Waist, lower back", animal:"Biped / human", habitat:"Markets / public places", rising:"Shirshodaya · head-rising", purushartha:"Kama", guna:"Rajas", varna:"Shudra", strength:"Day sign · Divabali"},
+    {name:"Scorpio", element:"Water · Jala", mobility:"Fixed · Sthira", direction:"North", gender:"Female (−)", body:"Reproductive organs", animal:"Insect / creeping creature", habitat:"Hidden, damp places", rising:"Shirshodaya · head-rising", purushartha:"Moksha", guna:"Tamas", varna:"Brahmin", strength:"Night sign · Ratribali"},
+    {name:"Sagittarius", element:"Fire · Agni", mobility:"Dual · Dvisvabhava", direction:"East", gender:"Male (+)", body:"Thighs", animal:"Human + quadruped (mixed)", habitat:"Open fields / high ground", rising:"Rising style varies by source", purushartha:"Dharma", guna:"Sattva", varna:"Kshatriya", strength:"Day sign · Divabali"},
+    {name:"Capricorn", element:"Earth · Prithvi", mobility:"Movable · Chara", direction:"South", gender:"Female (−)", body:"Knees", animal:"Quadruped + aquatic (mixed)", habitat:"Rocky places / shores", rising:"Prishtodaya · hind-rising", purushartha:"Artha", guna:"Rajas", varna:"Vaishya", strength:"Night sign · Ratribali"},
+    {name:"Aquarius", element:"Air · Vayu", mobility:"Fixed · Sthira", direction:"West", gender:"Male (+)", body:"Calves, ankles", animal:"Biped / human", habitat:"Wells / water-storage places", rising:"Shirshodaya · head-rising", purushartha:"Kama", guna:"Tamas", varna:"Shudra", strength:"Night sign · Ratribali"},
+    {name:"Pisces", element:"Water · Jala", mobility:"Dual · Dvisvabhava", direction:"North", gender:"Female (−)", body:"Feet", animal:"Water-dwelling", habitat:"Water bodies / oceans", rising:"Ubhayodaya · both-rising", purushartha:"Moksha", guna:"Sattva", varna:"Brahmin", strength:"Night sign · Ratribali"}
+  ];
+  const grid = {Pisces:"1/1",Aries:"1/2",Taurus:"1/3",Gemini:"1/4",Aquarius:"2/1",Cancer:"2/4",Capricorn:"3/1",Leo:"3/4",Sagittarius:"4/1",Scorpio:"4/2",Libra:"4/3",Virgo:"4/4"};
+  const byName = {}; signs.forEach(s=>byName[s.name]=s);
+  const order = ["Pisces","Aries","Taurus","Gemini","Aquarius","Cancer","Capricorn","Leo","Sagittarius","Scorpio","Libra","Virgo"];
+  const cfg = {
+    elemental:{title:"Elemental & Physical Dynamics",sub:"Mobility · element · direction · gender",fields:[["Element","element"],["Mobility","mobility"],["Direction","direction"],["Gender","gender"]],note:"Element colors distinguish Fire, Earth, Air and Water. Male signs are odd-numbered; female signs are even-numbered. Directional conventions may vary by source.",legend:true},
+    biological:{title:"Biological & Structural Nature",sub:"Body · animal class · habitat · rising style",fields:[["Body part","body"],["Animal class","animal"],["Natural habitat","habitat"],["Rising style","rising"]],note:"Animal classes, habitats and rising labels vary among classical sources. Pisces is commonly treated as Ubhayodaya; check the specific source followed for disputed classifications.",legend:false},
+    spiritual:{title:"Spiritual, Mental & Karmic Profile",sub:"Purushartha · guna · varna · day/night strength",fields:[["Purushartha","purushartha"],["Guna","guna"],["Varna","varna"],["Day / night","strength"]],note:"Purushartha is grouped by element: Fire = Dharma, Earth = Artha, Air = Kama, Water = Moksha. This view uses a common Guna-by-modality and Varna-by-element scheme; day/night strength conventions can vary.",legend:false}
+  };
+  function render(view){
+    const c=cfg[view] || cfg.elemental;
+    document.getElementById("classificationDescription").textContent=c.title;
+    document.getElementById("classificationCenterTitle").textContent=c.title;
+    document.getElementById("classificationCenterSub").textContent=c.sub;
+    document.getElementById("classificationNote").textContent=c.note;
+    document.getElementById("elementLegend").style.display="flex";
+    document.getElementById("mergedClassificationChart").className="chart classification-chart merged-classification-chart view-"+view;
+    document.querySelectorAll("#mergedClassificationChart [data-rasi]").forEach(el=>{
+      const s=byName[el.dataset.rasi];
+      el.style.gridArea=grid[s.name];
+      el.className="cell";
+      // Keep each sign's color consistent across all three views.
+      const cls=s.element.startsWith("Fire")?"elem-fire":s.element.startsWith("Earth")?"elem-earth":s.element.startsWith("Air")?"elem-air":"elem-water";
+      el.classList.add(cls);
+      const fields=c.fields.map(([label,key])=>{
+        let tokenClass="";
+        if(key==="element") tokenClass=s.element.startsWith("Fire")?"token-fire":s.element.startsWith("Earth")?"token-earth":s.element.startsWith("Air")?"token-air":"token-water";
+        else if(key==="mobility") tokenClass=s.mobility.startsWith("Movable")?"token-chara":s.mobility.startsWith("Fixed")?"token-sthira":"token-dual";
+        else if(key==="guna") tokenClass="token-guna-"+s.guna.toLowerCase();
+        else if(key==="varna") tokenClass="token-varna-"+s.varna.toLowerCase();
+        else if(key==="strength") tokenClass=s.strength.startsWith("Day")?"token-day":"token-night";
+        else if(key==="direction") tokenClass="token-direction";
+        else if(key==="gender") tokenClass=s.gender.startsWith("Male")?"token-male":"token-female";
+        else if(key==="body") tokenClass="bio-body";
+        else if(key==="animal") tokenClass="bio-animal";
+        else if(key==="habitat") tokenClass="bio-habitat";
+        else if(key==="rising") tokenClass=s.rising.startsWith("Shirshodaya")?"bio-shirshodaya":s.rising.startsWith("Prishtodaya")?"bio-prishtodaya": "bio-ubhayodaya";
+        return '<span class="detail"><i>'+label+'</i><strong class="'+tokenClass+'">'+s[key]+'</strong></span>';
+      }).join("");
+      el.innerHTML='<div class="class-cell"><b>'+s.name+'</b>'+fields+'</div>';
+    });
+    document.querySelectorAll(".view-toggle").forEach(btn=>{
+      const active=btn.dataset.view===view;
+      btn.classList.toggle("active",active);
+      btn.setAttribute("aria-pressed",active?"true":"false");
+    });
+  }
+  document.querySelectorAll(".view-toggle").forEach(btn=>btn.addEventListener("click",()=>render(btn.dataset.view)));
+  render("elemental");
+})();
+</script>
+<h2>1. Natural Planetary Relationships</h2><p class="sub">Natural (naisargika) relationships are different from functional Subathuvam / Paavathuvam for a specific Lagna.</p><p class="mobile-hint">Table adjusts to your screen width.</p>
+<div class="card scroll"><table class="relationships"><thead><tr><th>Planet</th><th>Natural Friends (Mitra)</th><th>Natural Enemies (Shatru)</th><th>Natural Neutrals (Sama)</th></tr></thead><tbody>
+<tr><td class="planet">Sun (Surya)</td><td>Moon, Mars, Jupiter</td><td>Venus, Saturn</td><td>Mercury</td></tr>
+<tr><td class="planet">Moon (Chandra)</td><td>Sun, Mercury</td><td>None</td><td>Mars, Jupiter, Venus, Saturn</td></tr>
+<tr><td class="planet">Mars (Mangala)</td><td>Sun, Moon, Jupiter</td><td>Mercury</td><td>Venus, Saturn</td></tr>
+<tr><td class="planet">Mercury (Budha)</td><td>Sun, Venus</td><td>Moon</td><td>Mars, Jupiter, Saturn</td></tr>
+<tr><td class="planet">Jupiter (Guru)</td><td>Sun, Moon, Mars</td><td>Mercury, Venus</td><td>Saturn</td></tr>
+<tr><td class="planet">Venus (Shukra)</td><td>Mercury, Saturn</td><td>Sun, Moon</td><td>Mars, Jupiter</td></tr>
+<tr><td class="planet">Saturn (Shani)</td><td>Mercury, Venus</td><td>Sun, Moon, Mars</td><td>Jupiter</td></tr>
+<tr><td class="planet">Rahu / Ketu</td><td colspan="3">Relationships vary by astrological lineage and text.</td></tr>
+</tbody></table></div>
+<h2>2. Planetary Dignities</h2><p class="sub">Commonly used sign and degree ranges; exact conventions can vary by text.</p><p class="mobile-hint">Table adjusts to your screen width.</p>
+<div class="card scroll"><table class="dignities"><thead><tr><th>Planet</th><th>Exaltation / Debilitation (peak degree)</th><th>Moolatrikona</th></tr></thead><tbody>
+<tr><td class="planet">Sun</td><td class="ex">Aries / Libra — 10°</td><td class="moo">Leo 0°–20°</td></tr>
+<tr><td class="planet">Moon</td><td class="ex">Taurus / Scorpio — 3°</td><td class="moo">Taurus 4°–30°</td></tr>
+<tr><td class="planet">Mars</td><td class="ex">Capricorn / Cancer — 28°</td><td class="moo">Aries 0°–12°</td></tr>
+<tr><td class="planet">Mercury</td><td class="ex">Virgo / Pisces — 15°</td><td class="moo">Virgo 16°–20°</td></tr>
+<tr><td class="planet">Jupiter</td><td class="ex">Cancer / Capricorn — 5°</td><td class="moo">Sagittarius 0°–10°</td></tr>
+<tr><td class="planet">Venus</td><td class="ex">Pisces / Virgo — 27°</td><td class="moo">Libra 0°–15°</td></tr>
+<tr><td class="planet">Saturn</td><td class="ex">Libra / Aries — 20°</td><td class="moo">Aquarius 0°–20°</td></tr>
+<tr><td class="planet">Rahu / Ketu</td><td colspan="2">Sign and degree assignments differ among traditions; no single universally accepted table.</td></tr>
+</tbody></table></div>
+
+<h2>3. Permanent (Natural) Subathuvam / Paavathuvam</h2>
+<p class="sub">This is the natural benefic or malefic nature of grahas. It does not change with Lagna; the Moon and Mercury need context.</p>
+<div class="card scroll"><table><thead><tr><th>Graha</th><th>Permanent / Natural Nature</th><th>Rule</th></tr></thead><tbody>
+<tr><td class="planet">Jupiter (Guru)</td><td><span class="status subha">Natural Subha</span></td><td>Generally benefic</td></tr>
+<tr><td class="planet">Venus (Shukra)</td><td><span class="status subha">Natural Subha</span></td><td>Generally benefic</td></tr>
+<tr><td class="planet">Waxing Moon (Shukla Paksha)</td><td><span class="status subha">Natural Subha</span></td><td>Benefic nature strengthens as it approaches full Moon</td></tr>
+<tr><td class="planet">Sun (Surya)</td><td><span class="status paapa">Natural Paapa</span></td><td>Mild natural malefic in many classical classifications</td></tr>
+<tr><td class="planet">Mars (Mangala)</td><td><span class="status paapa">Natural Paapa</span></td><td>Natural malefic</td></tr>
+<tr><td class="planet">Saturn (Shani)</td><td><span class="status paapa">Natural Paapa</span></td><td>Natural malefic</td></tr>
+<tr><td class="planet">Rahu</td><td><span class="status paapa">Natural Paapa</span></td><td>Usually treated as natural malefic; traditions vary</td></tr>
+<tr><td class="planet">Ketu</td><td><span class="status paapa">Natural Paapa</span></td><td>Usually treated as natural malefic; traditions vary</td></tr>
+<tr><td class="planet">Waning Moon (Krishna Paksha)</td><td><span class="status mixed">Variable / Paapa</span></td><td>Often treated as malefic when sufficiently waning</td></tr>
+<tr><td class="planet">Mercury (Budha)</td><td><span class="status mixed">Variable</span></td><td>Benefic when unafflicted; may become malefic through association</td></tr>
+</tbody></table></div>
+
+
+<div class="nested-chart-section">
+<h3>South Indian Rasi Chart — Permanent (Natural) Subathuvam / Paavathuvam</h3>
+<p class="sub">This chart is independent of Lagna. It shows the natural nature of each sign's ruling planet; Moon and Mercury are marked variable.</p>
+<div class="card">
+<div class="chart natural-chart">
+<div class="cell" data-natural-sign="11"></div><div class="cell" data-natural-sign="0"></div><div class="cell" data-natural-sign="1"></div><div class="cell" data-natural-sign="2"></div>
+<div class="cell" data-natural-sign="10"></div><div class="cell" data-natural-sign="3"></div>
+<div class="cell" data-natural-sign="9"></div><div class="cell" data-natural-sign="4"></div>
+<div class="cell" data-natural-sign="8"></div><div class="cell" data-natural-sign="7"></div><div class="cell" data-natural-sign="6"></div><div class="cell" data-natural-sign="5"></div>
+<div class="cell center"><strong>Permanent / Natural</strong><span>Subathuvam / Paavathuvam</span><small>Fixed signs · independent of Lagna</small></div>
+</div>
+<div class="legend"><span class="status subha">Natural Subha</span><span class="status paapa">Natural Paapa</span><span class="status mixed">Variable / tradition-dependent</span></div>
+<div class="note">This chart classifies signs by the natural nature of their ruling graha, not by functional lordship. Jupiter and Venus are generally natural benefics; Sun, Mars and Saturn are natural malefics; Moon and Mercury are variable. Rahu/Ketu classification varies by tradition.</div>
+</div>
+</div>
+
+<h2>4. South Indian Rasi Chart — Functional Subathuvam / Paavathuvam</h2><p class="sub">Signs stay fixed in this South Indian layout. The permanent natural nature is listed above; select the Lagna below to see a separate, simplified functional-lordship indication.</p>
+<div class="card"><div class="controls"><label for="lagna">Select Lagna:</label><select id="lagna">
+<option value="0">Aries (Mesha)</option><option value="1">Taurus (Vrishabha)</option><option value="2">Gemini (Mithuna)</option><option value="3" selected>Cancer (Karka)</option><option value="4">Leo (Simha)</option><option value="5">Virgo (Kanya)</option><option value="6">Libra (Tula)</option><option value="7">Scorpio (Vrishchika)</option><option value="8">Sagittarius (Dhanu)</option><option value="9">Capricorn (Makara)</option><option value="10">Aquarius (Kumbha)</option><option value="11">Pisces (Meena)</option></select></div>
+<div class="chart functional-chart">
+<div class="cell" data-sign="11"></div><div class="cell" data-sign="0"></div><div class="cell" data-sign="1"></div><div class="cell" data-sign="2"></div>
+<div class="cell" data-sign="10"></div><div class="cell" data-sign="3"></div>
+<div class="cell" data-sign="9"></div><div class="cell" data-sign="4"></div>
+<div class="cell" data-sign="8"></div><div class="cell" data-sign="7"></div><div class="cell" data-sign="6"></div><div class="cell" data-sign="5"></div>
+<div class="cell center"><strong>South Indian Rasi</strong><span id="lagnaText">Lagna: Cancer</span><small>Fixed signs · houses counted from Lagna</small></div>
+</div>
+<div class="legend"><span class="status subha">Subha</span><span class="status paapa">Paapa</span><span class="status mixed">Variable / Mixed</span><span class="meta">Each sign cell shows Permanent (natural) and Functional nature separately.</span></div>
+<div class="note">Permanent Subathuvam / Paavathuvam describes a graha’s natural benefic or malefic nature. Functional Subathuvam / Paavathuvam depends on ascendant and house ownership; aspects, conjunctions, planetary strength and tradition can modify the final judgement. Each sign cell now shows its lord’s permanent/natural nature as well as the separate simplified functional indication based on Lagna. This is not a complete horoscope judgement.</div></div>
+<footer>South Indian chart uses fixed zodiac signs. House numbers and the indicative lordship status update when Lagna changes. Rahu/Ketu dignities and relationships are tradition-dependent.</footer>
+
+<h2>5. Planetary Karakas and Traditional Correspondences</h2>
+<p class="sub">A quick-reference guide to the traditional associations supplied here. Interpretations and some correspondences can vary across Jyotisha texts and lineages.</p>
+
+<h3>5.1 Significations and relationships</h3>
+<div class="card scroll">
+<table class="planetary-reference">
+<thead><tr><th>Planet</th><th>Naisargika Karaka</th><th>Planetary cabinet</th><th>Relations</th><th>Adhi Devata</th><th>Benefic / Malefic</th></tr></thead>
+<tbody>
+<tr><td class="planet">Sun</td><td>Atma (soul)</td><td>King (royal)</td><td>Father</td><td>Agni (fire)</td><td>Mild malefic</td></tr>
+<tr><td class="planet">Moon</td><td>Mana (mind)</td><td>King (royal)</td><td>Mother</td><td>Ambu (water)</td><td>Conditional benefic</td></tr>
+<tr><td class="planet">Mars</td><td>Satvam (strength)</td><td>Commander-in-chief</td><td>Younger siblings</td><td>Kumara (Kartikeya)</td><td>Malefic</td></tr>
+<tr><td class="planet">Mercury</td><td>Vacho (speech)</td><td>Prince</td><td>Aunts and uncles</td><td>Kesava (Vishnu)</td><td>Conditional benefic</td></tr>
+<tr><td class="planet">Jupiter</td><td>Gyan / Sukha (wisdom and happiness)</td><td>Minister</td><td>Elder siblings, children</td><td>Indra</td><td>Benefic</td></tr>
+<tr><td class="planet">Venus</td><td>Love, relationships, passions, semen / potency</td><td>Minister</td><td>Spouse / relationships</td><td>Indrani (Sachi)</td><td>Benefic</td></tr>
+<tr><td class="planet">Saturn</td><td>Dukha (sorrow / grief)</td><td>Servant</td><td>Servants / employees</td><td>Kaha / Brahma</td><td>Malefic</td></tr>
+<tr><td class="planet">Rahu</td><td>Foreign or out-of-the-ordinary matters</td><td>Army</td><td>Maternal grandparents</td><td>Durga</td><td>Malefic</td></tr>
+<tr><td class="planet">Ketu</td><td>Moksha (liberation)</td><td>Army</td><td>Paternal grandparents</td><td>Ganesha</td><td>Malefic</td></tr>
+</tbody></table></div>
+
+<h3>5.2 Qualities and attributes</h3>
+<div class="card scroll">
+<table class="planetary-reference">
+<thead><tr><th>Planet</th><th>Color</th><th>Direction</th><th>Gender</th><th>Element</th><th>Varna</th><th>Gunas</th></tr></thead>
+<tbody>
+<tr><td class="planet">Sun</td><td>Dark red, copper</td><td>East</td><td>Male</td><td>Fire</td><td>Kshatriya</td><td>Sattva</td></tr>
+<tr><td class="planet">Moon</td><td>White</td><td>North-west</td><td>Female</td><td>Water</td><td>Vaisya</td><td>Sattva</td></tr>
+<tr><td class="planet">Mars</td><td>Blood red</td><td>South</td><td>Male</td><td>Fire</td><td>Kshatriya</td><td>Tamas</td></tr>
+<tr><td class="planet">Mercury</td><td>Green</td><td>North</td><td>Neuter</td><td>Earth</td><td>Sudra</td><td>Rajas</td></tr>
+<tr><td class="planet">Jupiter</td><td>Yellow or golden</td><td>North-east</td><td>Male</td><td>Space / ether</td><td>Brahmin</td><td>Sattva</td></tr>
+<tr><td class="planet">Venus</td><td>Variegated, white</td><td>South-east</td><td>Female</td><td>Water</td><td>Brahmin</td><td>Rajas</td></tr>
+<tr><td class="planet">Saturn</td><td>Black</td><td>West</td><td>Neuter</td><td>Air</td><td>Antyaja</td><td>Tamas</td></tr>
+<tr><td class="planet">Rahu</td><td>Magenta</td><td>South-west</td><td>Female</td><td>Air</td><td>Outcaste (traditional classification)</td><td>Tamas</td></tr>
+<tr><td class="planet">Ketu</td><td>Cat's eye</td><td>Not specified</td><td>Neuter</td><td>Not specified</td><td>Mixed caste (traditional classification)</td><td>Tamas</td></tr>
+</tbody></table></div>
+
+<h3>5.3 Places, seasons, time, and tastes</h3>
+<div class="card scroll">
+<table class="planetary-reference">
+<thead><tr><th>Planet</th><th>Places</th><th>Season / Ritu</th><th>Time</th><th>Taste</th></tr></thead>
+<tbody>
+<tr><td class="planet">Sun</td><td>Devasthanas (temples / sacred places)</td><td>Grishma (summer)</td><td>Ayana</td><td>Pungent</td></tr>
+<tr><td class="planet">Moon</td><td>Watery places</td><td>Varsha (monsoon)</td><td>Muhurtha</td><td>Saline / salty</td></tr>
+<tr><td class="planet">Mars</td><td>Places of fire</td><td>Grishma (summer)</td><td>Tithi</td><td>Bitter</td></tr>
+<tr><td class="planet">Mercury</td><td>Kridasthala (playgrounds / recreation areas)</td><td>Sarada (autumn)</td><td>Ritu</td><td>Mixed tastes</td></tr>
+<tr><td class="planet">Jupiter</td><td>Treasury</td><td>Hemanta (pre-winter)</td><td>Masa (month)</td><td>Sweet</td></tr>
+<tr><td class="planet">Venus</td><td>Bedroom</td><td>Vasanta (spring)</td><td>Paksha (fortnight)</td><td>Sour / acidic</td></tr>
+<tr><td class="planet">Saturn</td><td>Dirty or neglected places</td><td>Sisira (winter)</td><td>Year</td><td>Astringent</td></tr>
+<tr><td class="planet">Rahu</td><td>Anthills</td><td>Not specified</td><td>8 months</td><td>Not specified</td></tr>
+<tr><td class="planet">Ketu</td><td>Not specified</td><td>Not specified</td><td>3 months</td><td>Not specified</td></tr>
+</tbody></table></div>
+
+<h3>5.4 Dhatus and material associations</h3>
+<div class="card scroll">
+<table class="planetary-reference">
+<thead><tr><th>Planet</th><th>Dhatus / tissues</th><th>Trees / plants</th><th>Clothes</th><th>Metals / gems</th><th>Body type</th></tr></thead>
+<tbody>
+<tr><td class="planet">Sun</td><td>Bones</td><td>Strong trees with stout trunks</td><td>Coarse, rough</td><td>Copper</td><td>Not specified</td></tr>
+<tr><td class="planet">Moon</td><td>Blood</td><td>Milky trees / yielding plants (e.g. rubber)</td><td>New</td><td>Precious stones</td><td>Not specified</td></tr>
+<tr><td class="planet">Mars</td><td>Nerve marrow</td><td>Bitter plants (e.g. lemon plants)</td><td>Burnt</td><td>Gold</td><td>Not specified</td></tr>
+<tr><td class="planet">Mercury</td><td>Skin, plasma</td><td>Fruitless trees</td><td>Water-soaked</td><td>Bell metal</td><td>Not specified</td></tr>
+<tr><td class="planet">Jupiter</td><td>Fat, brain</td><td>Fruit-bearing trees</td><td>Recent origin, but not new</td><td>Silver; gold in own house</td><td>Not specified</td></tr>
+<tr><td class="planet">Venus</td><td>Reproductive tissues</td><td>Floral plants</td><td>Durable</td><td>Pearl</td><td>Not specified</td></tr>
+<tr><td class="planet">Saturn</td><td>Muscles</td><td>Useless / barren trees</td><td>Torn</td><td>Iron</td><td>Not specified</td></tr>
+<tr><td class="planet">Rahu</td><td>Tissue depletion</td><td>Not specified</td><td>Multi-colored</td><td>Lead</td><td>Not specified</td></tr>
+<tr><td class="planet">Ketu</td><td>Tissue depletion</td><td>Not specified</td><td>Rags</td><td>Blue gem</td><td>Not specified</td></tr>
+</tbody></table></div>
+
+</main>
+<script>
+const chartPositions={0:[1,2],1:[1,3],2:[1,4],3:[2,4],4:[3,4],5:[4,4],6:[4,3],7:[4,2],8:[4,1],9:[3,1],10:[2,1],11:[1,1]};
+const signs=[["Aries","Mesha","Mars"],["Taurus","Vrishabha","Venus"],["Gemini","Mithuna","Mercury"],["Cancer","Karka","Moon"],["Leo","Simha","Sun"],["Virgo","Kanya","Mercury"],["Libra","Tula","Venus"],["Scorpio","Vrishchika","Mars"],["Sagittarius","Dhanu","Jupiter"],["Capricorn","Makara","Saturn"],["Aquarius","Kumbha","Saturn"],["Pisces","Meena","Jupiter"]];
+const lords=signs.map(s=>s[2]);
+function updateNaturalChart(){
+ const nature={
+  Sun:["Permanent Paapa","paapa"],
+  Mars:["Permanent Paapa","paapa"],
+  Saturn:["Permanent Paapa","paapa"],
+  Jupiter:["Permanent Subha","subha"],
+  Venus:["Permanent Subha","subha"],
+  Moon:["Variable: Moon phase","mixed"],
+  Mercury:["Variable: association","mixed"]
+ };
+ document.querySelectorAll(".natural-chart [data-natural-sign]").forEach(c=>{
+  const s=Number(c.dataset.naturalSign);
+  c.style.gridRow=chartPositions[s][0];
+  c.style.gridColumn=chartPositions[s][1];
+  const lord=lords[s], n=nature[lord]||["Tradition-dependent","mixed"];
+  c.innerHTML=`<div class="sign">${signs[s][0]}</div><div class="meta">Lord: ${lord}</div><span class="status ${n[1]}">${n[0]}</span>`;
+ });
+}
+function update(){
+ const lagna=Number(document.getElementById("lagna").value);
+ document.getElementById("lagnaText").textContent="Lagna: "+signs[lagna][0];
+ const housesByPlanet={};
+ lords.forEach((planet,signIndex)=>{
+  const house=((signIndex-lagna+12)%12)+1;
+  (housesByPlanet[planet] ||= []).push(house);
+ });
+ const kendra=[4,7,10], trikona=[5,9], trik=[6,8,12];
+ const movable=[0,3,6,9].includes(lagna);
+ const fixed=[1,4,7,10].includes(lagna);
+ const badhakaHouse=movable?11:fixed?9:7;
+ const roleByPlanet={};
+ Object.entries(housesByPlanet).forEach(([planet,owned])=>{
+  const roles=[];
+  if(owned.some(h=>kendra.includes(h)) && owned.some(h=>trikona.includes(h))) roles.push(["YK","yk"]);
+  if(owned.includes(2)||owned.includes(7)) roles.push(["MK","mk"]);
+  if(owned.includes(badhakaHouse)) roles.push(["BK","bk"]);
+  if(owned.some(h=>trik.includes(h))) roles.push(["TK","tk"]);
+  roleByPlanet[planet]=roles;
+ });
+ document.querySelectorAll(".functional-chart [data-sign]").forEach(c=>{
+  const s=Number(c.dataset.sign);
+  c.style.gridRow=chartPositions[s][0];
+  c.style.gridColumn=chartPositions[s][1];
+  const h=((s-lagna+12)%12)+1, lord=lords[s], owned=housesByPlanet[lord]||[];
+  const good=owned.some(x=>[1,5,9].includes(x));
+  const bad=owned.some(x=>[3,6,8,11,12].includes(x));
+  const label=good&&bad?"Mixed":good?"Subha":bad?"Paapa":"Mixed / Maraka";
+  const cls=good&&bad?"mixed":good?"subha":bad?"paapa":"mixed";
+  const permanent={Sun:["Paapa","paapa"],Mars:["Paapa","paapa"],Saturn:["Paapa","paapa"],Jupiter:["Subha","subha"],Venus:["Subha","subha"],Moon:["Variable","mixed"],Mercury:["Variable","mixed"]};
+  const natural=permanent[lord]||["Variable","mixed"];
+  const roles=(roleByPlanet[lord]||[]).map(([tag,kind])=>`<span class="role-tag ${kind}">${tag}</span>`).join("");
+  c.innerHTML=`<div class="house-split"><div class="house-main"><div class="house">H${h}${s===lagna?" · LAGNA":""}</div><div class="sign">${signs[s][0]}</div><div class="meta">Lord: ${lord}</div><span class="status ${natural[1]}">${natural[0]}</span></div><div class="house-roles" aria-label="Functional nature and roles"><span class="status ${cls}">${label}</span>${roles}</div></div>`;
+  c.style.outline=s===lagna?"3px solid #2d65a3":"none";
+  c.style.outlineOffset="-3px";
+ });
+}
+document.getElementById("lagna").addEventListener("change",update);
+updateNaturalChart();
+update();
+</script></body></html>
