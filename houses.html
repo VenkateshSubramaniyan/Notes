@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bhava Guide — Houses in Vedic Astrology</title>
+<style>
+:root{
+  --bg:#091321;--panel:#101e30;--panel2:#14253a;--gold:#d8b56d;--gold2:#f0d9a0;
+  --ivory:#f4efe3;--muted:#b5c0ce;--line:#2a3c52;--good:#7fd1b0;--mixed:#f1c879;
+  --blue:#8ec5ee;--rose:#e7a3a3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#172943 0%,var(--bg) 55%);color:var(--ivory);font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:34px 22px 24px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(216,181,109,.08),transparent)}
+.eyebrow{color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;font-weight:700}
+h1{font-family:Georgia,'Times New Roman',serif;font-weight:600;letter-spacing:.02em;font-size:clamp(2rem,4vw,3.1rem);margin:8px 0;color:var(--gold2)}
+header p{max-width:800px;margin:0 auto;color:var(--muted)}
+main{max-width:1500px;margin:0 auto;padding:22px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:15px}
+input,select,button{font:inherit;color:var(--ivory);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px}
+input{flex:1;min-width:220px}select{min-width:175px}button{cursor:pointer;color:var(--gold2)}button:hover{border-color:var(--gold)}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.stat{background:rgba(16,30,48,.88);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;color:var(--gold);font:600 1.15rem Georgia,serif}.stat span{color:var(--muted);font-size:.82rem}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px;background:rgba(10,21,35,.88)}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1180px}
+thead th{position:sticky;top:0;background:#17283d;color:var(--gold2);text-align:left;font-size:.78rem;letter-spacing:.045em;text-transform:uppercase;padding:13px 12px;border-bottom:1px solid var(--gold);z-index:1}
+tbody td{padding:13px 12px;vertical-align:top;border-bottom:1px solid rgba(42,60,82,.8);color:#e9e6df}
+tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:rgba(216,181,109,.055)}
+.house{min-width:125px}.num{display:inline-grid;place-items:center;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;color:var(--gold2);font-weight:800;margin-right:7px}
+.sanskrit{display:block;color:var(--gold2);font:600 1.02rem Georgia,serif}.sub{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.pill{display:inline-block;padding:3px 8px;border-radius:20px;font-size:.76rem;border:1px solid var(--line);white-space:nowrap}
+.kendra{color:var(--blue);border-color:#3d6582}.trikona{color:var(--good);border-color:#356d5b}.dusthana{color:var(--rose);border-color:#754c53}.upachaya{color:var(--mixed);border-color:#79643c}
+.note{margin:17px 0 0;padding:15px 17px;border-left:3px solid var(--gold);background:rgba(216,181,109,.07);border-radius:0 9px 9px 0;color:var(--muted)}
+.note strong{color:var(--gold2)}footer{text-align:center;color:#8796a9;padding:24px;font-size:.82rem}
+@media(max-width:750px){main{padding:13px}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:27px 15px 20px}}
+@media print{body{background:#fff;color:#111}header{background:#fff}h1,.eyebrow{color:#614718}header p,.note,.sub,footer{color:#333}.table-wrap,.stat{background:#fff}thead th{position:static;background:#eee;color:#222}tbody td{color:#111}.toolbar{display:none}}
+
+.chart-section{margin:30px 0 20px;padding:22px;border:1px solid var(--line);border-radius:15px;background:rgba(16,30,48,.78)}
+.chart-heading{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.chart-heading h2{font:600 clamp(1.5rem,3vw,2rem) Georgia,serif;color:var(--gold2);margin:5px 0 8px}
+.chart-heading p{max-width:780px;color:var(--muted);margin:0}
+.lagna-picker{display:grid;gap:6px;color:var(--gold2);font-size:.85rem;font-weight:650;min-width:220px}
+.lagna-picker select{width:100%}
+.chart-legend{display:flex;gap:15px;flex-wrap:wrap;margin:18px 0 12px;color:var(--muted);font-size:.82rem}
+.chart-legend span{display:flex;align-items:center;gap:7px}
+.legend-swatch{display:inline-block;width:13px;height:13px;border:1px solid #496079;border-radius:3px;background:#14253a}
+.trikona-swatch{background:rgba(87,177,140,.24);border-color:#69c9a2}
+.kendra-swatch{background:rgba(102,164,220,.16);border-color:#78b9f0}
+.kendra-polygon{fill:rgba(102,164,220,.07)!important;stroke:#78b9f0!important;stroke-width:2!important;stroke-dasharray:5 3}
+.lagna-swatch{background:rgba(216,181,109,.3);border-color:var(--gold)}
+.south-chart{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(112px,auto));max-width:760px;margin:0 auto;border:2px solid #8e7549;border-radius:5px;overflow:hidden;background:#0a1726}
+.sign-cell{position:relative;min-height:112px;padding:11px;background:#112136;border:1px solid #66583d;transition:background .18s ease}
+.sign-cell .sign-num{font-size:.68rem;color:#8394a9;letter-spacing:.08em}
+.sign-cell .sign-name{display:block;font:600 1.02rem Georgia,serif;color:#e7d6ad;margin-top:4px}
+.sign-cell .sign-en{display:block;font-size:.78rem;color:#aebccc}
+.sign-cell .house-num{display:inline-block;margin-top:10px;padding:2px 7px;border-radius:12px;background:#23364b;color:#dbe5ef;font-size:.74rem}
+.sign-cell.trikona-cell{background:rgba(39,111,83,.42);box-shadow:inset 0 0 0 2px #55ae89}
+.sign-cell.trikona-cell .house-num{background:#245b48;color:#e2fff2}
+.sign-cell.lagna-cell{background:rgba(155,113,43,.35);box-shadow:inset 0 0 0 2px var(--gold)}
+.sign-cell.lagna-cell .sign-name{color:#ffe2a0}
+.chart-center{grid-column:2 / span 2;grid-row:2 / span 2;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:16px;background:radial-gradient(ellipse,rgba(216,181,109,.10),transparent 72%);border:1px solid #66583d}
+.center-kicker{color:var(--gold);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.chart-center strong{font:600 clamp(1.2rem,2.6vw,1.8rem) Georgia,serif;color:var(--gold2);margin:7px 0}
+#centerText{color:#b8dcca;font-size:.85rem}
+.center-mini{font-size:.75rem;color:var(--muted);margin-top:12px}
+.trikona-explain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:900px;margin:18px auto 0}
+.trikona-card{padding:12px;border:1px solid #376d59;background:rgba(39,111,83,.14);border-radius:9px}
+.trikona-card b{color:#91e0bb;display:block}.trikona-card span{color:var(--muted);font-size:.83rem}
+.chart-footnote{max-width:900px;margin:14px auto 0;color:var(--muted);font-size:.82rem}
+@media(max-width:650px){.chart-section{padding:13px}.south-chart{grid-template-rows:repeat(4,minmax(88px,auto))}.sign-cell{min-height:88px;padding:6px}.sign-cell .sign-name{font-size:.84rem}.sign-cell .sign-en{font-size:.68rem}.sign-cell .house-num{font-size:.67rem;margin-top:5px}.chart-center{padding:7px}.center-mini{display:none}.trikona-explain{grid-template-columns:1fr}.chart-legend{gap:8px}}
+@media print{.chart-section{background:#fff;border-color:#777}.south-chart{background:#fff}.sign-cell{background:#fff}.sign-cell .sign-name,.chart-center strong{color:#222}.sign-cell .sign-en,.sign-cell .sign-num,.chart-heading p,.chart-footnote,.trikona-card span{color:#333}.chart-center{background:#fff}.trikona-card{background:#eee}}
+
+
+/* Explicit South Indian chart positions: fixed zodiac signs around the perimeter */
+.south-chart .sign-cell[data-sign="11"]{grid-column:1;grid-row:1}
+.south-chart .sign-cell[data-sign="0"]{grid-column:2;grid-row:1}
+.south-chart .sign-cell[data-sign="1"]{grid-column:3;grid-row:1}
+.south-chart .sign-cell[data-sign="2"]{grid-column:4;grid-row:1}
+.south-chart .sign-cell[data-sign="10"]{grid-column:1;grid-row:2}
+.south-chart .sign-cell[data-sign="3"]{grid-column:4;grid-row:2}
+.south-chart .sign-cell[data-sign="9"]{grid-column:1;grid-row:3}
+.south-chart .sign-cell[data-sign="4"]{grid-column:4;grid-row:3}
+.south-chart .sign-cell[data-sign="8"]{grid-column:1;grid-row:4}
+.south-chart .sign-cell[data-sign="7"]{grid-column:2;grid-row:4}
+.south-chart .sign-cell[data-sign="6"]{grid-column:3;grid-row:4}
+.south-chart .sign-cell[data-sign="5"]{grid-column:4;grid-row:4}
+.south-chart .chart-center{grid-column:2 / span 2;grid-row:2 / span 2}
+
+
+/* Literal Dharma Trikona triangle drawn over the South Indian chart */
+.south-chart{position:relative}
+.triangle-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
+.triangle-overlay polygon{fill:rgba(85,174,137,.08);stroke:#82e0b5;stroke-width:2.5;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+
+
+.lagna-controls{display:flex;align-items:end;gap:8px;flex-wrap:wrap}
+.lagna-controls button{white-space:nowrap;min-height:42px}
+.lagna-controls .lagna-picker{flex:1;min-width:190px}
+@media(max-width:650px){.lagna-controls{width:100%}.lagna-controls button{flex:1}.lagna-controls .lagna-picker{order:-1;flex-basis:100%}}
+
+
+/* Clear cell fills for Kendra houses (1, 4, 7, 10); Trikona remains green */
+.sign-cell.kendra-cell{background:rgba(102,164,220,.24);box-shadow:inset 0 0 0 2px #78b9f0}
+.sign-cell.kendra-cell .house-num{background:#234a6d;color:#e2f2ff}
+.sign-cell.kendra-cell .sign-name{color:#c4e4ff}
+.sign-cell.trikona-cell{background:rgba(39,111,83,.42);box-shadow:inset 0 0 0 2px #55ae89}
+.sign-cell.lagna-cell{background:rgba(155,113,43,.35);box-shadow:inset 0 0 0 3px var(--gold)}
+
+
+.maraka-section{margin:28px 0;padding:24px;border:1px solid var(--line);border-radius:15px;background:rgba(16,30,48,.82)}
+.maraka-section h2{font:600 clamp(1.5rem,3vw,2rem) Georgia,serif;color:var(--gold2);margin:7px 0 10px}
+.maraka-section h3{color:var(--gold2)}
+.maraka-intro{max-width:1000px;color:var(--muted);margin:0 0 18px}
+.maraka-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.maraka-card{position:relative;padding:20px;border:1px solid var(--line);border-radius:12px;background:rgba(8,19,33,.5);overflow:hidden}
+.maraka-card h3{margin:0 0 8px;font:600 1.2rem Georgia,serif}
+.maraka-card p{color:#d7dee7;margin:12px 0 0}
+.maraka-number{position:absolute;right:14px;top:5px;font:700 3.2rem Georgia,serif;color:rgba(216,181,109,.13)}
+.maraka-tag{display:inline-block;padding:4px 9px;border:1px solid #8a7044;border-radius:18px;color:var(--gold2);font-size:.77rem}
+.maraka-rule{margin:18px 0;padding:16px;border:1px solid #66583d;border-radius:10px;background:rgba(216,181,109,.055)}
+.maraka-rule>strong{display:block;color:var(--gold2);margin-bottom:10px}
+.rule-flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:10px 0}
+.rule-flow div{min-width:155px;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel);text-align:center}
+.rule-flow b{display:block;color:var(--ivory)}
+.rule-flow span{color:var(--muted);font-size:.8rem}
+.rule-flow .rule-arrow{color:var(--gold);font-size:.83rem}
+.maraka-subhead{margin:18px 0 8px}
+.maraka-list{padding-left:21px;color:#d7dee7}
+.maraka-list li{margin:7px 0}
+.maraka-caution{padding:13px 15px;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;background:rgba(216,181,109,.07);color:var(--muted);margin-bottom:0}
+.maraka-caution strong{color:var(--gold2)}
+@media(max-width:700px){.maraka-section{padding:15px}.maraka-grid{grid-template-columns:1fr}.rule-flow{gap:7px}.rule-flow div{min-width:125px;flex:1}}
+@media print{.maraka-section,.maraka-card,.maraka-rule{background:#fff}.maraka-card p,.maraka-list,.maraka-intro,.maraka-caution{color:#222}.maraka-number{color:#eee}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Parāśara Jyotiṣa · Reference Table</div>
+  <h1>The 12 Bhāvas</h1>
+  <p>A practical reference to the twelve houses in Vedic astrology: their core topics, traditional significators, body correspondences, and common house classifications.</p>
+</header>
+<main>
+  <section class="summary" aria-label="House classification overview">
+    <div class="stat"><b>1 · 4 · 7 · 10</b><span>Kendras — angular houses</span></div>
+    <div class="stat"><b>1 · 5 · 9</b><span>Trikonas — dharma / fortune</span></div>
+    <div class="stat"><b>6 · 8 · 12</b><span>Dusthānas — difficult themes</span></div>
+    <div class="stat"><b>3 · 6 · 10 · 11</b><span>Upachayas — growth over time</span></div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search houses, topics, Sanskrit names, planets…" aria-label="Search table">
+    <select id="filter" aria-label="Filter by classification">
+      <option value="all">All classifications</option>
+      <option value="Kendra">Kendra</option><option value="Trikona">Trikona</option>
+      <option value="Dusthana">Dusthāna</option><option value="Upachaya">Upachaya</option>
+      <option value="Maraka">Maraka association</option>
+    </select>
+    <button id="reset" type="button">Reset</button>
+    <button type="button" onclick="window.print()">Print table</button>
+  </div>
+
+  <div class="table-wrap">
+  <table id="bhavaTable">
+    <thead><tr>
+      <th>House</th><th>Traditional name</th><th>Main significations</th><th>Common topics</th><th>Natural kāraka examples</th><th>Body association*</th><th>Classification</th>
+    </tr></thead>
+    <tbody>
+      <tr data-class="Kendra Trikona"><td class="house"><span class="num">1</span><b>First</b><span class="sub">Lagna / Ascendant</span></td><td><span class="sanskrit">Tanu Bhāva</span><span class="sub">Self / body</span></td><td>Identity, constitution, vitality, temperament, appearance, life direction.</td><td>Personality, health and resilience, confidence, beginnings, how one approaches life.</td><td>Sun (vitality); the Lagna lord is especially important.</td><td>Head; overall body and constitution.</td><td><span class="pill kendra">Kendra</span> <span class="pill trikona">Trikona</span></td></tr>
+      <tr data-class="Maraka"><td class="house"><span class="num">2</span><b>Second</b></td><td><span class="sanskrit">Dhana Bhāva</span><span class="sub">Wealth / family</span></td><td>Accumulated wealth, speech, family, food, values, stored resources.</td><td>Savings, possessions, voice, early family environment, face and oral habits.</td><td>Jupiter (wealth); Mercury (speech and learning).</td><td>Face, mouth, teeth, tongue, right eye in some traditions.</td><td><span class="pill">Maraka association</span></td></tr>
+      <tr data-class="Upachaya"><td class="house"><span class="num">3</span><b>Third</b></td><td><span class="sanskrit">Sahaja Bhāva</span><span class="sub">Effort / siblings</span></td><td>Courage, initiative, communication, skills, younger siblings, short journeys.</td><td>Writing, media, hands-on learning, self-effort, hobbies, enterprise.</td><td>Mars (courage and siblings); Mercury (communication).</td><td>Arms, shoulders, hands, ears in some traditions.</td><td><span class="pill upachaya">Upachaya</span></td></tr>
+      <tr data-class="Kendra"><td class="house"><span class="num">4</span><b>Fourth</b></td><td><span class="sanskrit">Sukha Bhāva</span><span class="sub">Home / happiness</span></td><td>Mother, home, emotional foundations, property, vehicles, formal education.</td><td>Domestic peace, land, real estate, comforts, homeland, inner security.</td><td>Moon (mother and mind); Venus (comforts and vehicles).</td><td>Chest, heart region, lungs in traditional mappings.</td><td><span class="pill kendra">Kendra</span></td></tr>
+      <tr data-class="Trikona"><td class="house"><span class="num">5</span><b>Fifth</b></td><td><span class="sanskrit">Putra Bhāva</span><span class="sub">Intelligence / merit</span></td><td>Children, intellect, creativity, mantra, purva-punya, discernment.</td><td>Study and insight, romance, creative work, speculation (not a guarantee of profit).</td><td>Jupiter (children and wisdom); Sun (creative authority).</td><td>Stomach, upper abdomen; some traditions include the heart.</td><td><span class="pill trikona">Trikona</span></td></tr>
+      <tr data-class="Dusthana Upachaya"><td class="house"><span class="num">6</span><b>Sixth</b></td><td><span class="sanskrit">Ari / Roga Bhāva</span><span class="sub">Conflict / service</span></td><td>Debts, disputes, enemies, illness, service, competition, daily work.</td><td>Problem-solving, routines, litigation, obstacles, employees, discipline.</td><td>Mars (conflict); Saturn (service and labor); Mercury (analysis).</td><td>Waist, lower abdomen, intestines in common mappings.</td><td><span class="pill dusthana">Dusthāna</span> <span class="pill upachaya">Upachaya</span></td></tr>
+      <tr data-class="Kendra Maraka"><td class="house"><span class="num">7</span><b>Seventh</b></td><td><span class="sanskrit">Yuvati / Kāma Bhāva</span><span class="sub">Partnerships</span></td><td>Marriage, spouse, committed partnerships, contracts, business and public dealings.</td><td>Negotiation, clients, alliances, one-to-one relationships and open opponents.</td><td>Venus (relationship significator); Jupiter is also used for husband in some traditional readings.</td><td>Pelvic region, lower back; reproductive organs in some mappings.</td><td><span class="pill kendra">Kendra</span> <span class="pill">Maraka association</span></td></tr>
+      <tr data-class="Dusthana"><td class="house"><span class="num">8</span><b>Eighth</b></td><td><span class="sanskrit">Randhra / Āyus Bhāva</span><span class="sub">Transformation / longevity</span></td><td>Longevity themes, sudden changes, inheritance, secrets, vulnerability, research.</td><td>Joint assets, taxes, occult studies, crisis management, deep investigation.</td><td>Saturn (longevity in many traditions); Mars (sudden events); Ketu (esoteric inquiry in some schools).</td><td>Reproductive and excretory organs; chronic or hidden conditions in traditional symbolism.</td><td><span class="pill dusthana">Dusthāna</span></td></tr>
+      <tr data-class="Trikona"><td class="house"><span class="num">9</span><b>Ninth</b></td><td><span class="sanskrit">Dharma / Bhāgya Bhāva</span><span class="sub">Dharma / fortune</span></td><td>Father and mentors, dharma, fortune, higher learning, ethics, pilgrimage.</td><td>Beliefs, philosophy, law, long-distance travel, teachers, blessings and guidance.</td><td>Jupiter (wisdom and dharma); Sun (father/authority in many traditions).</td><td>Hips, thighs.</td><td><span class="pill trikona">Trikona</span></td></tr>
+      <tr data-class="Kendra Upachaya"><td class="house"><span class="num">10</span><b>Tenth</b></td><td><span class="sanskrit">Karma Bhāva</span><span class="sub">Action / career</span></td><td>Profession, karma, status, authority, reputation, responsibilities and public contribution.</td><td>Career direction, leadership, recognition, achievements, visible work.</td><td>Saturn (work and duty); Sun (authority); Mercury (commerce and skills).</td><td>Knees.</td><td><span class="pill kendra">Kendra</span> <span class="pill upachaya">Upachaya</span></td></tr>
+      <tr data-class="Upachaya"><td class="house"><span class="num">11</span><b>Eleventh</b></td><td><span class="sanskrit">Lābha Bhāva</span><span class="sub">Gains / networks</span></td><td>Income, gains, ambitions, elder siblings, communities, fulfillment of aims.</td><td>Bonuses, profit, professional networks, audience, patrons and long-term goals.</td><td>Jupiter (expansion); Saturn (large groups and sustained gains); Mercury (trade).</td><td>Calves, ankles.</td><td><span class="pill upachaya">Upachaya</span></td></tr>
+      <tr data-class="Dusthana"><td class="house"><span class="num">12</span><b>Twelfth</b></td><td><span class="sanskrit">Vyaya Bhāva</span><span class="sub">Release / expenditure</span></td><td>Expenses, losses, sleep, retreat, foreign lands, seclusion, liberation.</td><td>Charity, hospitals or ashrams, distant residence, private life, meditation, letting go.</td><td>Saturn (seclusion and endurance); Ketu (moksha themes in some traditions); Venus (bed comforts).</td><td>Feet.</td><td><span class="pill dusthana">Dusthāna</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <section class="chart-section">
+    <div class="chart-heading">
+      <div>
+        <div class="eyebrow">Rāśi Chakra · South Indian Style</div>
+        <h2>Trikona Houses for Each Lagna</h2>
+        <p>Choose an Ascendant (Lagna). The chart keeps the signs in the traditional fixed South Indian layout and highlights the 1st, 5th and 9th houses—the Dharma Trikona—for that Lagna.</p>
+      </div>
+      <div class="lagna-controls">
+        <button type="button" id="prevLagna" aria-label="Previous Lagna">← Previous</button>
+        <label class="lagna-picker">Select Lagna
+          <select id="lagnaSelect">
+            <option value="0">Mesha — Aries</option><option value="1">Vrishabha — Taurus</option>
+            <option value="2">Mithuna — Gemini</option><option value="3">Karka — Cancer</option>
+            <option value="4">Simha — Leo</option><option value="5">Kanya — Virgo</option>
+            <option value="6">Tula — Libra</option><option value="7">Vrischika — Scorpio</option>
+            <option value="8">Dhanu — Sagittarius</option><option value="9">Makara — Capricorn</option>
+            <option value="10">Kumbha — Aquarius</option><option value="11">Meena — Pisces</option>
+          </select>
+        </label>
+        <button type="button" id="nextLagna" aria-label="Next Lagna">Next →</button>
+      </div>
+    </div>
+    <div class="chart-legend">
+      <span><i class="legend-swatch trikona-swatch"></i> Trikona: houses 1, 5, 9</span>
+      <span><i class="legend-swatch kendra-swatch"></i> Kendra: houses 1, 4, 7, 10</span>
+      <span><i class="legend-swatch lagna-swatch"></i> Lagna / 1st house</span>
+      <span><i class="legend-swatch"></i> Other houses</span>
+    </div>
+    <div class="south-chart" id="southChart" aria-label="Interactive South Indian zodiac chart">
+      <div class="sign-cell" data-sign="11"></div><div class="sign-cell" data-sign="0"></div><div class="sign-cell" data-sign="1"></div><div class="sign-cell" data-sign="2"></div>
+      <div class="sign-cell" data-sign="10"></div><div class="chart-center"><span class="center-kicker">Dharma Trikona</span><strong id="centerLagna">Mesha Lagna</strong><span id="centerText">Houses 1 · 5 · 9 highlighted</span><div class="center-mini">1st · Self &nbsp;|&nbsp; 5th · Purva punya &nbsp;|&nbsp; 9th · Dharma</div></div><div class="sign-cell" data-sign="3"></div>
+      <div class="sign-cell" data-sign="9"></div><div class="sign-cell" data-sign="4"></div><div class="sign-cell" data-sign="5"></div><div class="sign-cell" data-sign="6"></div>
+      <div class="sign-cell" data-sign="8"></div><div class="sign-cell" data-sign="7"></div>
+      <svg class="triangle-overlay" id="trikonaTriangle" aria-label="Trikona triangle for houses 1, 5 and 9 and Kendra quadrilateral for houses 1, 4, 7 and 10" role="img" preserveAspectRatio="none" viewBox="0 0 100 100">
+        <polygon id="kendraPolygon" class="kendra-polygon" points="20,20 80,20 80,80 20,80"></polygon>
+        <polygon id="trikonaPolygon" points="50,10 15,85 85,85"></polygon>
+      </svg>
+    </div>
+    <div class="trikona-explain" id="trikonaExplain"></div>
+    <p class="chart-footnote">The sign layout is fixed in the South Indian style; house numbers change with the selected Lagna. Trikona is calculated by counting the Lagna sign as house 1, then counting forward through the zodiac. This shows the traditional 1–5–9 relationship, not a complete birth chart.</p>
+  </section>
+
+  <div class="note"><strong>How to read this table:</strong> A house is not automatically good or bad. Interpret its sign, house lord, planets placed there, aspects, dignity, yogas, divisional charts and running daśā together. Kendra, Trikona, Dusthāna and Upachaya are overlapping classifications, not a single ranking. Houses 2 and 7 are traditionally associated with maraka potential; this is not a standalone prediction of death.</div>
+  <div class="note"><strong>*Body correspondences:</strong> These are traditional astrological associations, and lists can differ by lineage. They are symbolic correspondences, not medical diagnoses or substitutes for medical care.</div>
+
+  <section class="maraka-section">
+    <div class="eyebrow">Maraka Bhāvas · Classical Jyotiṣa</div>
+    <h2>Why Are the 2nd and 7th Houses Called Maraka Houses?</h2>
+    <p class="maraka-intro">In Vedic astrology, <strong>Maraka</strong> literally means “that which can cause an ending.” The 7th house is linked to the primary longevity reference (the 8th house), while the 2nd is linked to the secondary longevity reference (the 3rd house); both are traditionally associated with maraka potential. This is a technical astrological doctrine—not a claim that these houses or their occupants inevitably cause death.</p>
+    <div class="maraka-grid">
+      <article class="maraka-card maraka-seven">
+        <div class="maraka-number">07</div>
+        <h3>7th House · Yuvati Bhāva</h3>
+        <span class="maraka-tag">12th from the 8th · Primary reference</span>
+        <p>The 8th house is the principal house associated with longevity, lifespan and major transformations. The 7th is the 12th from the 8th · Primary reference, so it is interpreted as the house of depletion or loss relative to the longevity house. This is the central positional explanation for its maraka role.</p>
+        <p>The 7th is also opposite the Lagna (the 1st house), which represents the native. In traditional maraka analysis, the 7th house and its lord can therefore receive particular attention—but this symbolism alone does not establish a death prediction.</p>
+      </article>
+      <article class="maraka-card maraka-two">
+        <div class="maraka-number">02</div>
+        <h3>2nd House · Dhana Bhāva</h3>
+        <span class="maraka-tag">12th from the 3rd · Secondary reference</span>
+        <p>The 3rd house is commonly treated as the 8th from the 8th and is used as a secondary longevity house. The 2nd is the 12th house counted from the 3rd; the 12th-from relationship signifies loss or depletion of the matters represented by the house it is counted from. This is one traditional rationale for assigning maraka significance to the 2nd.</p>
+        <p>The 2nd is also a <em>maraka sthāna</em> in classical longevity rules, alongside the 7th. Its ordinary significations—wealth, speech, family and food—remain important and are not inherently harmful.</p>
+      </article>
+    <div class="maraka-rule">
+      <strong>The classical rule of thumb</strong>
+      <div class="rule-flow">
+        <div><b>8th house</b><span>Primary longevity reference</span></div>
+        <span class="rule-arrow">← 12th from</span>
+        <div><b>7th house</b><span>Maraka association</span></div>
+      </div>
+      <div class="rule-flow">
+        <div><b>3rd house</b><span>Secondary longevity reference</span></div>
+        <span class="rule-arrow">← 12th from</span>
+        <div><b>2nd house</b><span>Maraka association</span></div>
+      </div>
+    </div>
+    <h3 class="maraka-subhead">How maraka potential is assessed</h3>
+    <ul class="maraka-list">
+      <li><strong>2nd- and 7th-house lords:</strong> traditionally examined as maraka lords.</li>
+      <li><strong>Planets placed in the 2nd or 7th:</strong> may be considered in maraka analysis depending on the school and chart context.</li>
+      <li><strong>Daśā and antardaśā:</strong> timing is traditionally assessed only after evaluating the whole chart and longevity framework.</li>
+      <li><strong>Whole-chart context:</strong> the 8th house and its lord, the 3rd house, Saturn, planetary strength, aspects and relevant divisional factors may also be examined.</li>
+    </ul>
+    <p class="maraka-caution"><strong>Important:</strong> These are traditional astrological interpretations, not scientifically validated methods for predicting death. A 2nd- or 7th-house placement, a maraka lord, or a particular daśā should not be used on its own to predict when or whether someone will die.</p>
+  </section>
+
+</main>
+<footer>Vedic Astrology · Bhāva Reference · Use as a study guide, not as deterministic prediction</footer>
+<script>
+const search=document.getElementById('search'), filter=document.getElementById('filter');
+const rows=[...document.querySelectorAll('#bhavaTable tbody tr')];
+function update(){
+ const q=search.value.trim().toLowerCase(), f=filter.value;
+ rows.forEach(row=>{
+   const matchesText=row.innerText.toLowerCase().includes(q);
+   const classes=(row.dataset.class||'').split(' ');
+   const matchesFilter=f==='all'||classes.includes(f);
+   row.hidden=!(matchesText&&matchesFilter);
+ });
+}
+search.addEventListener('input',update);filter.addEventListener('change',update);
+document.getElementById('reset').addEventListener('click',()=>{search.value='';filter.value='all';update()});
+
+const signData=[
+ {name:'Mesha',en:'Aries'},{name:'Vrishabha',en:'Taurus'},{name:'Mithuna',en:'Gemini'},
+ {name:'Karka',en:'Cancer'},{name:'Simha',en:'Leo'},{name:'Kanya',en:'Virgo'},
+ {name:'Tula',en:'Libra'},{name:'Vrischika',en:'Scorpio'},{name:'Dhanu',en:'Sagittarius'},
+ {name:'Makara',en:'Capricorn'},{name:'Kumbha',en:'Aquarius'},{name:'Meena',en:'Pisces'}
+];
+const houseTopics={
+ 1:['Self & body','Identity, vitality, temperament'],
+ 5:['Intelligence & purva punya','Children, creativity, mantra, discernment'],
+ 9:['Dharma & fortune','Higher learning, teachers, ethics, blessings']
+};
+
+function drawTrikonaTriangle(){
+ const chart=document.getElementById('southChart');
+ if(!chart)return;
+ const chartRect=chart.getBoundingClientRect();
+ function pointsForHouses(houses){
+   const points=[];
+   houses.forEach(house=>{
+     const cell=[...chart.querySelectorAll('.sign-cell')].find(el=>Number(el.dataset.house)===house);
+     if(!cell)return;
+     const r=cell.getBoundingClientRect();
+     const x=((r.left+r.width/2-chartRect.left)/chartRect.width)*100;
+     const y=((r.top+r.height/2-chartRect.top)/chartRect.height)*100;
+     points.push(`${x},${y}`);
+   });
+   return points;
+ }
+ const trikona=pointsForHouses([1,5,9]);
+ const kendra=pointsForHouses([1,4,7,10]);
+ const trikonaPolygon=document.getElementById('trikonaPolygon');
+ const kendraPolygon=document.getElementById('kendraPolygon');
+ if(trikonaPolygon&&trikona.length===3)trikonaPolygon.setAttribute('points',trikona.join(' '));
+ if(kendraPolygon&&kendra.length===4)kendraPolygon.setAttribute('points',kendra.join(' '));
+}
+
+function renderSouthChart(){
+ const lagna=Number(document.getElementById('lagnaSelect').value);
+ const cells=[...document.querySelectorAll('#southChart .sign-cell')];
+ cells.forEach(cell=>{
+   const sign=Number(cell.dataset.sign);
+   const house=((sign-lagna+12)%12)+1;
+   cell.classList.remove('trikona-cell','kendra-cell','lagna-cell');
+   cell.dataset.house=house;
+   if([1,5,9].includes(house))cell.classList.add('trikona-cell');
+   if([1,4,7,10].includes(house))cell.classList.add('kendra-cell');
+   if(house===1)cell.classList.add('lagna-cell');
+   cell.innerHTML=`<span class="sign-num">SIGN ${String(sign+1).padStart(2,'0')}</span><span class="sign-name">${signData[sign].name}</span><span class="sign-en">${signData[sign].en}</span><span class="house-num">House ${house}${[1,5,9].includes(house)?' · Trikona':''}</span>`;
+ });
+ document.getElementById('centerLagna').textContent=signData[lagna].name+' Lagna';
+ document.getElementById('centerText').textContent=`${signData[lagna].en} Ascendant · Trikona 1/5/9 · Kendra 1/4/7/10`;
+ document.getElementById('trikonaExplain').innerHTML=[1,5,9].map(h=>{
+   const sign=signData[(lagna+h-1)%12];
+   return `<div class="trikona-card"><b>House ${h} · ${sign.name} (${sign.en})</b><span>${houseTopics[h][0]} — ${houseTopics[h][1]}</span></div>`;
+ }).join('');
+ drawTrikonaTriangle();
+}
+document.getElementById('lagnaSelect').addEventListener('change',renderSouthChart);
+
+function moveLagna(step){
+ const selector=document.getElementById('lagnaSelect');
+ const current=Number(selector.value);
+ selector.value=String((current+step+12)%12);
+ renderSouthChart();
+}
+document.getElementById('prevLagna').addEventListener('click',()=>moveLagna(-1));
+document.getElementById('nextLagna').addEventListener('click',()=>moveLagna(1));
+
+renderSouthChart();
+
+</script>
+</body>
+</html>
