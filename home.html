@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#24113f">
+<meta name="description" content="A structured personal library for learning and applying Vedic astrology.">
+<title>Vedic Astrology Library</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel2: #f8f5ff;
+    --line: #e1d5f4;
+    --text: #28183e;
+    --muted: #6f6281;
+    --accent: #7542b8;
+    --accent2: #5b2d98;
+    --shadow: 0 10px 28px rgba(70, 38, 112, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--text);
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(196,160,255,.14), transparent 38rem),
+      radial-gradient(ellipse at 100% 35%, rgba(117,66,184,.07), transparent 34rem),
+      var(--bg);
+    font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
+  header { padding: 22px 0; border-bottom: 1px solid #eee6f8; background:rgba(255,255,255,.94); }
+  .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+  .brand { display:flex; align-items:center; gap:12px; font-weight:750; letter-spacing:.02em; }
+  .brand-mark {
+    display:grid; place-items:center; width:42px; height:42px; border-radius:14px;
+    color:#ffffff; background:linear-gradient(135deg,#8d5bd0,#6234a0);
+    font-size:22px; box-shadow:0 8px 24px rgba(117,66,184,.18);
+  }
+  .top-link { color:var(--muted); font-size:.92rem; }
+  .hero { padding:70px 0 46px; }
+  .eyebrow { color:var(--accent2); font-size:.78rem; text-transform:uppercase; letter-spacing:.19em; font-weight:750; }
+  h1 { max-width:800px; margin:12px 0 18px; font-size:clamp(2.5rem, 6vw, 4.7rem); line-height:1.04; letter-spacing:-.045em; }
+  h1 span { color:var(--accent); }
+  .intro { max-width:720px; color:var(--muted); font-size:1.1rem; margin:0; }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; padding:11px 17px; border-radius:12px; font-weight:700; border:1px solid var(--line); transition:transform .18s, border-color .18s, background .18s; }
+  .btn:hover { transform:translateY(-2px); border-color:var(--accent); }
+  .btn.primary { color:#ffffff; border-color:transparent; background:linear-gradient(135deg,#8d5bd0,#6234a0); }
+  .section-head { display:flex; justify-content:space-between; align-items:end; gap:18px; margin:20px 0 18px; }
+  h2 { margin:0; font-size:1.55rem; letter-spacing:-.02em; }
+  .section-head p { margin:4px 0 0; color:var(--muted); }
+  .search { width:min(100%,310px); padding:11px 14px; color:var(--text); background:#ffffff; border:1px solid var(--line); border-radius:12px; outline:none; font:inherit; }
+  .search:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(196,160,255,.12); }
+  .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  .card {
+    min-height:185px; display:flex; flex-direction:column; padding:21px;
+    border:1px solid rgba(196,160,255,.18); border-radius:18px;
+    background:linear-gradient(155deg,#ffffff,#faf7ff);
+    box-shadow:var(--shadow); transition:transform .18s,border-color .18s,background .18s;
+  }
+  .card:hover { transform:translateY(-4px); border-color:rgba(117,66,184,.55); background:linear-gradient(155deg,#ffffff,#f3ebff); }
+  .card-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .icon { display:grid; place-items:center; width:43px; height:43px; border-radius:13px; color:var(--accent); background:#f0e7ff; font-size:21px; }
+  .tag { color:#674394; background:#f5efff; font-size:.72rem; border:1px solid #e5d7fa; border-radius:99px; padding:3px 9px; }
+  .card h3 { margin:17px 0 6px; font-size:1.12rem; line-height:1.3; }
+  .card p { color:var(--muted); font-size:.92rem; margin:0 0 17px; }
+  .open { margin-top:auto; color:var(--accent); font-weight:750; font-size:.9rem; }
+  .open span { display:inline-block; transition:transform .18s; }
+  .card:hover .open span { transform:translateX(4px); }
+  .table-wrap { overflow-x:auto; border:1px solid #e1d5f4; border-radius:18px; background:#ffffff; box-shadow:var(--shadow); }
+  .topic-table { width:100%; border-collapse:collapse; min-width:720px; }
+  .topic-table th { padding:14px 17px; text-align:left; color:#ffffff; font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; background:#7542b8; border-bottom:1px solid var(--line); }
+  .topic-table td { padding:15px 17px; border-bottom:1px solid #eee6f8; vertical-align:middle; }
+  .topic-table tbody tr:last-child td { border-bottom:0; }
+  .topic-table tbody tr:hover { background:#f8f3ff; }
+  .row-icon { display:grid; place-items:center; width:32px; height:32px; border-radius:10px; background:#f0e7ff; color:var(--accent); font-size:.78rem; font-weight:800; }
+  .table-link { color:var(--text); font-weight:750; }
+  .table-link:hover,.open-link:hover { color:var(--accent); text-decoration:underline; }
+  .file-name { color:var(--muted); font-size:.78rem; margin-top:2px; }
+  .description { color:var(--muted); font-size:.9rem; min-width:260px; }
+  .open-link { color:var(--accent); font-weight:750; white-space:nowrap; font-size:.9rem; }
+  .empty { display:none; padding:28px; text-align:center; color:var(--muted); border:1px dashed var(--line); border-radius:16px; }
+  .note { display:flex; gap:14px; align-items:flex-start; margin:30px 0 60px; padding:18px 20px; border:1px solid #e1d5f4; background:#faf7ff; border-radius:16px; }
+  .note strong { display:block; color:#5b2d98; margin-bottom:3px; }
+  .note p { margin:0; color:var(--muted); font-size:.92rem; }
+  footer { border-top:1px solid #eee6f8; padding:22px 0 30px; color:var(--muted); font-size:.86rem; background:#ffffff; }
+  .footer-inner { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  @media (max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .hero { padding-top:52px; } }
+  @media (max-width:560px) {
+    .wrap { width:min(100% - 24px,1160px); }
+    .grid { grid-template-columns:1fr; }
+    .section-head { align-items:stretch; flex-direction:column; }
+    .search { width:100%; }
+    .hero { padding:44px 0 32px; }
+    .card { min-height:160px; }
+  }
+  @media print {
+    body { background:#fff; }
+    header { border-bottom:1px solid #ddd; }
+    .hero-actions,.search,.top-link { display:none; }
+    .card { box-shadow:none; break-inside:avoid; background:#fff; border:1px solid #ccc; }
+    .table-wrap { box-shadow:none; background:#fff; border-color:#ccc; }
+    .topic-table th,.topic-table td { border-color:#ccc; }
+    .topic-table tbody tr:hover { background:#fff; }
+    .note { background:#fff; }
+    a { text-decoration:none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <a class="brand" href="./home.html" aria-label="Vedic Astrology Library home">
+      <span class="brand-mark" aria-hidden="true">ॐ</span>
+      <span>Vedic Astrology <span style="color:var(--accent)">Library</span></span>
+    </a>
+    <a class="top-link" href="./index.html">Open main guide ↗</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">A personal study reference</div>
+    <h1>Understand the chart.<br><span>Connect the principles.</span></h1>
+    <p class="intro">Your Vedic astrology study library—from planets, houses, and conjunctions to yogas, prediction methods, and timing. Choose a topic to begin, or search the collection.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="./index.html">Start with the main guide <span aria-hidden="true">&nbsp;→</span></a>
+      <a class="btn" href="#library">Browse all topics</a>
+    </div>
+  </section>
+
+  <section id="library" aria-labelledby="library-title">
+    <div class="section-head">
+      <div>
+        <h2 id="library-title">Explore the library</h2>
+        <p>Open any standalone HTML page. Links use relative paths.</p>
+      </div>
+      <input class="search" id="search" type="search" placeholder="Search topics…" aria-label="Search astrology topics">
+    </div>
+
+    <div class="table-wrap">
+      <table class="topic-table" id="cards">
+        <thead><tr><th>#</th><th>Topic</th><th>Description</th><th>Category</th><th>Link</th></tr></thead>
+        <tbody>
+      <tr data-search="main astrology guide central guide for connecting core vedic astrology concepts. start here index.html">
+        <td><span class="row-icon">01</span></td>
+        <td><a class="table-link" href="./index.html">Main Astrology Guide</a><div class="file-name">index.html</div></td>
+        <td class="description">Central guide for connecting core Vedic astrology concepts.</td>
+        <td><span class="tag">Start here</span></td>
+        <td><a class="open-link" href="./index.html" aria-label="Open Main Astrology Guide">Open ↗</a></td>
+      </tr>
+      <tr data-search="houses the twelve houses, their life areas, and interpretation. foundations houses.html">
+        <td><span class="row-icon">02</span></td>
+        <td><a class="table-link" href="./houses.html">Houses</a><div class="file-name">houses.html</div></td>
+        <td class="description">The twelve houses, their life areas, and interpretation.</td>
+        <td><span class="tag">Foundations</span></td>
+        <td><a class="open-link" href="./houses.html" aria-label="Open Houses">Open ↗</a></td>
+      </tr>
+      <tr data-search="bhavas bhava meanings, house significance, and classifications. house analysis bhavas.html">
+        <td><span class="row-icon">03</span></td>
+        <td><a class="table-link" href="./bhavas.html">Bhavas</a><div class="file-name">bhavas.html</div></td>
+        <td class="description">Bhava meanings, house significance, and classifications.</td>
+        <td><span class="tag">House analysis</span></td>
+        <td><a class="open-link" href="./bhavas.html" aria-label="Open Bhavas">Open ↗</a></td>
+      </tr>
+      <tr data-search="planets (grahas) planetary nature, strength, dignity, relationships, and influences. foundations planets.html">
+        <td><span class="row-icon">04</span></td>
+        <td><a class="table-link" href="./planets.html">Planets (Grahas)</a><div class="file-name">planets.html</div></td>
+        <td class="description">Planetary nature, strength, dignity, relationships, and influences.</td>
+        <td><span class="tag">Foundations</span></td>
+        <td><a class="open-link" href="./planets.html" aria-label="Open Planets (Grahas)">Open ↗</a></td>
+      </tr>
+      <tr data-search="conjunctions interpret planets placed together and assess combined influences. planetary combinations conjunctions.html">
+        <td><span class="row-icon">05</span></td>
+        <td><a class="table-link" href="./conjunctions.html">Conjunctions</a><div class="file-name">conjunctions.html</div></td>
+        <td class="description">Interpret planets placed together and assess combined influences.</td>
+        <td><span class="tag">Planetary combinations</span></td>
+        <td><a class="open-link" href="./conjunctions.html" aria-label="Open Conjunctions">Open ↗</a></td>
+      </tr>
+      <tr data-search="prediction methods combine houses, lords, planets, aspects, and strength to judge outcomes. application prediction.html">
+        <td><span class="row-icon">06</span></td>
+        <td><a class="table-link" href="./prediction.html">Prediction Methods</a><div class="file-name">prediction.html</div></td>
+        <td class="description">Combine houses, lords, planets, aspects, and strength to judge outcomes.</td>
+        <td><span class="tag">Application</span></td>
+        <td><a class="open-link" href="./prediction.html" aria-label="Open Prediction Methods">Open ↗</a></td>
+      </tr>
+      <tr data-search="yogas planetary combinations and the conditions that shape their results. combinations yoga.html">
+        <td><span class="row-icon">07</span></td>
+        <td><a class="table-link" href="./Yoga.html">Yogas</a><div class="file-name">Yoga.html</div></td>
+        <td class="description">Planetary combinations and the conditions that shape their results.</td>
+        <td><span class="tag">Combinations</span></td>
+        <td><a class="open-link" href="./Yoga.html" aria-label="Open Yogas">Open ↗</a></td>
+      </tr>
+      <tr data-search="raja yoga raja yoga principles, qualifying conditions, and strength. special topic raja-yoga.html">
+        <td><span class="row-icon">08</span></td>
+        <td><a class="table-link" href="./raja-yoga.html">Raja Yoga</a><div class="file-name">raja-yoga.html</div></td>
+        <td class="description">Raja Yoga principles, qualifying conditions, and strength.</td>
+        <td><span class="tag">Special topic</span></td>
+        <td><a class="open-link" href="./raja-yoga.html" aria-label="Open Raja Yoga">Open ↗</a></td>
+      </tr>
+      <tr data-search="time-based astrology timing techniques, periods, transits, and event activation. timing time-based.html">
+        <td><span class="row-icon">09</span></td>
+        <td><a class="table-link" href="./time-based.html">Time-Based Astrology</a><div class="file-name">time-based.html</div></td>
+        <td class="description">Timing techniques, periods, transits, and event activation.</td>
+        <td><span class="tag">Timing</span></td>
+        <td><a class="open-link" href="./time-based.html" aria-label="Open Time-Based Astrology">Open ↗</a></td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty">No matching topics. Try a different search term.</div>
+  </section>
+
+  <aside class="note">
+    <span class="icon" aria-hidden="true">ⓘ</span>
+    <div><strong>How to use this library</strong><p>Keep this homepage in the same folder as the linked HTML files. The <code>./filename.html</code> links are relative, so the library can work locally without a server. This page is named <code>home.html</code> to avoid overwriting your existing <code>index.html</code>.</p></div>
+  </aside>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>Vedic Astrology Library</span>
+    <span>Standalone HTML · Responsive layout · Searchable topic cards</span>
+  </div>
+</footer>
+<script>
+  const search = document.getElementById('search');
+  const rows = [...document.querySelectorAll('#cards tbody tr')];
+  const empty = document.getElementById('empty');
+  search.addEventListener('input', () => {
+    const term = search.value.trim().toLowerCase();
+    let shown = 0;
+    rows.forEach(row => {
+      const haystack = (row.innerText + ' ' + (row.dataset.search || '')).toLowerCase();
+      const match = haystack.includes(term);
+      row.hidden = !match;
+      if (match) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>
