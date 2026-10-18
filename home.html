@@ -30,27 +30,27 @@
   }
   a { color: inherit; text-decoration: none; }
   .wrap { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
-  header { padding: 22px 0; border-bottom: 1px solid #eee6f8; background:rgba(255,255,255,.94); }
+  header { padding: 10px 0; border-bottom: 1px solid #eee6f8; background:rgba(255,255,255,.94); }
   .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; }
   .brand { display:flex; align-items:center; gap:12px; font-weight:750; letter-spacing:.02em; }
   .brand-mark {
-    display:grid; place-items:center; width:42px; height:42px; border-radius:14px;
+    display:grid; place-items:center; width:36px; height:36px; border-radius:12px;
     color:#ffffff; background:linear-gradient(135deg,#8d5bd0,#6234a0);
     font-size:22px; box-shadow:0 8px 24px rgba(117,66,184,.18);
   }
   .top-link { color:var(--muted); font-size:.92rem; }
-  .hero { padding:70px 0 46px; }
-  .eyebrow { color:var(--accent2); font-size:.78rem; text-transform:uppercase; letter-spacing:.19em; font-weight:750; }
-  h1 { max-width:800px; margin:12px 0 18px; font-size:clamp(2.5rem, 6vw, 4.7rem); line-height:1.04; letter-spacing:-.045em; }
+  .hero { padding:12px 0 8px; }
+  .eyebrow { color:var(--accent2); font-size:.7rem; text-transform:uppercase; letter-spacing:.15em; font-weight:750; }
+  h1 { max-width:800px; margin:3px 0 5px; font-size:clamp(1.65rem, 3vw, 2.25rem); line-height:1.08; letter-spacing:-.035em; }
   h1 span { color:var(--accent); }
-  .intro { max-width:720px; color:var(--muted); font-size:1.1rem; margin:0; }
-  .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .intro { max-width:850px; color:var(--muted); font-size:.9rem; line-height:1.45; margin:0; }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:0; }
   .btn { display:inline-flex; align-items:center; justify-content:center; padding:11px 17px; border-radius:12px; font-weight:700; border:1px solid var(--line); transition:transform .18s, border-color .18s, background .18s; }
   .btn:hover { transform:translateY(-2px); border-color:var(--accent); }
   .btn.primary { color:#ffffff; border-color:transparent; background:linear-gradient(135deg,#8d5bd0,#6234a0); }
-  .section-head { display:flex; justify-content:space-between; align-items:end; gap:18px; margin:20px 0 18px; }
-  h2 { margin:0; font-size:1.55rem; letter-spacing:-.02em; }
-  .section-head p { margin:4px 0 0; color:var(--muted); }
+  .section-head { display:flex; justify-content:space-between; align-items:center; gap:18px; margin:8px 0 10px; }
+  h2 { margin:0; font-size:1.3rem; letter-spacing:-.02em; }
+  .section-head p { margin:2px 0 0; color:var(--muted); font-size:.9rem; }
   .search { width:min(100%,310px); padding:11px 14px; color:var(--text); background:#ffffff; border:1px solid var(--line); border-radius:12px; outline:none; font:inherit; }
   .search:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(196,160,255,.12); }
   .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
@@ -87,13 +87,13 @@
   .note p { margin:0; color:var(--muted); font-size:.92rem; }
   footer { border-top:1px solid #eee6f8; padding:22px 0 30px; color:var(--muted); font-size:.86rem; background:#ffffff; }
   .footer-inner { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-  @media (max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .hero { padding-top:52px; } }
+  @media (max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .hero { padding-top:20px; } }
   @media (max-width:560px) {
     .wrap { width:min(100% - 24px,1160px); }
     .grid { grid-template-columns:1fr; }
     .section-head { align-items:stretch; flex-direction:column; }
     .search { width:100%; }
-    .hero { padding:44px 0 32px; }
+    .hero { padding:10px 0 6px; }
     .card { min-height:160px; }
   }
   @media print {
@@ -125,17 +125,14 @@
     <div class="eyebrow">A personal study reference</div>
     <h1>Understand the chart.<br><span>Connect the principles.</span></h1>
     <p class="intro">Your Vedic astrology study library—from planets, houses, and conjunctions to yogas, prediction methods, and timing. Choose a topic to begin, or search the collection.</p>
-    <div class="hero-actions">
-      <a class="btn primary" href="./index.html">Start with the main guide <span aria-hidden="true">&nbsp;→</span></a>
-      <a class="btn" href="#library">Browse all topics</a>
-    </div>
+
   </section>
 
   <section id="library" aria-labelledby="library-title">
     <div class="section-head">
       <div>
         <h2 id="library-title">Explore the library</h2>
-        <p>Open any standalone HTML page. Links use relative paths.</p>
+        
       </div>
       <input class="search" id="search" type="search" placeholder="Search topics…" aria-label="Search astrology topics">
     </div>
