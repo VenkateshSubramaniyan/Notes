@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bhāva Kārakatvas — Vedic Astrology</title>
+<style>
+:root{--ink:#202b3c;--muted:#657187;--line:#dce3ec;--paper:#f4f7fb;--card:#fff;--accent:#5b4bb7;--accent2:#e9e5ff;--gold:#a56a14}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#202b3c;color:#fff;padding:24px clamp(16px,4vw,44px) 22px}
+header .eyebrow{color:#c9c2ff;text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800}
+h1{font-size:clamp(25px,4vw,38px);line-height:1.12;margin:8px 0}header p{max-width:850px;color:#e1e7f0;margin:10px 0 0}
+main{max-width:1280px;margin:auto;padding:22px clamp(12px,3vw,32px) 44px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input,select,button{font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink)}
+input{flex:1;min-width:210px}button{cursor:pointer;font-weight:700}button.primary{background:var(--accent);border-color:var(--accent);color:white}
+.intro{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:18px}
+.intro strong{color:var(--accent)}.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;background:#edf1f7;color:#46546a;font-size:12px;font-weight:750}
+.pill.purple{background:var(--accent2);color:#4e3ea6}.pill.gold{background:#fff1d8;color:#87540e}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 2px 8px #20304a08;min-width:0}
+.cardtop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border-bottom:1px solid #edf0f5;padding-bottom:10px;margin-bottom:10px}
+.house{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+h2{font-size:21px;line-height:1.2;margin:3px 0 0}.sanskrit{font-size:13px;color:var(--accent);font-weight:700}
+.section{margin:10px 0}.section b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:3px}
+.uj-wrap{margin:12px 0}
+.uj-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:6px}
+.uj-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px;line-height:1.45}
+.uj-table th,.uj-table td{width:50%;vertical-align:top;text-align:left;padding:10px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.uj-table th{font-size:12px;letter-spacing:.02em}
+.uj-table th:first-child{background:#e4f4e9;color:#216b40}
+.uj-table th:last-child{background:#e8edff;color:#354e9b}
+.uj-table td:first-child{background:#f5fbf6}
+.uj-table td:last-child{background:#f6f7ff}
+.uj-table tr:last-child td{border-bottom:0}
+.uj-label{display:block;font-weight:800;margin-bottom:4px}
+.uyir-label{color:#217447}.jada-label{color:#4059a8}
+ul{margin:4px 0 0;padding-left:18px}li{margin:2px 0}.note{font-size:12px;color:var(--muted)}
+footer{margin-top:22px;padding:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.grid{grid-template-columns:1fr}header{padding-top:20px}.card{padding:14px}}
+@media print{body{background:#fff}.toolbar,button{display:none!important}main{max-width:none;padding:0}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.card{break-inside:avoid;box-shadow:none}header{background:#fff;color:#111;padding:10px 0}header p{color:#333}.intro{break-inside:avoid}}
+
+.method-panel{margin:20px 0;background:#fff;border:1px solid var(--line);border-radius:15px;padding:clamp(14px,2.5vw,24px);box-shadow:0 2px 8px #20304a08}
+.method-panel h2{font-size:clamp(21px,3vw,28px);margin:0 0 10px;color:var(--ink)}
+.method-panel h3{font-size:16px;margin:18px 0 8px}
+.method-lead{background:#f2f0ff;border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0 16px}
+.method-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.method-card{padding:14px;border-radius:12px;border:1px solid var(--line)}
+.method-card h3{margin:0 0 5px;font-size:18px}
+.method-card p{margin:4px 0 8px}
+.method-card ol{margin:6px 0 0;padding-left:20px}
+.method-card li{margin:5px 0}
+.uyir-method{background:#f5fbf6;border-color:#cce7d4}.uyir-method h3{color:#217447}
+.jada-method{background:#f6f7ff;border-color:#d4dcff}.jada-method h3{color:#4059a8}
+.combination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.combination{border:1px solid var(--line);border-radius:10px;padding:11px 12px;display:flex;flex-direction:column;gap:5px}
+.combination strong{font-size:13px}.combination span{font-size:13px;color:var(--muted)}
+.combination.uyir-strong{background:#f5fbf6;border-color:#cce7d4}.combination.uyir-strong strong{color:#217447}
+.combination.jada-strong{background:#f6f7ff;border-color:#d4dcff}.combination.jada-strong strong{color:#4059a8}
+.combination.both-strong{background:#f2f8f2}.combination.both-weak{background:#fff7f7}
+.example-table-wrap{overflow-x:auto}
+.example-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45}
+.example-table th,.example-table td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+.example-table th{background:#eef1f7}
+.method-note{font-size:13px;color:var(--muted);margin:12px 0 0}
+@media(max-width:650px){.method-grid,.combination-grid{grid-template-columns:1fr}.method-panel{padding:13px}}
+@media print{.method-panel{break-inside:avoid;box-shadow:none}.method-grid,.combination-grid{grid-template-columns:repeat(2,1fr)}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Jyotiṣa reference • House significations</div>
+  <h1>Bhāva Kārakatvas</h1>
+  <p>A practical reference to the principal topics represented by each of the twelve houses in Vedic astrology, with commonly used natural significators (naisargika kārakas).</p>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search houses, topics, Sanskrit names, planets…" aria-label="Search house significations">
+    <select id="group" aria-label="Filter house group">
+      <option value="all">All houses</option><option value="kendra">Kendra (1, 4, 7, 10)</option>
+      <option value="trikona">Trikona (1, 5, 9)</option><option value="upachaya">Upachaya (3, 6, 10, 11)</option>
+      <option value="dusthana">Dusthāna (6, 8, 12)</option><option value="maraka">Maraka houses (2, 7)</option>
+    </select>
+    <button class="primary" onclick="window.print()">Print / Save PDF</button>
+    <button onclick="resetFilters()">Reset</button>
+  </div>
+  <div class="intro">
+    <strong>How to read this page</strong>
+    <div>Bhāva kārakatva means the subjects signified by a house. A <em>natural kāraka</em> is a planet that signifies a topic by its inherent symbolism; the <em>house lord</em> is the ruler of the sign occupying that house in a particular chart. They are related but not interchangeable.</div>
+    <div class="legend"><span class="pill purple">Kendra</span><span class="pill purple">Trikona</span><span class="pill">Upachaya</span><span class="pill">Dusthāna</span><span class="pill gold">Maraka</span></div>
+    <div class="note" style="margin-top:8px">Lists below are traditional, commonly taught associations—not a claim that every school assigns every topic identically. Judge a house with its lord, occupants, aspects, dignity, divisional charts, and daśā context.</div>
+  </div>
+  
+  <section class="method-panel" id="predict-uyir-jada">
+    <h2>How to Predict Uyir and Jada Kārakatvas</h2>
+    <p class="method-lead"><strong>Yes — Uyir can be strong while Jada is weak, and Jada can be strong while Uyir is weak.</strong> A house represents multiple subjects, and each subject can have different significators and different influences. Judge the specific subject rather than assigning one strength to the entire house.</p>
+    <div class="method-grid">
+      <article class="method-card uyir-method">
+        <h3>Uyir • உயிர்</h3>
+        <p><strong>Living beings and life-related matters</strong></p>
+        <ol>
+          <li>Identify the living subject represented by the house (for example, mother in the 4th or spouse in the 7th).</li>
+          <li>Examine the relevant natural kāraka.</li>
+          <li>Assess the house, house lord, occupants, aspects and relevant divisional chart.</li>
+          <li>Judge the particular relationship or living outcome; do not infer everything from one planet.</li>
+        </ol>
+      </article>
+      <article class="method-card jada-method">
+        <h3>Jada • ஜடம்</h3>
+        <p><strong>Non-living, material and tangible matters</strong></p>
+        <ol>
+          <li>Identify the material subject (for example, property or vehicles in the 4th, savings in the 2nd).</li>
+          <li>Examine the natural kāraka relevant to that asset.</li>
+          <li>Assess the house lord and other relevant asset or wealth indicators.</li>
+          <li>Judge acquisition, ownership, stability or accumulation as separate outcomes.</li>
+        </ol>
+      </article>
+    </div>
+    <h3>Four possible combinations</h3>
+    <div class="combination-grid">
+      <div class="combination uyir-strong"><strong>Uyir strong · Jada weak</strong><span>People-related matters may be better supported than material acquisition or stability.</span></div>
+      <div class="combination jada-strong"><strong>Jada strong · Uyir weak</strong><span>Material outcomes may be supported while relationships or people-related matters face challenges.</span></div>
+      <div class="combination both-strong"><strong>Both strong</strong><span>Both categories have supportive indications, subject to the full chart and timing.</span></div>
+      <div class="combination both-weak"><strong>Both weak</strong><span>Both categories may face challenges, with different causes, expressions and timing.</span></div>
+    </div>
+    <h3>Worked example: 4th house</h3>
+    <div class="example-table-wrap">
+      <table class="example-table">
+        <thead><tr><th>Factor</th><th>Uyir — Mother</th><th>Jada — Property</th></tr></thead>
+        <tbody>
+          <tr><td>Relevant significator</td><td>Moon</td><td>Mars is an important property significator; also consider the 4th lord and other asset indicators.</td></tr>
+          <tr><td>Hypothetical condition</td><td>Moon and maternal indicators are well-supported</td><td>Mars and property indicators are afflicted or poorly supported</td></tr>
+          <tr><td>Possible interpretation</td><td>Maternal care or the relationship may be supported</td><td>Property acquisition or ownership may encounter obstacles</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="method-note"><strong>How to assess strength:</strong> consider the house and its lord, the natural kāraka, dignity, Shadbala where available, conjunctions, aspects, relevant supporting houses, divisional charts and daśā timing. Exaltation does not guarantee every result, and debilitation does not automatically deny it.</p>
+    <p class="method-note"><strong>Tradition note:</strong> Uyir/Jada is a useful analytical distinction, but there is no single universally standardized classical Jyotiṣa score that measures these categories independently. The examples are illustrative, not fixed predictions.</p>
+  </section>
+
+  <div id="cards" class="grid"></div>
+  <footer>
+    <b>Important distinction:</b> house topics describe the area of life; the house lord describes how that area functions in a specific horoscope; natural kārakas provide an additional significator layer. No single factor should be read in isolation.
+  </footer>
+</main>
+<script>
+const houses = [
+{n:1,name:"Tanu Bhāva",meaning:"Self • body • identity",groups:["kendra","trikona"],topics:["Body, constitution and vitality","Appearance, temperament and manner","Selfhood, confidence and personal initiative","Overall life direction and how one approaches the world"],uyir:'The native; living body; vitality and personal identity',jada:'Physical appearance; complexion; clothing; personal possessions and visible presentation',karaka:"Sun (soul, vitality); Lagna and Lagna lord are central",extra:"The ascendant is the chart’s starting point. Assess the sign, its lord, planets in the 1st, and aspects."},
+{n:2,name:"Dhana Bhāva",meaning:"Wealth • family • speech",groups:["maraka"],topics:["Accumulated wealth, savings and possessions","Family of origin and family resources","Speech, voice and food habits","Face, mouth, teeth and early upbringing","Values and stored resources"],uyir:'Family members; living family lineage; the voice as a living faculty',jada:'Accumulated wealth; food and stored provisions; jewels; possessions; mouth and teeth as physical structures',karaka:"Jupiter (wealth, wisdom); Mercury (speech); Venus (comforts)",extra:"A traditional maraka house, especially considered alongside the 7th; this does not by itself predict death."},
+{n:3,name:"Sahaja Bhāva",meaning:"Courage • effort • siblings",groups:["upachaya"],topics:["Courage, initiative and self-effort","Younger siblings and peer-like relationships","Communication, writing and practical skills","Hands, arms, shoulders and short journeys","Hobbies, persistence and enterprise"],uyir:'Younger siblings; living peers; courage and initiative expressed by a person',jada:'Written messages; documents; tools; instruments; hands/arms as physical structures; short-distance conveyances',karaka:"Mars (courage, siblings); Mercury (communication)",extra:"An upachaya house: results are often described as developing through effort, practice and time."},
+{n:4,name:"Sukha Bhāva",meaning:"Home • mother • inner peace",groups:["kendra"],topics:["Mother and nurturing environment","Home, property, land and vehicles","Formal foundations of education and learning environment","Emotional security, comfort and private life","Chest and heart region in traditional body mapping"],uyir:'Mother; caregivers; emotional life and the living household',jada:'House; land; fields; buildings; vehicles; furniture; fixed property',karaka:"Moon (mother, mind); Venus (vehicles, comforts); Mars (land/property)",extra:"The 4th is a kendra and is often examined for domestic stability, roots and inner contentment."},
+{n:5,name:"Putra Bhāva",meaning:"Children • intelligence • merit",groups:["trikona"],topics:["Children, conception and parenting themes","Intelligence, discernment and learning","Creativity, performance and authorship","Mantra, devotion, pūrva-puṇya (past-life merit)","Romance, speculation and play"],uyir:'Children; students; intelligence and creative capacity in living beings',jada:'Books; manuscripts; educational materials; works of art; creative products',karaka:"Jupiter (children, wisdom); Sun (creative intelligence in some traditions)",extra:"A trikona house traditionally associated with dharma, merit, learning and creative expression."},
+{n:6,name:"Ari / Ṛṇa Bhāva",meaning:"Illness • debts • service",groups:["upachaya","dusthana"],topics:["Disease, injuries and recovery challenges","Debts, disputes and daily obligations","Competition, opponents and litigation","Employees, service, routine and discipline","Pets and small animals in some traditions"],uyir:'Enemies and competitors; employees or service workers; illness in a living body',jada:'Debts; disputes and case files; medicines; tools used in service; work routines and obligations',karaka:"Mars (conflict, effort); Saturn (labor, service); Mercury (analysis)",extra:"An upachaya and dusthāna. Interpret health topics carefully; a chart is not a substitute for medical advice."},
+{n:7,name:"Yuvati Bhāva",meaning:"Marriage • partnership • others",groups:["kendra","maraka"],topics:["Marriage and long-term partnerships","Business partners, contracts and agreements","Public dealings, clients and negotiation","Open opponents and one-to-one dynamics","Spouse and relationship expectations"],uyir:'Spouse; business partners; clients and other people encountered one-to-one',jada:'Contracts; agreements; business arrangements; trade transactions and partnership assets',karaka:"Venus (relationship significator); Jupiter is also used for husband in some traditional female-chart readings",extra:"A kendra and traditional primary maraka reference. The 7th is 12th from the 8th; longevity cannot be judged from this factor alone."},
+{n:8,name:"Randhra / Āyus Bhāva",meaning:"Longevity • change • hidden matters",groups:["dusthana"],topics:["Longevity assessment in traditional Jyotiṣa","Sudden changes, crises and vulnerability","Inheritance, legacies and shared assets","Secrets, research, occult studies and mysteries","Transformation, chronic themes and the unexpected"],uyir:"The native's life span; vulnerable life processes; people connected through inheritance",jada:'Inheritance; wills; hidden assets; secrets, research materials and other concealed resources',karaka:"Saturn (longevity, endurance); Ketu (detachment/occult in some lineages)",extra:"A dusthāna associated with deep change and hidden matters. Longevity rules are complex and should not be reduced to one placement."},
+{n:9,name:"Dharma Bhāva",meaning:"Dharma • fortune • teachers",groups:["trikona"],topics:["Dharma, ethics, faith and worldview","Father, mentors, teachers and guides","Higher education, philosophy and scripture","Fortune, blessings and long-distance journeys","Pilgrimage, spiritual practice and principles"],uyir:'Father; teachers; mentors; guides and living lineage of instruction',jada:'Religious texts; scriptures; institutions of learning; pilgrimage routes and long-distance travel arrangements',karaka:"Jupiter (dharma, teachers, wisdom); Sun (father/authority in many traditions)",extra:"A major trikona house associated with guidance, higher knowledge, fortune and principles."},
+{n:10,name:"Karma Bhāva",meaning:"Career • action • status",groups:["kendra","upachaya"],topics:["Profession, career and public role","Actions, responsibilities and achievement","Authority, reputation, recognition and status","Leadership, administration and contribution","Work in the wider world"],uyir:'Employer; authority figures; colleagues; the native acting in a profession or public role',jada:'Profession, office, organization, tools of work, official position, public status and tangible achievements',karaka:"Saturn (work, service); Sun (authority); Mercury (trade/skills); Jupiter (counsel)",extra:"A kendra and upachaya. Career analysis also considers the 10th lord, planets in the 10th, daśā and relevant divisional charts."},
+{n:11,name:"Lābha Bhāva",meaning:"Gains • networks • ambitions",groups:["upachaya"],topics:["Income, gains and fulfillment of aims","Elder siblings and supportive circles","Friends, networks, communities and patrons","Rewards from career and large organizations","Desires, aspirations and opportunities"],uyir:'Elder siblings; friends; supporters; patrons and social networks of people',jada:'Income and gains; rewards; assets received; organizations, groups and material fulfilment of aims',karaka:"Jupiter (expansion/gains); Saturn (large networks); Mercury (commerce)",extra:"An upachaya associated with gains and networks; distinguish income/gains here from accumulated wealth of the 2nd."},
+{n:12,name:"Vyaya Bhāva",meaning:"Loss • release • foreign lands",groups:["dusthana"],topics:["Expenses, outflow and letting go","Sleep, bed comforts and retreat","Foreign residence, distant places and isolation","Hospitals, monasteries, ashrams and secluded settings","Liberation, contemplation, charity and spiritual release"],uyir:"Living beings in seclusion or institutions; sleep and the body's need for rest; spiritual withdrawal",jada:'Expenses; losses; foreign places; beds; hospitals, monasteries, retreats and secluded buildings',karaka:"Saturn (seclusion, hardship); Ketu (mokṣa); Venus (bed comforts)",extra:"A dusthāna with both challenging and spiritual interpretations; expenditure may be wasteful, necessary, charitable or purposeful."}
+];
+const groupLabels={kendra:"Kendra",trikona:"Trikona",upachaya:"Upachaya",dusthana:"Dusthāna",maraka:"Maraka"};
+function card(h){
+ const pills=h.groups.map(g=>`<span class="pill ${g==='maraka'?'gold':(['kendra','trikona'].includes(g)?'purple':'')}">${groupLabels[g]}</span>`).join(" ");
+ return `<article class="card" data-n="${h.n}" data-groups="${h.groups.join(" ")}" data-search="${(h.name+' '+h.meaning+' '+h.topics.join(' ')+' '+h.uyir+' '+h.jada+' '+h.karaka+' '+h.extra).toLowerCase()}">
+ <div class="cardtop"><div><div class="house">House ${h.n}</div><h2>${h.name}</h2><div class="sanskrit">${h.meaning}</div></div><div style="font-size:30px;font-weight:850;color:#d8d2fb">${String(h.n).padStart(2,'0')}</div></div>
+ <div class="legend">${pills}</div>
+ <div class="section"><b>Principal kārakatvas</b><ul>${h.topics.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+ <div class="uj-wrap">
+ <div class="uj-title">Uyir vs Jada Kārakatvas</div>
+ <table class="uj-table" aria-label="Uyir and Jada significations for house ${h.n}">
+  <thead><tr><th><span class="uj-label uyir-label">Uyir • உயிர்</span>Living / animate</th><th><span class="uj-label jada-label">Jada • ஜடம்</span>Non-living / material</th></tr></thead>
+  <tbody><tr><td>${h.uyir}</td><td>${h.jada}</td></tr></tbody>
+ </table>
+ </div>
+ <div class="section"><b>Natural significators</b>${h.karaka}</div>
+ <div class="section note">${h.extra}</div></article>`;
+}
+const container=document.getElementById('cards');
+container.innerHTML=houses.map(card).join('');
+function filterCards(){
+ const q=document.getElementById('search').value.trim().toLowerCase(),g=document.getElementById('group').value;
+ document.querySelectorAll('.card').forEach(el=>{
+  const matchQ=el.dataset.search.includes(q)||el.querySelector('h2').textContent.toLowerCase().includes(q);
+  const matchG=g==='all'||el.dataset.groups.split(' ').includes(g);
+  el.style.display=matchQ&&matchG?'':'none';
+ });
+}
+function resetFilters(){document.getElementById('search').value='';document.getElementById('group').value='all';filterCards()}
+document.getElementById('search').addEventListener('input',filterCards);
+document.getElementById('group').addEventListener('change',filterCards);
+</script>
+</body>
+</html>
