@@ -52,7 +52,7 @@ th{color:var(--ac)}
 <div><label>Speed (frames/sec)</label><select id="sp"><option>1</option><option>2</option><option selected>5</option><option>10</option><option>20</option></select></div>
 </div>
 <input id="sl" type="range" min="0" max="0" value="0" aria-label="Timeline">
-<div class="bt"><button id="pl">Play</button><button id="pv">&lt; Step</button><button id="nx">Step &gt;</button><button id="rs">Reset</button></div></div>
+<div class="bt"><button id="pb">Play</button><button id="pv">&lt; Step</button><button id="nx">Step &gt;</button><button id="rs">Reset</button></div></div>
 <div class="card"><div class="v"><div id="ch"></div><div><table><thead><tr><th>Planet</th><th>Sign</th><th>Degree</th><th>Nakshatra</th></tr></thead><tbody id="tb"></tbody></table><h2 style="margin-top:12px">Sign changes (ingress)</h2><div id="lg" class="n"></div></div></div></div>
 <p class="n">Each step starts at the start time you set (local time of the chosen place, shown on the chart for hourly steps); the end date is reached at the same time of day. Lagna is computed for the chosen place and moves about one sign every two hours. Positions use compact approximate orbital elements. The Moon is accurate to a few arcminutes; other planets to about an arcminute or two. Rahu and Ketu are the mean nodes. Date range: 1800 to 2050 recommended.</p>
 </main>
@@ -82,7 +82,7 @@ for(const [s,,k] of K)if(k&&s!='Su')rt[s]=((geo(k,T+1/36525)-geo(k,T)+540)%360)-
 const POS={11:[0,0],0:[0,1],1:[0,2],2:[0,3],10:[1,0],3:[1,3],9:[2,0],4:[2,3],8:[3,0],7:[3,1],6:[3,2],5:[3,3]};
 const dm=l=>{const d=l%30;return Math.floor(d)+'°'+String(Math.floor((d%1)*60)).padStart(2,'0')+'’'};
 function draw(P,rt,lbl,CH,cht){CH=CH||{};const by={};for(const [s] of K)(by[Math.floor(P[s]/30)]=by[Math.floor(P[s]/30)]||[]).push(`<tspan fill="${COL[s]}"${CH[s]?' class="gl"':''}>${s}${rt[s]?'℞':''} ${dm(P[s])}</tspan>`);let g='';
-for(const s in POS){const [r,c]=POS[s],x=c*100+10,y=r*100+10;const hc=Object.keys(CH).filter(k=>Math.floor(P[k]/30)==+s);g+=`<rect x="${x}" y="${y}" width="100" height="100" fill="${hc.length?COL[hc[0]]:'none'}" fill-opacity=".25" class="${hc.length?'bx':''}" stroke="var(--ac)" stroke-width="1.2"/>`;
+for(const s in POS){const [r,c]=POS[s],x=c*100+10,y=r*100+10;g+=`<rect x="${x}" y="${y}" width="100" height="100" fill="none" stroke="var(--ac)" stroke-width="1.2"/>`;
 let L=(by[s]||[]).slice();if(+s==Math.floor(P.As/30)){g+=`<line x1="${x}" y1="${y+24}" x2="${x+24}" y2="${y}" stroke="var(--ac)" stroke-width="1.5"/>`;L.unshift(`<tspan fill="var(--ac)"${CH.As?' class="gl"':''}>Asc ${dm(P.As)}</tspan>`)}if(L.length>4){const q=[];for(let i=0;i<L.length;i+=2)q.push(L.slice(i,i+2).join(' '));L=q}
 const big=L.length<=3;L.forEach((t,i)=>g+=`<text x="${x+50}" y="${y+(big?38:30)+i*(big?17:16)}" text-anchor="middle" font-size="${big?13:12}" fill="var(--fg)">${t}</text>`)}
 g+=`<text x="210" y="205" text-anchor="middle" font-size="18" fill="var(--ac)" font-weight="bold">${lbl}</text><text x="210" y="226" text-anchor="middle" font-size="11" fill="var(--mu)">${PLN} · Lahiri</text>${(cht||[]).map((t,i)=>`<text x="210" y="${250+i*16}" text-anchor="middle" font-size="12" font-weight="bold" fill="var(--ac)">${t}</text>`).join('')}`;
@@ -101,10 +101,10 @@ prev=P;$('sl').value=k}
 function setup(){stop();$('y1').value=$('d1').value.slice(0,4);$('y2').value=$('d2').value.slice(0,4);const a=$('d1').value,b=$('d2').value;if(!a||!b)return;const[y1,m1,d1]=a.split('-').map(Number),[y2,m2,d2]=b.split('-').map(Number);
 LAT=+$('la').value;LON=+$('lo').value;TZ=+$('tz').value;PLN=$('pl').value=='c'?'Custom':$('pl').selectedOptions[0].textContent;const[hh,mi]=($('tm').value||'00:00').split(':').map(Number),off=(hh+mi/60-TZ)/24;J0=jd(y1,m1,d1)+off;const J1=jd(y2,m2,d2)+off;if(J1<J0){alert('End date must be after start date');return}
 N=Math.floor((J1-J0)/step());$('sl').max=N;i=0;prev=null;$('lg').innerHTML='';show(0,false)}
-function stop(){clearInterval(timer);timer=null;$('pl').textContent='Play'}
-function play(){if(timer){stop();return}if(i>=N){i=0;prev=null;$('lg').innerHTML=''}$('pl').textContent='Pause';
+function stop(){clearInterval(timer);timer=null;$('pb').textContent='Play'}
+function play(){if(timer){stop();return}if(i>=N){i=0;prev=null;$('lg').innerHTML=''}$('pb').textContent='Pause';
 timer=setInterval(()=>{if(i>=N){stop();return}i++;show(i,true)},1000/+$('sp').value)}
-$('pl').onclick=play;$('rs').onclick=setup;
+$('pb').onclick=play;$('rs').onclick=setup;
 $('nx').onclick=()=>{stop();if(i<N){i++;show(i,true)}};$('pv').onclick=()=>{stop();if(i>0){i--;prev=null;show(i,false)}};
 $('sl').oninput=()=>{i=+$('sl').value;prev=null;show(i,false)};
 $('sp').onchange=()=>{if(timer){stop();play()}};
