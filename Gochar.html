@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Planet Movement Replay</title>
+<style>
+:root{--bg:#fbf7ef;--fg:#2b2118;--card:#fff;--ac:#a4471b;--bd:#d9c9ae;--mu:#7a6a58;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17130f;--fg:#efe6d6;--card:#221c15;--ac:#e8985e;--bd:#4a3d2d;--mu:#a89880;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17130f;--fg:#efe6d6;--card:#221c15;--ac:#e8985e;--bd:#4a3d2d;--mu:#a89880;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 Georgia,'Times New Roman',serif}
+main{max-width:980px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.5rem;margin:.2em 0;color:var(--ac)}
+h2{font-size:1.05rem;margin:0 0 8px;color:var(--ac)}
+p.s,.n{color:var(--mu);margin:0 0 14px;font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:14px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+label{display:block;font-size:.8rem;color:var(--mu)}
+input,select,button{width:100%;font:inherit;padding:7px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)}
+button{background:var(--ac);color:#fff;border:0;cursor:pointer;font-weight:bold}
+.bt{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+input[type=range]{padding:0;margin-top:12px}
+.v{display:flex;flex-wrap:wrap;gap:14px}
+.v>div:first-child{flex:1 1 340px;max-width:460px}
+.v>div:last-child{flex:1 1 260px;overflow-x:auto}
+svg{width:100%;height:auto;display:block}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border-bottom:1px solid var(--bd);padding:4px 8px;text-align:left;white-space:nowrap}
+th{color:var(--ac)}
+#lg{max-height:150px;overflow-y:auto;font-size:.85rem;margin-top:8px}
+.gl{font-weight:bold;text-decoration:underline;animation:pg .6s ease-in-out infinite alternate}
+@keyframes pg{from{opacity:1}to{opacity:.35}}
+.bx{animation:bg .6s ease-in-out infinite alternate}
+@keyframes bg{from{fill-opacity:.4}to{fill-opacity:.1}}
+.hl td{background:rgba(232,152,94,.28)}
+</style></head><body><main>
+<h1>Planet Movement Replay</h1>
+<p class="s">Watch the sidereal (Lahiri) planetary positions move through the South Indian chart between two dates.</p>
+<div class="card"><div class="f">
+<div><label>Start year (type to search)</label><input id="y1" list="yl" inputmode="numeric" placeholder="e.g. 1990" autocomplete="off"></div>
+<div><label>Start date</label><input id="d1" type="date"></div>
+<div><label>Start time (local)</label><input id="tm" type="time" value="06:00"></div>
+<div><label>Place</label><select id="pl"></select></div>
+<div><label>Latitude (N+)</label><input id="la" type="number" step="0.0001"></div>
+<div><label>Longitude (E+)</label><input id="lo" type="number" step="0.0001"></div>
+<div><label>UTC offset (hours)</label><input id="tz" type="number" step="0.25" value="5.5"></div>
+<div><label>End year (type to search)</label><input id="y2" list="yl" inputmode="numeric" placeholder="e.g. 2025" autocomplete="off"></div>
+<div><label>End date</label><input id="d2" type="date"></div>
+<datalist id="yl"></datalist>
+<div><label>Jump interval</label><input id="iv" type="number" min="1" value="1"></div>
+<div><label>Unit</label><select id="un"><option value="0.0416667">Hours</option><option value="1" selected>Days</option><option value="7">Weeks</option><option value="30.4375">Months</option><option value="365.25">Years</option></select></div>
+<div><label>Speed (frames/sec)</label><select id="sp"><option>1</option><option>2</option><option selected>5</option><option>10</option><option>20</option></select></div>
+</div>
+<input id="sl" type="range" min="0" max="0" value="0" aria-label="Timeline">
+<div class="bt"><button id="pl">Play</button><button id="pv">&lt; Step</button><button id="nx">Step &gt;</button><button id="rs">Reset</button></div></div>
+<div class="card"><div class="v"><div id="ch"></div><div><table><thead><tr><th>Planet</th><th>Sign</th><th>Degree</th><th>Nakshatra</th></tr></thead><tbody id="tb"></tbody></table><h2 style="margin-top:12px">Sign changes (ingress)</h2><div id="lg" class="n"></div></div></div></div>
+<p class="n">Each step starts at the start time you set (local time of the chosen place, shown on the chart for hourly steps); the end date is reached at the same time of day. Lagna is computed for the chosen place and moves about one sign every two hours. Positions use compact approximate orbital elements. The Moon is accurate to a few arcminutes; other planets to about an arcminute or two. Rahu and Ketu are the mean nodes. Date range: 1800 to 2050 recommended.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id),R=Math.PI/180,m360=x=>((x%360)+360)%360;
+const SG=["Mesha","Vrishabha","Mithuna","Kataka","Simha","Kanya","Tula","Vrischika","Dhanus","Makara","Kumbha","Meena"];
+const NK=["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const EL={me:[.38709927,.00000037,.20563593,.00001906,7.00497902,-.00594749,252.2503235,149472.67411175,77.45779628,.16047689,48.33076593,-.12534081],
+ve:[.72333566,.0000039,.00677672,-.00004107,3.39467605,-.0007889,181.9790995,58517.81538729,131.60246718,.00268329,76.67984255,-.27769418],
+em:[1.00000261,.00000562,.01671123,-.00004392,-.00001531,-.01294668,100.46457166,35999.37244981,102.93768193,.32327364,0,0],
+ma:[1.52371034,.00001847,.0933941,.00007882,1.84969142,-.00813131,-4.55343205,19140.30268499,-23.94362959,.44441088,49.55953891,-.29257343],
+ju:[5.202887,-.00011607,.04838624,-.00013253,1.30439695,-.00183714,34.39644051,3034.74612775,14.72847983,.21252668,100.47390909,.20469106],
+sa:[9.53667594,-.0012506,.05386179,-.00050991,2.48599187,.00193609,49.95424423,1222.49362201,92.59887831,-.41897216,113.66242448,-.28867794]};
+const AY0=23.853,sd=l=>m360(l-AY0);
+function hel(k,T){const q=EL[k],a=q[0]+q[1]*T,e=q[2]+q[3]*T,I=(q[4]+q[5]*T)*R,L=q[6]+q[7]*T,w=q[8]+q[9]*T,O=q[10]+q[11]*T;
+const M=m360(L-w)*R;let E=M;for(let i=0;i<14;i++)E=M+e*Math.sin(E);
+const xp=a*(Math.cos(E)-e),yp=a*Math.sqrt(1-e*e)*Math.sin(E),om=(w-O)*R,Or=O*R,cw=Math.cos(om),sw=Math.sin(om),cO=Math.cos(Or),sO=Math.sin(Or),cI=Math.cos(I);
+return[(cw*cO-sw*sO*cI)*xp+(-sw*cO-cw*sO*cI)*yp,(cw*sO+sw*cO*cI)*xp+(-sw*sO+cw*cO*cI)*yp]}
+function geo(k,T){const e=hel('em',T);if(k=='su')return m360(Math.atan2(-e[1],-e[0])/R);const p=hel(k,T);return m360(Math.atan2(p[1]-e[1],p[0]-e[0])/R)}
+function moonTrop(T){const r=x=>x*R,L=218.3164477+481267.88123421*T,D=r(297.8501921+445267.1114034*T),M=r(357.5291092+35999.0502909*T),P=r(134.9633964+477198.8675055*T),F=r(93.272095+483202.0175233*T);
+return m360(L+6.288774*Math.sin(P)+1.274027*Math.sin(2*D-P)+.658314*Math.sin(2*D)+.213618*Math.sin(2*P)-.185116*Math.sin(M)-.114332*Math.sin(2*F)+.058793*Math.sin(2*D-2*P)+.057066*Math.sin(2*D-M-P)+.053322*Math.sin(2*D+P)+.045758*Math.sin(2*D-M)-.040923*Math.sin(M-P)-.03472*Math.sin(D)-.030383*Math.sin(M+P)+.015327*Math.sin(2*D-2*F)-.012528*Math.sin(P+2*F)+.01098*Math.sin(P-2*F)+.010675*Math.sin(4*D-P)+.010034*Math.sin(3*P))}
+function jd(y,m,d){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5}
+const K=[['Su','Sun','su'],['Mo','Moon'],['Ma','Mars','ma'],['Me','Mercury','me'],['Ju','Jupiter','ju'],['Ve','Venus','ve'],['Sa','Saturn','sa'],['Ra','Rahu'],['Ke','Ketu']];
+function at(J){const T=(J-2451545)/36525,ay=AY0+1.39697*T,P={},rt={};
+for(const [s,,k] of K)if(k)P[s]=sd(geo(k,T));P.Mo=m360(moonTrop(T)-ay);P.Ra=m360(125.0445479-1934.1362891*T-ay);P.Ke=m360(P.Ra+180);
+for(const [s,,k] of K)if(k&&s!='Su')rt[s]=((geo(k,T+1/36525)-geo(k,T)+540)%360)-180<0;rt.Ra=rt.Ke=true;const eps=(23.439291-.0130042*T)*R,th=m360(280.46061837+360.98564736629*(J-2451545)+LON)*R;P.As=m360(Math.atan2(Math.cos(th),-(Math.sin(th)*Math.cos(eps)+Math.tan(LAT*R)*Math.sin(eps)))/R-ay);return{P,rt}}
+const POS={11:[0,0],0:[0,1],1:[0,2],2:[0,3],10:[1,0],3:[1,3],9:[2,0],4:[2,3],8:[3,0],7:[3,1],6:[3,2],5:[3,3]};
+const dm=l=>{const d=l%30;return Math.floor(d)+'°'+String(Math.floor((d%1)*60)).padStart(2,'0')+'’'};
+function draw(P,rt,lbl,CH,cht){CH=CH||{};const by={};for(const [s] of K)(by[Math.floor(P[s]/30)]=by[Math.floor(P[s]/30)]||[]).push(`<tspan fill="${COL[s]}"${CH[s]?' class="gl"':''}>${s}${rt[s]?'℞':''} ${dm(P[s])}</tspan>`);let g='';
+for(const s in POS){const [r,c]=POS[s],x=c*100+10,y=r*100+10;const hc=Object.keys(CH).filter(k=>Math.floor(P[k]/30)==+s);g+=`<rect x="${x}" y="${y}" width="100" height="100" fill="${hc.length?COL[hc[0]]:'none'}" fill-opacity=".25" class="${hc.length?'bx':''}" stroke="var(--ac)" stroke-width="1.2"/>`;
+let L=(by[s]||[]).slice();if(+s==Math.floor(P.As/30)){g+=`<line x1="${x}" y1="${y+24}" x2="${x+24}" y2="${y}" stroke="var(--ac)" stroke-width="1.5"/>`;L.unshift(`<tspan fill="var(--ac)"${CH.As?' class="gl"':''}>Asc ${dm(P.As)}</tspan>`)}if(L.length>4){const q=[];for(let i=0;i<L.length;i+=2)q.push(L.slice(i,i+2).join(' '));L=q}
+const big=L.length<=3;L.forEach((t,i)=>g+=`<text x="${x+50}" y="${y+(big?38:30)+i*(big?17:16)}" text-anchor="middle" font-size="${big?13:12}" fill="var(--fg)">${t}</text>`)}
+g+=`<text x="210" y="205" text-anchor="middle" font-size="18" fill="var(--ac)" font-weight="bold">${lbl}</text><text x="210" y="226" text-anchor="middle" font-size="11" fill="var(--mu)">${PLN} · Lahiri</text>${(cht||[]).map((t,i)=>`<text x="210" y="${250+i*16}" text-anchor="middle" font-size="12" font-weight="bold" fill="var(--ac)">${t}</text>`).join('')}`;
+return`<svg viewBox="0 0 420 420" font-family="Georgia,serif" role="img" aria-label="Planet positions on ${lbl}">${g}</svg>`}
+const COL={Su:'#ff8c00',Mo:'#6aa0e0',Ma:'#e0443a',Me:'#2fb36b',Ju:'#c8a400',Ve:'#d867b0',Sa:'#8a7fb0',Ra:'#8c8c8c',Ke:'#b5714f',As:'#a4471b'},NAME={};K.forEach(x=>NAME[x[0]]=x[1]);
+let RC={},J0=0,N=0,i=0,timer=null,prev=null,LAT=13.0827,LON=80.2707,TZ=5.5,PLN='Chennai';
+const step=()=>Math.max(+$('iv').value||1,.0001)*+$('un').value;
+const lt=J=>new Date((J+TZ/24-2440587.5)*864e5).toISOString(),ds=J=>lt(J).slice(0,10);
+function show(k,log){const J=J0+k*step(),{P,rt}=at(J);if(!prev)RC={};else for(const s of [...K.map(x=>x[0]),'As'])if((s!='As'||step()<=.25)&&Math.floor(prev[s]/30)!=Math.floor(P[s]/30))RC[s]={k,t:(s=='As'?'Lagna':NAME[s])+' → '+SG[Math.floor(P[s]/30)]};
+const H=Math.max(2,+$('sp').value),CH={},cht=[];for(const s in RC)if(k>=RC[s].k&&k-RC[s].k<H){CH[s]=1;cht.push(RC[s].t)}
+if(cht.length>3){const n=cht.length-3;cht.length=3;cht.push('+'+n+' more')}
+$('ch').innerHTML=draw(P,rt,ds(J)+(step()<1?' '+lt(J).slice(11,16):''),CH,cht);
+$('tb').innerHTML=`<tr${CH.As?' class="hl"':''}><td><b>Lagna</b></td><td>${SG[Math.floor(P.As/30)]}</td><td>${dm(P.As)}</td><td>${NK[Math.floor(P.As/(360/27))]}</td></tr>`+K.map(([s,n])=>{const l=P[s],nk=Math.floor(l/(360/27)),pd=Math.floor((l%(360/27))/(360/108))+1;return`<tr${CH[s]?' class="hl"':''}><td style="color:${COL[s]};font-weight:bold">${n}${rt[s]?' ℞':''}</td><td>${SG[Math.floor(l/30)]}</td><td>${dm(l)}</td><td>${NK[nk]} ${pd}</td></tr>`}).join('');
+if(log&&prev&&step()<=.25&&Math.floor(prev.As/30)!=Math.floor(P.As/30))$('lg').insertAdjacentHTML('afterbegin',`<div>${lt(J).slice(0,16).replace('T',' ')}: Lagna rises ${SG[Math.floor(P.As/30)]}</div>`);if(log&&prev)for(const [s,n] of K){if(s=='Mo')continue;const a=Math.floor(prev[s]/30),b=Math.floor(P[s]/30);if(a!=b)$('lg').insertAdjacentHTML('afterbegin',`<div>${lt(J).slice(0,16).replace('T',' ')}: ${n} enters ${SG[b]}</div>`)}
+prev=P;$('sl').value=k}
+function setup(){stop();$('y1').value=$('d1').value.slice(0,4);$('y2').value=$('d2').value.slice(0,4);const a=$('d1').value,b=$('d2').value;if(!a||!b)return;const[y1,m1,d1]=a.split('-').map(Number),[y2,m2,d2]=b.split('-').map(Number);
+LAT=+$('la').value;LON=+$('lo').value;TZ=+$('tz').value;PLN=$('pl').value=='c'?'Custom':$('pl').selectedOptions[0].textContent;const[hh,mi]=($('tm').value||'00:00').split(':').map(Number),off=(hh+mi/60-TZ)/24;J0=jd(y1,m1,d1)+off;const J1=jd(y2,m2,d2)+off;if(J1<J0){alert('End date must be after start date');return}
+N=Math.floor((J1-J0)/step());$('sl').max=N;i=0;prev=null;$('lg').innerHTML='';show(0,false)}
+function stop(){clearInterval(timer);timer=null;$('pl').textContent='Play'}
+function play(){if(timer){stop();return}if(i>=N){i=0;prev=null;$('lg').innerHTML=''}$('pl').textContent='Pause';
+timer=setInterval(()=>{if(i>=N){stop();return}i++;show(i,true)},1000/+$('sp').value)}
+$('pl').onclick=play;$('rs').onclick=setup;
+$('nx').onclick=()=>{stop();if(i<N){i++;show(i,true)}};$('pv').onclick=()=>{stop();if(i>0){i--;prev=null;show(i,false)}};
+$('sl').oninput=()=>{i=+$('sl').value;prev=null;show(i,false)};
+$('sp').onchange=()=>{if(timer){stop();play()}};
+['d1','d2','iv','un','tm','la','lo','tz'].forEach(id=>$(id).onchange=setup);
+const TN=[["Chennai",13.0827,80.2707],["Coimbatore",11.0168,76.9558],["Madurai",9.9252,78.1198],["Tiruchirappalli",10.7905,78.7047],["Salem",11.6643,78.146],["Tirunelveli",8.7139,77.7567],["Tiruppur",11.1085,77.3411],["Erode",11.341,77.7172],["Vellore",12.9165,79.1325],["Thoothukudi",8.7642,78.1348],["Thanjavur",10.787,79.1378],["Dindigul",10.3673,77.9803],["Kanchipuram",12.8342,79.7036],["Kumbakonam",10.9617,79.3881],["Karur",10.9601,78.0766],["Nagercoil",8.1833,77.4119],["Cuddalore",11.748,79.7714],["Hosur",12.7409,77.8253],["Tiruvannamalai",12.2253,79.0747],["Sivakasi",9.4533,77.7979],["Rajapalayam",9.4511,77.5561],["Pudukkottai",10.3833,78.8001],["Ramanathapuram",9.3639,78.8395],["Rameswaram",9.2876,79.3129],["Namakkal",11.2189,78.1677],["Karaikudi",10.0667,78.7833],["Kodaikanal",10.2381,77.4892],["Udhagamandalam (Ooty)",11.4102,76.695],["Nagapattinam",10.7672,79.8449],["Chidambaram",11.3993,79.6914],["Villupuram",11.9401,79.4861],["Mayiladuthurai",11.1018,79.652],["Palani",10.45,77.5167],["Theni",10.0104,77.4768],["Virudhunagar",9.585,77.957],["Tiruchendur",8.4955,78.1203],["Pollachi",10.6609,77.0048],["Arakkonam",13.084,79.67],["Ambur",12.7916,78.7167],["Krishnagiri",12.5186,78.2137],["Dharmapuri",12.1211,78.1582],["Perambalur",11.2342,78.8808],["Ariyalur",11.1401,79.0786],["Tenkasi",8.9594,77.3152],["Thiruvarur",10.7661,79.6344]];
+const IN=[["Mumbai",19.076,72.8777],["Delhi",28.6139,77.209],["Bengaluru",12.9716,77.5946],["Hyderabad",17.385,78.4867],["Kolkata",22.5726,88.3639],["Pune",18.5204,73.8567],["Ahmedabad",23.0225,72.5714],["Jaipur",26.9124,75.7873],["Lucknow",26.8467,80.9462],["Kochi",9.9312,76.2673],["Thiruvananthapuram",8.5241,76.9366],["Kozhikode",11.2588,75.7804],["Visakhapatnam",17.6868,83.2185],["Vijayawada",16.5062,80.648],["Tirupati",13.6288,79.4192],["Mysuru",12.2958,76.6394],["Mangaluru",12.9141,74.856],["Puducherry",11.9416,79.8083],["Bhopal",23.2599,77.4126],["Indore",22.7196,75.8577],["Nagpur",21.1458,79.0882],["Surat",21.1702,72.8311],["Patna",25.5941,85.1376],["Bhubaneswar",20.2961,85.8245],["Ranchi",23.3441,85.3096],["Raipur",21.2514,81.6296],["Chandigarh",30.7333,76.7794],["Amritsar",31.634,74.8723],["Kanpur",26.4499,80.3319],["Varanasi",25.3176,82.9739],["Dehradun",30.3165,78.0322],["Srinagar",34.0837,74.7973],["Guwahati",26.1445,91.7362],["Panaji",15.4909,73.8278]];
+(function(){let h='<option value="c">Custom (enter lat/long)</option><optgroup label="Tamil Nadu">';TN.forEach((c,k)=>h+=`<option value="t${k}">${c[0]}</option>`);h+='</optgroup><optgroup label="Major Indian cities">';IN.forEach((c,k)=>h+=`<option value="i${k}">${c[0]}</option>`);$('pl').innerHTML=h+'</optgroup>';
+function sel(){const v=$('pl').value;if(v=='c')return;const c=(v[0]=='t'?TN:IN)[+v.slice(1)];$('la').value=c[1];$('lo').value=c[2];$('tz').value=5.5}
+$('pl').onchange=()=>{sel();setup()};$('pl').value='t0';sel()})();
+(function(){let h='';for(let y=1800;y<=2100;y++)h+=`<option value="${y}">`;$('yl').innerHTML=h;
+const ch=(y,d)=>{const f=()=>{const n=parseInt($(y).value,10);if(!(n>=1&&n<=9999))return;const v=$(d).value||'2000-01-01';let md=v.slice(4);if(md=='-02-29'&&!(n%4==0&&(n%100||n%400==0)))md='-02-28';$(d).value=String(n).padStart(4,'0')+md;setup()};$(y).onchange=f;$(y).oninput=()=>{if(/^\d{4}$/.test($(y).value))f()}};ch('y1','d1');ch('y2','d2')})();
+const t=new Date(),e=new Date(t.getTime()+365*864e5);$('d1').value=t.toISOString().slice(0,10);$('d2').value=e.toISOString().slice(0,10);$('un').value='7';setup();
+</script></body></html>
