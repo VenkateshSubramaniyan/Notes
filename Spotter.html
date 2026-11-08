@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nakshatra Sky Spotter</title><link rel="icon" href="data:,">
+<style>
+:root{--bg:#02040b;--fg:#e9edff;--mut:#97a2cf;--acc:#ffd48a;--card:rgba(8,12,30,.74)}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:Georgia,"Times New Roman",serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hd{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:16px;font:italic 15px Georgia,serif;color:var(--mut)}
+#ui{position:fixed;left:0;right:0;bottom:0;max-width:720px;margin:0 auto;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px}
+#card{background:var(--card);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px}
+#top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:26px;font-weight:600;color:var(--acc)}
+#dv{font-size:20px;color:var(--fg)}
+#wt{font:13px system-ui,sans-serif;color:var(--mut);margin-top:2px}
+#tp{margin:8px 0 0;font-size:16px;line-height:1.5;max-width:60ch}
+#bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--mut)}
+button{font:inherit;color:var(--fg);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:7px 12px;cursor:pointer}
+button:hover{background:rgba(255,255,255,.15)}button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+label{display:flex;gap:5px;align-items:center;cursor:pointer}
+#rel{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font:13px system-ui,sans-serif;color:var(--mut)}#rel button{padding:4px 9px;font-size:12px}
+#chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+#chips button{flex:none;font-size:13px;padding:5px 10px;white-space:nowrap}
+#chips button.on,#bar button.on{background:var(--acc);color:#1a1200;border-color:var(--acc)}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="hd">Spotting the 27 nakshatras</div>
+<div id="ui">
+<div id="card"><div id="top"><h1 id="nm"></h1><span id="dv"></span></div><div id="wt"></div><p id="tp"></p><div id="rel"></div></div>
+<div id="bar"><button id="m1" class="on">Nakshatras</button><button id="m2">Zodiac</button><button id="pv" aria-label="Previous">‹ Prev</button><button id="pl">Auto tour</button><button id="dg">Zodiac dive</button><button id="nx" aria-label="Next">Next ›</button>
+<label><input type="checkbox" id="k1" checked>Shape</label><label><input type="checkbox" id="k2" checked>Ecliptic + divisions</label><label><input type="checkbox" id="k3" checked>Zodiac figures</label></div>
+<div id="chips"></div></div>
+<script>
+// [name, devanagari, western ID, how to spot it, stars [RAh, Dec°, mag], polylines (star indices)]
+const NK=[
+["Ashwini","अश्विनी","β · γ · α Arietis","Look for a small trio just below Hamal, the brightest star of Aries: the horse’s head.",[[1.91,20.8,2.6],[1.89,19.3,3.9],[2.12,23.46,2]],[[1,0,2]]],
+["Bharani","भरणी","35 · 39 · 41 Arietis","A tiny, faint triangle in Aries, north of the Pleiades: the bearer.",[[2.83,27.26,3.6],[2.89,27.71,4.6],[2.95,29.0,4.5]],[[0,1,2,0]]],
+["Krittika","कृत्तिका","Pleiades · M45","A hazy little dipper of six or seven blue stars: the razor, or flame.",[[3.79,24.1,2.9],[3.82,24.05,3.6],[3.74,24.11,3.7],[3.76,24.37,3.9],[3.77,23.95,4.2],[3.75,24.47,4.3],[3.82,24.14,5]],[[5,3,2,4,0,1]]],
+["Rohini","रोहिणी","Aldebaran · Hyades","The orange eye of Taurus sits at the tip of the V-shaped Hyades: the cart.",[[4.6,16.51,0.9],[4.48,15.87,3.4],[4.33,15.63,3.6],[4.38,17.54,3.8],[4.48,19.18,3.5]],[[4,3,2,1,0]]],
+["Mrigashira","मृगशीर्षा","λ · φ¹ · φ² Orionis","A small triangle of faint stars above Orion’s shoulders: the deer’s head.",[[5.585,9.93,3.5],[5.617,9.29,4.4],[5.632,9.29,4.1]],[[0,1,2,0]]],
+["Ardra","आर्द्रा","Betelgeuse · α Orionis","The red shoulder star of Orion: the teardrop.",[[5.92,7.41,0.5]],[]],
+["Punarvasu","पुनर्वसु","Castor · Pollux","The twins of Gemini, side by side.",[[7.58,31.89,1.6],[7.76,28.03,1.1]],[[0,1]]],
+["Pushya","पुष्य","γ · δ · θ Cancri","A tiny triangle in Cancer beside the misty Beehive cluster.",[[8.72,21.47,4.7],[8.745,18.15,3.9],[8.53,18.09,4],[8.67,19.98,3.7]],[[0,1,2]]],
+["Ashlesha","आश्लेषा","δ σ η ρ ζ ε Hydrae","A coiled loop of six faint stars: the head of Hydra, the serpent.",[[8.627,5.7,4.1],[8.646,3.34,4.4],[8.72,3.4,4.3],[8.805,5.84,4.4],[8.923,5.95,3.1],[8.779,6.42,3.4]],[[0,1,2,3,4,5,0]]],
+["Magha","मघा","Regulus · Sickle of Leo","Bright Regulus anchors the backward question mark of Leo: the throne.",[[10.14,11.97,1.4],[10.12,16.76,3.5],[10.33,19.84,2],[10.28,23.77,3.4],[9.88,26,3.9],[9.76,23.77,3]],[[0,1,2,3,4,5]]],
+["Purva Phalguni","पूर्व फाल्गुनी","δ · θ Leonis","Two stars on Leo’s hindquarters: the front legs of the bed.",[[11.235,20.52,2.6],[11.24,15.43,3.3]],[[0,1]]],
+["Uttara Phalguni","उत्तर फाल्गुनी","Denebola · 93 Leonis","Denebola, Leo’s tail, and its partner: the rear legs of the bed.",[[11.82,14.57,2.1],[11.96,20.22,4.5]],[[0,1]]],
+["Hasta","हस्त","α β γ δ ε Corvi","Corvus the crow, a lopsided shape like an open palm.",[[12.14,-24.73,4],[12.17,-22.62,3],[12.26,-17.54,2.6],[12.5,-16.52,3],[12.57,-23.4,2.7]],[[0,1,2,3,4,1]]],
+["Chitra","चित्रा","Spica · α Virginis","Spica, the blue-white pearl of Virgo.",[[13.42,-11.16,1]],[]],
+["Swati","स्वाति","Arcturus · α Boötis","Follow the Big Dipper’s handle in an arc to orange Arcturus.",[[14.26,19.18,-0.05]],[]],
+["Vishakha","विशाखा","α β γ ι Librae","Libra’s four-sided arch: the triumphal gateway.",[[14.85,-16.04,2.8],[15.28,-9.38,2.6],[15.59,-14.79,3.9],[15.2,-19.79,4.5]],[[0,1,2,3,0]]],
+["Anuradha","अनुराधा","β δ π ρ Scorpii","A vertical row of stars forming the scorpion’s head: the lotus.",[[16.09,-19.81,2.6],[16,-22.62,2.3],[15.98,-26.11,2.9],[15.96,-29.21,3.9]],[[0,1,2,3]]],
+["Jyeshtha","ज्येष्ठा","Antares · σ · τ Scorpii","Red Antares, the heart of Scorpius, with a star on each side: the eldest.",[[16.49,-26.43,1],[16.35,-25.59,2.9],[16.6,-28.22,2.8]],[[1,0,2]]],
+["Mula","मूल","ε … υ Scorpii · Shaula","The scorpion’s curling tail ending in the stinger Shaula: the root.",[[16.84,-34.29,2.3],[16.86,-38.05,3],[16.9,-42.36,3.3],[17.2,-43.24,3.3],[17.62,-42.99,1.9],[17.79,-40.13,3],[17.71,-39.03,2.4],[17.56,-37.1,1.6],[17.69,-37.3,2.7]],[[0,1,2,3,4,5,6,7,8]]],
+["Purva Ashadha","पूर्वाषाढा","δ · ε Sagittarii","Two stars at the base of the Teapot: the winnowing fan.",[[18.35,-29.83,2.7],[18.4,-34.38,1.8]],[[0,1]]],
+["Uttara Ashadha","उत्तराषाढा","Nunki · Ascella","Two stars at the Teapot’s handle: the elephant’s tusk.",[[18.92,-26.3,2],[19.04,-29.88,2.6]],[[0,1]]],
+["Shravana","श्रवण","Altair · β · γ Aquilae","Altair flanked by two stars in a straight line: Vishnu’s three footprints.",[[19.77,10.61,2.7],[19.85,8.87,0.8],[19.92,6.41,3.7]],[[0,1,2]]],
+["Dhanishta","धनिष्ठा","α β γ δ ε Delphini","Delphinus the Dolphin: a small bright diamond with a tail, like a drum.",[[20.66,15.91,3.8],[20.63,14.6,3.6],[20.78,16.12,4.3],[20.72,15.07,4.4],[20.55,11.3,4]],[[1,0,2,3,1],[1,4]]],
+["Shatabhisha","शतभिषा","λ · φ · σ Aquarii","A scattered patch of faint stars, the hundred healers. It has no tidy outline, so look under dark skies.",[[22.88,-7.58,3.7],[23.24,-6.05,4.2],[22.76,-10.68,4.8],[22.59,-0.12,4],[22.36,-1.39,3.8],[22.48,-0.02,3.6]],[[2,0,1]]],
+["Purva Bhadrapada","पूर्व भाद्रपदा","Markab · Scheat","The western edge of the Great Square of Pegasus.",[[23.08,15.2,2.5],[23.06,28.08,2.4]],[[0,1]]],
+["Uttara Bhadrapada","उत्तर भाद्रपदा","Algenib · Alpheratz","The eastern edge of the Great Square of Pegasus.",[[0.22,15.18,2.8],[0.14,29.09,2.1]],[[0,1]]],
+["Revati","रेवती","δ · ε · ζ Piscium","Faint stars in the knot of the Fishes: the last nakshatra.",[[0.82,7.59,4.4],[1.05,7.89,4.3],[1.23,7.58,5.2]],[[0,1,2]]]];
+const ZD=[
+['Mesha','मेष','Aries · the Ram','A short bent line of four stars led by Hamal: the ram’s head.',[[2.83,27.26,3.6],[2.12,23.46,2],[1.91,20.81,2.6],[1.89,19.29,3.9]],[[0,1,2,3]]],
+['Vrishabha','वृषभ','Taurus · the Bull','A V-shaped face around red Aldebaran, with long horns reaching toward Elnath. The Pleiades sit on its shoulder.',[[4.6,16.51,.9],[5.44,28.61,1.7],[5.63,21.14,3],[4.33,15.63,3.6],[4.38,17.54,3.8],[4.48,19.18,3.5],[4.48,15.87,3.4],[4.01,12.49,3.5],[3.79,24.1,2.9]],[[1,0,2],[7,3,4,5],[3,6,0]]],
+['Mithuna','मिथुन','Gemini · the Twins','Two parallel stick figures. Castor and Pollux are the twins’ heads.',[[7.58,31.89,1.6],[7.76,28.03,1.1],[6.63,16.4,1.9],[6.73,25.13,3],[6.38,22.51,2.9],[6.25,22.51,3.3],[7.34,21.98,3.5],[7.07,20.57,3.8]],[[0,3,4,5],[1,6,7,2]]],
+['Karka','कर्क','Cancer · the Crab','A faint upside-down Y. The misty Beehive cluster sits between γ and δ.',[[8.28,9.19,3.5],[8.745,18.15,3.9],[8.72,21.47,4.7],[8.78,28.76,4],[8.97,11.86,4.3]],[[0,1,2,3],[1,4]]],
+['Simha','सिंह','Leo · the Lion','A backward question mark, the Sickle, with Regulus at its base, then a triangle for the hindquarters ending at Denebola.',[[10.14,11.97,1.4],[10.12,16.76,3.5],[10.33,19.84,2],[10.28,23.77,3.4],[9.88,26,3.9],[9.76,23.77,3],[11.235,20.52,2.6],[11.24,15.43,3.3],[11.82,14.57,2.1]],[[0,1,2,3,4,5],[2,6,8,7,0]]],
+['Kanya','कन्या','Virgo · the Maiden','A large, loose Y-shaped figure that ends in blue-white Spica.',[[13.42,-11.16,1],[12.69,-1.45,2.7],[11.84,1.77,3.6],[13.04,10.96,2.8],[12.93,3.4,3.4],[12.33,-0.67,3.9],[13.58,-0.6,3.4]],[[2,5,1],[3,4,1],[1,6,0]]],
+['Tula','तुला','Libra · the Scales','A lopsided four-sided frame, with α and β as the two pans.',[[14.85,-16.04,2.8],[15.28,-9.38,2.6],[15.59,-14.79,3.9],[15.07,-25.28,3.3]],[[3,0,1,2,0]]],
+['Vrishchika','वृश्चिक','Scorpius · the Scorpion','Red Antares at the heart, curved claws to the west, and a long hooked tail ending at Shaula.',[[16.49,-26.43,1],[16.35,-25.59,2.9],[16.6,-28.22,2.8],[16.09,-19.81,2.6],[16,-22.62,2.3],[15.98,-26.11,2.9],[16.84,-34.29,2.3],[16.86,-38.05,3],[16.9,-42.36,3.3],[17.2,-43.24,3.3],[17.62,-42.99,1.9],[17.79,-40.13,3],[17.71,-39.03,2.4],[17.56,-37.1,1.6],[17.69,-37.3,2.7]],[[3,4,5],[4,1,0,2,6,7,8,9,10,11,12,13,14]]],
+['Dhanu','धनु','Sagittarius · the Archer','The Teapot: lid, spout and handle, with the Milky Way steaming from the spout.',[[18.4,-34.38,1.8],[18.35,-29.83,2.7],[18.47,-25.42,2.8],[19.04,-29.88,2.6],[18.92,-26.3,2],[18.76,-26.99,3.2],[19.12,-27.67,3.3],[18.1,-30.42,3]],[[0,1,2,5,4,6,3,0],[1,7]]],
+['Makara','मकर','Capricornus · the Sea-Goat','A faint, wide crescent like a smile low in the south.',[[20.3,-12.54,3.6],[20.35,-14.78,3.1],[20.77,-25.27,4.1],[20.86,-26.92,4.1],[21.44,-22.41,3.7],[21.67,-16.66,3.7],[21.78,-16.13,2.9],[21.1,-17.23,4.1]],[[0,1,2,3,4,5,6,7,0]]],
+['Kumbha','कुंभ','Aquarius · the Water-Bearer','A scattered cluster for the water jar, with a faint stream trailing south.',[[21.53,-5.57,2.9],[22.1,-0.32,3],[22.36,-1.39,3.8],[22.48,-0.02,3.6],[22.59,-0.12,4],[22.42,1.38,4.7],[22.88,-7.58,3.7],[22.91,-15.82,3.3]],[[0,1,2,3,4],[3,5],[4,6,7]]],
+['Meena','मीन','Pisces · the Fishes','Two loose rings of faint stars joined by a long V-shaped cord.',[[2.03,2.76,3.8],[1.76,9.16,4.3],[1.52,15.35,3.6],[1.23,7.58,5.2],[1.05,7.89,4.3],[.82,7.59,4.4],[23.99,6.86,4],[23.66,5.63,4.1],[23.46,6.38,4.3],[23.7,1.78,4.5],[23.45,1.26,4.9],[23.29,3.28,3.7]],[[2,1,0,3,4,5,6],[6,8,7,9,10,11,8]]]];
+let N=NK;const ALL=NK.concat(ZD);
+const SQ=[[23.08,15.2],[23.06,28.08],[0.14,29.09],[0.22,15.18],[23.08,15.2]];
+const RAD=Math.PI/180,wrap=d=>((d+12)%24+24)%24-12,cl=(v,a,b)=>Math.min(b,Math.max(a,v)),ease=p=>1-Math.pow(1-p,3);
+let sd=11;const rnd=()=>{sd|=0;sd=sd+0x6D2B79F5|0;let t=Math.imul(sd^sd>>>15,1|sd);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const BG=Array.from({length:1100},()=>[rnd()*24,-55+rnd()*120,2+Math.pow(rnd(),.4)*4.6,rnd()*6.28]);
+const mk=A=>A.map(n=>{const r0=n[4][0][0];let sx=0,sy=0;n[4].forEach(s=>{sx+=wrap(s[0]-r0);sy+=s[1]});return[(r0+sx/n[4].length+24)%24,sy/n[4].length]});const CNK=mk(NK),CNZ=mk(ZD);let CN=CNK;let dir=false,dive=null,di=0,inDive=false;
+let fl=null;
+function fly(t0){const dd=Math.hypot(wrap(tgt.ra-cam.ra)*15*Math.cos(cam.dec*RAD),tgt.dec-cam.dec),span=Math.max(dd*1.6,N===NK?50:100),lm=dir?cam.ls*.6+tgt.ls*.4:Math.min(cam.ls,tgt.ls-.45,Math.log(Math.min(W,H*.7)*.9/span)),T=dd<1?1.2:Math.min(5.5,3.5+dd/30);fl={t0,T,ra:cam.ra,dec:cam.dec,ls:cam.ls,lm};selT=t0+T;dir=false}
+const $=id=>document.getElementById(id),cv=$("c"),ctx=cv.getContext("2d");
+let W,H,cur=0,selT=0,tgt,cam,playing=false,ss=null,last=0;
+function rs(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)}
+function aim(){const st=N[cur][4],r0=st[0][0];let sx=0,sy=0;st.forEach(s=>{sx+=wrap(s[0]-r0);sy+=s[1]});
+const ra=r0+sx/st.length,dec=sy/st.length;let r=0;st.forEach(s=>{r=Math.max(r,Math.hypot(wrap(s[0]-ra)*15*Math.cos(dec*RAD),s[1]-dec))});
+r=Math.max(r,st.length<2?7:1.1);const av=Math.min(W*.9,H*.45)/2;
+tgt={ra:(ra+24)%24,dec,ls:Math.log(cl(av*(N===NK?.8:1.05)/r,5,150))}}
+function sel(i,now){if(!inDive)dive=null;cur=(i+N.length)%N.length;const t0=(now??performance.now())/1000;aim();fly(t0);const n=N[cur];
+$("nm").textContent=(cur+1)+". "+n[0];$("dv").textContent=n[1];$("wt").textContent=n[2];$("tp").textContent=n[3];relUI();
+[...$("chips").children].forEach((b,j)=>{b.classList.toggle("on",j==cur);if(j==cur)b.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"})})}
+const nkRashi=i=>{const m={};for(let p=0;p<4;p++){const k=Math.floor((i*40/3+p*10/3+.01)/30);(m[k]=m[k]||[]).push(p+1)}return Object.entries(m).map(([k,ps])=>[+k,ps])};
+const rashiNk=k=>{const o=[];for(let i=0;i<27;i++){const ps=[];for(let p=0;p<4;p++)if(Math.floor((i*40/3+p*10/3+.01)/30)==k)ps.push(p+1);if(ps.length)o.push([i,ps])}return o};
+const pd=ps=>ps.length==4?'all 4 padas':'pada '+(ps.length>1?ps[0]+'–'+ps[ps.length-1]:ps[0]);
+function relUI(){const r=$('rel');r.innerHTML='';const lb=document.createElement('span');lb.textContent=N===NK?'Falls in:':'Holds:';r.appendChild(lb);
+const it=N===NK?nkRashi(cur).map(([k,ps])=>[ZD[k][0]+' · '+pd(ps),()=>mode(1,k)]):rashiNk(cur).map(([i,ps])=>[NK[i][0]+' · '+pd(ps),()=>mode(0,i)]);
+it.forEach(([t,f])=>{const b=document.createElement('button');b.textContent=t;b.onclick=f;r.appendChild(b)})}
+const EPS=23.44*RAD,AYA=24.2;
+function ep(ls){const l=(ls+AYA)*RAD;const a=(Math.atan2(Math.cos(EPS)*Math.sin(l),Math.cos(l))/RAD/15+24)%24;return[a,Math.asin(Math.sin(EPS)*Math.sin(l))/RAD]}
+function eclDiv(P,s){const zs=N===ZD,sp=zs?30:40/3;
+ctx.strokeStyle='rgba(255,212,138,.85)';ctx.lineWidth=4;ctx.beginPath();for(let d=cur*sp;d<=(cur+1)*sp+.01;d+=1){const[x,y]=P(...ep(d));d==cur*sp?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();
+const tick=(d,h,c)=>{const[x,y]=P(...ep(d));if(x<0||x>W)return;ctx.strokeStyle=c;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x,y-h);ctx.lineTo(x,y+h);ctx.stroke()};
+const lab=(d,t,dy,f,c)=>{const[x,y]=P(...ep(d));if(x<30||x>W-30)return;ctx.font=f;ctx.fillStyle=c;ctx.shadowColor='#000';ctx.shadowBlur=5;ctx.fillText(t,x,y+dy);ctx.shadowBlur=0};
+ctx.textAlign='center';
+for(let i=0;i<=27;i++)tick(i*40/3,6,'rgba(255,255,255,.4)');
+for(let k=0;k<=12;k++)tick(k*30,15,'rgba(150,190,255,.75)');
+for(let k=0;k<12;k++)lab(k*30+15,ZD[k][0],30,'14px Georgia,serif',zs&&k==cur?'#ffe2a8':'#9fb4ff');
+if(s>5)for(let i=0;i<27;i++)lab(i*40/3+20/3,NK[i][0],i%2?-26:-14,'11px Georgia,serif',!zs&&i==cur?'#ffe2a8':'#cfd6ee')}
+function dstep(){const s=dive[di];inDive=true;dir=s[0]==0&&di>0&&dive[di-1][0]==1;mode(s[0]?1:0,s[1]);
+$('hd').textContent=s[0]?'Zodiac dive · '+ZD[s[1]][0]:'Zodiac dive · '+ZD[s[2]][0]+' › '+NK[s[1]][0]+' ('+pd(s[3])+')';inDive=false}
+function dnext(){di=(di+1)%dive.length;dstep()}
+function startDive(){dive=[];for(let k=0;k<12;k++){dive.push([1,k]);rashiNk(k).forEach(([i,ps])=>dive.push([0,i,k,ps]))}di=0;playing=true;$('pl').textContent='Pause tour';dstep()}
+$('dg').onclick=startDive;
+function buildChips(){$('chips').innerHTML='';N.forEach((n,i)=>{const b=document.createElement('button');b.textContent=n[0];b.onclick=()=>sel(i);$('chips').appendChild(b)})}
+function mode(z,k){N=z?ZD:NK;CN=z?CNZ:CNK;$('m1').classList.toggle('on',!z);$('m2').classList.toggle('on',!!z);$('hd').textContent=z?'Spotting the 12 zodiac signs (rashis)':'Spotting the 27 nakshatras';buildChips();sel(k||0)}
+$('m1').onclick=()=>mode(0);$('m2').onclick=()=>mode(1);buildChips();
+$("pv").onclick=()=>sel(cur-1);$("nx").onclick=()=>sel(cur+1);
+$("pl").onclick=()=>{playing=!playing;$("pl").textContent=playing?"Pause tour":"Auto tour"};
+addEventListener("keydown",e=>{if(e.key=="ArrowRight")sel(cur+1);if(e.key=="ArrowLeft")sel(cur-1)});
+addEventListener("resize",()=>{rs();aim()});rs();aim();
+cam={ra:(tgt.ra+7)%24,dec:0,ls:Math.log(3.5)};sel(0);
+function star(x,y,m,i,t,z,hi){const r=Math.max(1,(5.6-m))*z*(hi?1.2:1)*.9,a=.78+.22*Math.sin(t*(1.3+i%4*.4)+i);ctx.globalAlpha=a;
+if(m<4.2||hi){const g=ctx.createRadialGradient(x,y,0,x,y,r*5);g.addColorStop(0,hi?"rgba(255,236,190,.9)":"rgba(220,230,255,.7)");g.addColorStop(.25,hi?"rgba(255,200,120,.35)":"rgba(180,200,255,.22)");g.addColorStop(1,"rgba(0,0,0,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*5,0,6.3);ctx.fill()}
+ctx.fillStyle=hi?"#fff4d6":"#eef2ff";ctx.beginPath();ctx.arc(x,y,r*.65,0,6.3);ctx.fill();
+if(hi&&m<2){ctx.strokeStyle="rgba(255,240,200,.6)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-r*7,y);ctx.lineTo(x+r*7,y);ctx.moveTo(x,y-r*7);ctx.lineTo(x,y+r*7);ctx.stroke()}ctx.globalAlpha=1}
+function frame(now){const t=now/1000,dt=Math.min(.05,t-last||.016);last=t;const k=1-Math.exp(-dt*2.4);
+const u=fl?cl((t-fl.t0)/fl.T,0,1):1,sm=x=>x*x*(3-2*x),pu=sm(cl((u-.22)/.56,0,1));
+if(fl){cam.ra=(fl.ra+wrap(tgt.ra-fl.ra)*pu+24)%24;cam.dec=fl.dec+(tgt.dec-fl.dec)*pu;cam.ls=u<.22?fl.ls+(fl.lm-fl.ls)*sm(u/.22):u<.78?fl.lm:fl.lm+(tgt.ls-fl.lm)*sm((u-.78)/.22);if(u>=1)fl=null}
+const s=Math.exp(cam.ls),cy0=H*.34,cc=Math.cos(cam.dec*RAD);
+const P=(ra,dec)=>[W/2-wrap(ra-cam.ra)*15*cc*s,cy0-(dec-cam.dec)*s],z=cl(Math.sqrt(s/22),.8,2.3);
+const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#01030a");g.addColorStop(.6,"#060b22");g.addColorStop(1,"#151b40");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+for(const b of BG){const[x,y]=P(b[0],b[1]);if(x<-5||x>W+5||y<-5||y>H+5)continue;
+ctx.globalAlpha=cl((.3+.5*(6.6-b[2])/4.6)*(.8+.2*Math.sin(t*1.7+b[3]*5)),.1,1);ctx.fillStyle="#cfd8ff";ctx.beginPath();ctx.arc(x,y,Math.max(.45,(6.6-b[2])*.26)*z*.8,0,6.3);ctx.fill()}ctx.globalAlpha=1;
+if($("k2").checked){ctx.setLineDash([6,8]);ctx.strokeStyle="rgba(130,170,255,.28)";ctx.lineWidth=1;ctx.beginPath();
+for(let r=-12;r<=12;r+=.25){const ra=cam.ra+r,dec=Math.atan(Math.tan(23.44*RAD)*Math.sin(ra*15*RAD))/RAD,x=W/2-r*15*cc*s,y=cy0-(dec-cam.dec)*s;r==-12?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();ctx.setLineDash([]);eclDiv(P,s)}
+if(N===NK&&cur>=24&&cur<=25){ctx.setLineDash([3,7]);ctx.strokeStyle="rgba(200,215,255,.3)";ctx.beginPath();SQ.forEach((p,i)=>{const[x,y]=P(p[0],p[1]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.setLineDash([])}
+if($('k3').checked){ctx.strokeStyle='rgba(150,175,255,.24)';ctx.lineWidth=1;ctx.beginPath();ZD.forEach(c=>c[5].forEach(pl=>pl.forEach((si,j)=>{const q=c[4][si],[x,y]=P(q[0],q[1]);j?ctx.lineTo(x,y):ctx.moveTo(x,y)})));ctx.stroke()}
+const used=new Set(N[cur][5].flat());if(!used.size)N[cur][4].forEach((_,i)=>used.add(i));
+ALL.forEach((n,ni)=>n[4].forEach((s,i)=>{const[x,y]=P(s[0],s[1]);if(x<-40||x>W+40||y<-40||y>H+40)return;star(x,y,s[2],ni*9+i,t,z,n===N[cur]&&used.has(i))}));
+const la=cl((45-s)/20,0,1);
+if(la>0){ctx.textAlign="center";ctx.font="13px Georgia,serif";CN.forEach((c,i)=>{const[x,y]=P(c[0],c[1]);if(x<24||x>W-24||y<24||y>H*.7)return;const tg=i==cur;if(tg&&!fl)return;ctx.globalAlpha=tg?1:la*.75;ctx.fillStyle=tg?"#ffe2a8":"#aab6e6";ctx.shadowColor="#000";ctx.shadowBlur=6;ctx.fillText(N[i][0],x,y-16);ctx.shadowBlur=0});ctx.globalAlpha=1}
+if(fl){const[x,y]=P(CN[cur][0],CN[cur][1]),f=(t*1.1)%1;ctx.strokeStyle="#ffd48a";ctx.lineWidth=2;ctx.globalAlpha=1-f;ctx.beginPath();ctx.arc(x,y,10+f*46,0,6.3);ctx.stroke();ctx.globalAlpha=.9;ctx.beginPath();ctx.arc(x,y,16+3*Math.sin(t*5),0,6.3);ctx.stroke();ctx.globalAlpha=1}
+const n=N[cur],pts=n[4].map(p=>P(p[0],p[1])),rev=cl((t-selT-1)/2.2,0,1);
+let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;pts.forEach((p,i)=>{if(!used.has(i))return;x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1])});
+if($("k1").checked&&n[5].length){const sg=[];n[5].forEach(pl=>{for(let j=0;j<pl.length-1;j++)sg.push([pts[pl[j]],pts[pl[j+1]]])});
+const ln=sg.map(([a,b])=>Math.hypot(b[0]-a[0],b[1]-a[1])),tot=ln.reduce((a,b)=>a+b,0);let rem=rev*tot;
+ctx.lineWidth=1.8;ctx.strokeStyle="rgba(255,217,138,.9)";ctx.shadowColor="#ffcf6b";ctx.shadowBlur=10;ctx.beginPath();
+for(let j=0;j<sg.length&&rem>0;j++){const[a,b]=sg[j],f=Math.min(1,rem/ln[j]);ctx.moveTo(a[0],a[1]);ctx.lineTo(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f);rem-=ln[j]}ctx.stroke();ctx.shadowBlur=0}
+ctx.strokeStyle="rgba(255,217,138,.8)";ctx.lineWidth=1;pts.forEach((p,i)=>{if(!used.has(i))return;ctx.globalAlpha=rev*.8;ctx.beginPath();ctx.arc(p[0],p[1],12*z*.8+3*Math.sin(t*3+i),0,6.3);ctx.stroke()});ctx.globalAlpha=1;
+const p=ease(cl((t-selT)/1.8,0,1)),cx=(x0+x1)/2,cy=(y0+y1)/2,hw=Math.max((x1-x0)/2+46,56)+(1-p)*170,hh=Math.max((y1-y0)/2+46,56)+(1-p)*170,L=18;
+ctx.globalAlpha=p*.85;ctx.strokeStyle="#ffd48a";ctx.lineWidth=1.5;ctx.beginPath();
+[[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([a,b])=>{const px=cx+a*hw,py=cy+b*hh;ctx.moveTo(px-a*L,py);ctx.lineTo(px,py);ctx.lineTo(px,py-b*L)});ctx.stroke();
+ctx.globalAlpha=rev;ctx.textAlign="center";ctx.fillStyle="#ffe2a8";ctx.shadowColor="#000";ctx.shadowBlur=8;ctx.font="600 22px Georgia,serif";
+ctx.fillText(n[0],cx,Math.max(cy-hh-12,70));ctx.font="italic 14px Georgia,serif";ctx.fillStyle="#c5cdf0";ctx.fillText(n[2],cx,Math.min(cy+hh+26,H*.62));ctx.shadowBlur=0;ctx.globalAlpha=1;
+if(!ss&&Math.random()<dt/6)ss={x:Math.random()*W*.8+W*.2,y:Math.random()*H*.3,l:1};
+if(ss){ss.x-=520*dt;ss.y+=240*dt;ss.l-=dt*1.3;const gr=ctx.createLinearGradient(ss.x,ss.y,ss.x+90,ss.y-42);gr.addColorStop(0,"rgba(255,255,255,"+Math.max(ss.l,0)+")");gr.addColorStop(1,"rgba(255,255,255,0)");ctx.strokeStyle=gr;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(ss.x,ss.y);ctx.lineTo(ss.x+90,ss.y-42);ctx.stroke();if(ss.l<=0)ss=null}
+if(playing&&!fl&&t-selT>(dive?6:7)){dive?dnext():sel(cur+1,now)}
+requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+</script></body></html>
