@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kartari: a practical guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--panel:#fffaf0;--ink:#2a2233;--mute:#6a6175;--line:#ddd2bd;--mal:#a3282f;--ben:#2d6a55;--gold:#b7791f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Spectral,Georgia,serif}
+main{max-width:860px;margin:0 auto;padding:28px 18px 70px}
+h1{font-size:clamp(2.2rem,7vw,3.6rem);line-height:1.05;margin:.2em 0 .25em;font-weight:600}
+h2{font-size:1.65rem;margin:2.2em 0 .5em;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:.25em}
+h3{font-size:1.1rem;margin:1.2em 0 .3em;font-family:Hind,sans-serif}
+p{margin:.6em 0;max-width:68ch}
+.lede{font-size:1.2rem;color:var(--mute);font-style:italic}
+.ui{font-family:Hind,system-ui,sans-serif}
+.scissors{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:6px;margin:18px 0}
+.box{background:var(--panel);border:1px solid var(--line);padding:12px 10px;text-align:center;border-radius:6px;font-family:Hind,sans-serif;font-size:.9rem}
+.box b{display:block;font-size:1.05rem;font-family:Spectral,serif}
+.box.mal{border-color:var(--mal)}.box.mal b{color:var(--mal)}
+.box.mid{border:2px solid var(--gold)}.box.mid b{color:var(--gold)}
+.blade{align-self:center;color:var(--mute);font-size:1.4rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chips button{font:500 .9rem Hind,sans-serif;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 13px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--gold);color:#1b1408;border-color:var(--gold)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.out{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);padding:14px 18px;border-radius:6px}
+.out h3{margin-top:0}
+.out ul{margin:.3em 0 .3em 1.1em;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);padding:14px 16px;border-radius:6px}
+.card h3{margin-top:0}
+.card.s{border-top:4px solid var(--mal)}.card.w{border-top:4px solid var(--ben)}.card.m{border-top:4px solid var(--gold)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel);font-family:Hind,sans-serif}
+ol.cancel{padding-left:1.2em}ol.cancel li{margin:.55em 0}
+.note{font-size:.95rem;color:var(--mute);border-top:1px solid var(--line);margin-top:2.5em;padding-top:1em}
+.top{display:flex;justify-content:space-between;align-items:center}
+@media (max-width:560px){.scissors{grid-template-columns:1fr;}.blade{display:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><span class="ui" style="color:var(--mute)">Jyotisha notes</span></div>
+<h1>Kartari</h1>
+
+<h2>What Kartari means</h2>
+<p><i>Kartari</i> means scissors. Take any house or planet and look at the house before it (12th from it) and the house after it (2nd from it).</p>
+<ul>
+<li><b>Papa Kartari:</b> malefics in both flanking houses. Sun, Mars, Saturn, Rahu and Ketu are the usual malefics. Many astrologers also count the functional malefics of that Lagna.</li>
+<li><b>Shubha Kartari:</b> benefics (Jupiter, Venus, well-placed Mercury, a bright Moon) in both flanking houses. It protects and lifts the hemmed point.</li>
+<li><b>Mixed:</b> a benefic on one side and a malefic on the other. This is not a Kartari, only a mixed influence.</li>
+</ul>
+<p>One malefic alone is never a Kartari. Both blades must be present. It is read by sign (rashi) in most texts. Some astrologers also test it by bhava cusp.</p>
+<p>The idea is the same for houses and planets: whatever sits in the middle has no free space. The two flanking houses are the “blades”, and the quality of the planets in them decides whether the middle is squeezed or cradled.</p>
+
+<h2>Papa Kartari</h2>
+<div class="card s">
+<p><b>Definition:</b> malefics in both the 12th and 2nd from the point. The 12th-side planet drains energy and the 2nd-side planet cuts off support, so the middle is boxed in.</p>
+<ul>
+<li><b>Who counts as malefic:</b> Sun, Mars, Saturn, Rahu and Ketu. A waning Moon and an afflicted Mercury are sometimes added. Many astrologers also use the functional malefics of that Lagna, such as the 6th, 8th and 12th lords.</li>
+<li><b>What it does:</b> pressure, delay and a feeling of limited room in whatever the hemmed house or planet signifies.</li>
+<li><b>Where it matters most:</b> the Lagna, the Moon and the Lagna lord first, then the house or planet in question.</li>
+<li><b>Not automatic doom:</b> its real strength depends on the factors in the strong and weak section below.</li>
+</ul>
+</div>
+
+<h2>Shubha Kartari</h2>
+<div class="card m">
+<p><b>Definition:</b> benefics in both the 12th and 2nd from the point. Jupiter, Venus, a well-placed Mercury and a bright Moon are the usual ones.</p>
+<p>Benefics on both sides act like a protective cradle. A house or planet in Shubha Kartari gains support, reputation and steadiness in its significations. On the Lagna it supports health and self-confidence. On the Moon it brings calm and emotional security. On a weak house it will not cure the weakness, but it softens it. Its strength rises when the flanking benefics are strong in sign and the house lord is well placed.</p>
+<p><b>Mixed case:</b> one benefic and one malefic is not a Kartari. It is a mixed influence, and the house simply carries both flavours.</p>
+</div>
+
+<h2>Further elaborations</h2>
+<p>With the three types clear, the sections below go deeper: where to check it, how it plays out in each house and planet, how strong it is, how long it acts, and what cancels it.</p>
+
+<h3>How to check it in a chart</h3>
+<ol class="cancel">
+<li>Pick the point: a house, or a planet’s sign.</li>
+<li>Find the sign before it and the sign after it.</li>
+<li>List who sits in each. Empty means no blade on that side.</li>
+<li>Classify each occupant as benefic or malefic <i>for this Lagna</i>, not only by nature.</li>
+<li>Both malefic means Papa, both benefic means Shubha, anything else is mixed.</li>
+<li>Then run the relief checks: aspects, house lord strength, occupants, degrees.</li>
+</ol>
+<div class="card"><p><b>Natural versus functional:</b> Jupiter rules the 8th and 11th for Taurus and Mars rules the 7th and 12th, so labels shift with the Lagna. Mercury is benefic alone or with benefics, and a waning Moon is weaker than a bright one. Rahu and Ketu act like their dispositor and conjunctions. Always state which method you used.</p></div>
+
+<h2>Houses explorer</h2>
+<p>Choose a house to see its flanking houses and what a Papa Kartari there tends to do.</p>
+<div class="chips" id="hchips" role="group" aria-label="House"></div>
+<div class="scissors" id="sc"></div>
+<div class="out" id="hout" aria-live="polite"></div>
+
+<h2>Planets explorer</h2>
+<p>A planet can also be hemmed in: malefics in the signs on either side of the sign it occupies. Its significations then arrive with delay or friction.</p>
+<div class="chips" id="pchips" role="group" aria-label="Planet"></div>
+<div class="out" id="pout" aria-live="polite"></div>
+
+<h2>Strong and weak Papa Kartari</h2>
+<div class="grid">
+<div class="card s"><h3>Stronger</h3><ul>
+<li>Falls on the Lagna, the Moon or the Lagna lord.</li>
+<li>Both flanking malefics are strong: own sign, exalted, or close in degrees.</li>
+<li>No benefic occupies either flank or aspects the house.</li>
+<li>The hemmed house lord is weak, debilitated, combust or in a dusthana.</li>
+<li>The house holds malefics too, or is empty and unsupported.</li>
+<li>The kartari planets run the dasha, with a transit trigger.</li>
+</ul></div>
+<div class="card w"><h3>Weaker</h3><ul>
+<li>Falls on an ordinary house, not the Lagna or Moon.</li>
+<li>Flanking malefics are weak, debilitated, combust or far apart in degrees.</li>
+<li>Jupiter or Venus aspects the house or either flank.</li>
+<li>The house lord is strong, in a kendra or trikona.</li>
+<li>Flanking planets are functional benefics for that Lagna.</li>
+<li>Benefics sit in the hemmed house.</li>
+</ul></div>
+</div>
+<div class="tw"><table>
+<tr><th>Situation</th><th>Reading</th></tr>
+<tr><td>Both flanks malefic, house lord weak, no aspects</td><td>Full Papa Kartari. Results are clear in that house’s matters.</td></tr>
+<tr><td>Both flanks malefic, Jupiter aspects the house</td><td>Mild. Delay and effort first, relief later.</td></tr>
+<tr><td>Both flanks malefic, house lord strong</td><td>Often only an early obstacle. The native breaks out.</td></tr>
+<tr><td>One flank malefic, other flank benefic</td><td>Not Papa Kartari. A mixed influence.</td></tr>
+</table></div>
+
+<h2>Will it work through life?</h2>
+<p>Not constantly. Most traditions treat Kartari as a background condition that switches on at certain times, and not as a lifelong sentence.</p>
+<ul>
+<li><b>Dashas:</b> it shows most in the dasha or antardasha of the hemmed house lord, its occupants, and the two flanking planets.</li>
+<li><b>Transits:</b> Saturn, Mars or the nodes passing over the hemmed house or the flanking signs can re-trigger it.</li>
+<li><b>Early life:</b> on the Lagna or Moon the pressure is usually felt first in childhood and youth, around health, confidence or security, and often eases once the Lagna lord or a benefic dasha takes over.</li>
+<li><b>Other houses:</b> the matter itself (marriage, children, money) carries the delay. It does not go away automatically, but the benefic aspects and strong lord changes how it ends.</li>
+<li><b>Other charts:</b> check the navamsha (D9) and the divisional chart for that matter (D10 for career, D7 for children). If the pattern repeats there, it is more serious. If not, it is likely diluted.</li>
+</ul>
+<p>Treat it as a modifier, not a verdict. One yoga never decides a life by itself.</p>
+
+<h2>Cancellations and relief</h2>
+<ol class="cancel">
+<li><b>Benefic in a flanking house.</b> The “both sides” condition fails, so it becomes mixed or Shubha.</li>
+<li><b>Benefic aspect.</b> Jupiter is the most-cited reliever. Venus and a strong Mercury also help. Aspect on the house, on its lord, or on both flanks all count.</li>
+<li><b>Strong house lord.</b> Own sign, exalted, or in a kendra or trikona.</li>
+<li><b>Benefic occupying the hemmed house.</b> It shields the house, though the Kartari still limits its output.</li>
+<li><b>Malefics that behave well.</b> Flanking planets in own sign, exalted, or functional benefics for that Lagna do much less harm. Rahu or Mars in the 3rd, 6th or 11th are comfortable.</li>
+<li><b>Weak flanking malefics.</b> Debilitated, combust, or conjunct a benefic, or very far apart by degree.</li>
+<li><b>Lagna and Moon are free of it.</b> Overall life and mind are then protected even if another house is hemmed.</li>
+<li><b>Remedial practice.</b> Traditional options include worship and mantras for the hemmed house lord and the flanking planets, and service and charity linked to their significations. Treat these as supportive practice, not a guarantee. A qualified astrologer can match them to the full chart.</li>
+</ol>
+
+<p class="note">Classical sources agree on the basic definition but differ on how much weight to give it, which planets count as malefic, and sign versus cusp counting. This page gives the common reading. Interpretation depends on the whole chart.</p>
+</main>
+<script>
+var H=[
+["Self, body, vitality","Weak vitality, early struggles, self-doubt, slow identity building.","Lagna lord strong, Jupiter aspect on the Lagna."],
+["Wealth, family, speech","Money hard to hold, family friction, harsh or restricted speech, eye or face concerns.","Strong 2nd lord, benefic aspect on the 2nd."],
+["Effort, siblings, courage","Little sibling support, results only through personal effort, courage tested.","Malefics are comfortable in the 3rd, so mild."],
+["Home, mother, peace","Domestic unrest, trouble with property or vehicles, a mother under strain, low peace of mind.","Benefic in the 4th or Jupiter aspect."],
+["Children, intellect, romance","Delay or worry around children, interrupted study, romantic disappointment.","Jupiter aspect, strong 5th lord."],
+["Disease, rivals, debt","Rarely harmful. Malefics here are natural, so it can give strength against enemies and illness.","Generally none needed."],
+["Marriage, partnership","Delay or friction in marriage, a pressured spouse, partnership trouble.","Venus or Jupiter aspect, strong 7th lord."],
+["Longevity, sudden events","Sudden events and chronic issues. Mixed, because the 8th is already tough.","Jupiter aspect, strong 8th lord."],
+["Fortune, father, dharma","Obstructed luck, a strained father bond, difficulty with teachers and higher learning.","Jupiter in or aspecting the 9th."],
+["Career, status","Career obstacles, pressure from authority, slow recognition. Effort pays later if the 10th lord is strong.","Strong 10th lord, benefic aspect."],
+["Gains, networks","Irregular income, few real friends, unmet desires.","Malefics are comfortable in the 11th, so often mild."],
+["Losses, sleep, foreign lands","Expenses, isolation, disturbed sleep. Mixed, since the 12th is also a loss house.","Often tolerated. Check the 12th lord."]
+];
+var P=[
+["Sun","Confidence, father, authority, recognition, vitality.","Self-esteem is tested and recognition comes late. Dealings with authority or father can be strained."],
+["Moon","Mind, mother, emotional security.","Anxiety, restless mind, a sense of being unsupported. Serious when the Moon is also waning or weak."],
+["Mars","Courage, energy, siblings, property.","Energy is blocked or poorly directed. Frustration, conflict or delays in property."],
+["Mercury","Speech, intellect, trade, nerves.","Communication and decision making are under pressure. Business and learning go slowly."],
+["Jupiter","Wisdom, children, wealth, guidance, luck.","Guidance and luck come late, with worries around children or advisers. Jupiter is resilient, so often only a delay."],
+["Venus","Marriage, comfort, money, arts.","Relationship and comfort delays, financial strain, and emotional tension."],
+["Saturn","Discipline, longevity, stability.","Delays are heavy but Saturn tolerates pressure, so it often gives resilience instead. Mild unless afflicted otherwise."],
+["Rahu and Ketu","Ambition, obsessions; detachment, spirituality.","Seldom assessed this way in most texts. Judge nodes by their dispositor and conjunctions."]
+];
+function el(i){return document.getElementById(i)}
+function ord(n){return n+(n==1?"st":n==2?"nd":n==3?"rd":"th")}
+function mk(box,list,fn){list.forEach(function(x,i){var b=document.createElement("button");b.type="button";b.textContent=x.label;b.setAttribute("aria-pressed","false");b.onclick=function(){[].forEach.call(box.children,function(c){c.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");fn(i)};box.appendChild(b)})}
+mk(el("hchips"),H.map(function(_,i){return{label:ord(i+1)}}),function(i){
+var h=i+1,a=((h+10)%12)+1,c=(h%12)+1,d=H[i];
+el("sc").innerHTML='<div class="box mal"><b>House '+a+'</b>12th from it: malefic</div><div class="blade">✂</div><div class="box mid"><b>House '+h+'</b>'+d[0]+'</div><div class="blade">✂</div><div class="box mal"><b>House '+c+'</b>2nd from it: malefic</div>';
+el("hout").innerHTML='<h3>Papa Kartari on the '+ord(h)+' house</h3><ul><li><b>Effect:</b> '+d[1]+'</li><li><b>Relief:</b> '+d[2]+'</li><li><b>Check:</b> the '+ord(h)+' lord’s sign and strength, and any benefic aspect on houses '+a+' and '+c+'.</li></ul>'});
+mk(el("pchips"),P.map(function(p){return{label:p[0]}}),function(i){var p=P[i];
+el("pout").innerHTML='<h3>'+p[0]+' hemmed in</h3><ul><li><b>Signifies:</b> '+p[1]+'</li><li><b>When hemmed:</b> '+p[2]+'</li><li><b>Relief:</b> a benefic aspect, the planet in own sign or exalted, or a benefic in either flanking sign.</li></ul>'});
+el("hchips").children[0].click();el("pchips").children[0].click();
+</script>
+</body>
+</html>
