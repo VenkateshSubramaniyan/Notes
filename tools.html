@@ -18,7 +18,11 @@ body{
   var(--paper);
   font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-main{max-width:1000px;margin:0 auto;padding:44px 22px 64px}
+.topbar{max-width:1000px;margin:0 auto;padding:18px 22px 0}
+.nav-links{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+.nav-link{color:#6c5d50;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.55);transition:all .15s ease}
+.nav-link:hover{color:var(--saffron);border-color:rgba(166,93,50,.38);background:#fffaf6}
+main{max-width:1000px;margin:0 auto;padding:24px 22px 64px}
 .page-heading{padding:0 2px 15px;border-bottom:1px solid var(--line);margin-bottom:22px}
 .page-heading h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(25px,4vw,32px);font-weight:500;letter-spacing:-.025em;line-height:1.2;margin:0}
 .section{margin-top:32px}
@@ -57,6 +61,12 @@ footer{display:flex;justify-content:space-between;gap:12px;margin-top:30px;paddi
 </style>
 </head>
 <body>
+  <div class="topbar">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="nav-link" href="./home.html">Home</a>
+      <a class="nav-link" href="./index.html">Library</a>
+    </nav>
+  </div>
 <main>
   <header class="page-heading">
     <h1>Vedic Astrology Tools & Resources</h1>
