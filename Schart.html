@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>South Indian Chart Generator</title>
+<style>
+:root{--bg:#ffffff;--fg:#2b2118;--card:#fdfaf4;--ac:#a4471b;--bd:#d9c9ae;--mu:#7a6a58;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 Num,Georgia,'Times New Roman',serif}
+main{max-width:980px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.5rem;margin:.2em 0;color:var(--ac)}
+p.s{color:var(--mu);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:14px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label{display:block;font-size:.8rem;color:var(--mu)}
+input,select,button{width:100%;font:inherit;padding:7px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)}
+button{background:var(--ac);color:#fff;border:0;cursor:pointer;margin-top:12px;font-weight:bold}
+.ch{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.ch>div{flex:1 1 320px;max-width:430px;text-align:center}
+svg{width:100%;height:auto;display:block}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border-bottom:1px solid var(--bd);padding:5px 8px;text-align:left;white-space:nowrap}
+th{color:var(--ac)}
+h2{font-size:1.1rem;margin:0 0 8px;color:var(--ac)}
+.n{font-size:.8rem;color:var(--mu)}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:12px;font-size:.85rem}
+.lg b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+h3{font-size:1rem;margin:12px 0 4px;color:var(--ac)}
+ul.y{margin:0 0 8px;padding-left:20px}
+ul.y li{margin:5px 0}
+.cur td{background:rgba(164,71,27,.12);font-weight:bold}
+.dh,details>summary{display:grid;grid-template-columns:1.4fr 1.2fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;border-bottom:1px solid var(--bd);min-width:440px;list-style:none;cursor:pointer}
+.dh{font-weight:bold;color:var(--ac);cursor:default}
+summary::-webkit-details-marker{display:none}
+details>summary span:first-child::before{content:'\25B8  '}
+details[open]>summary span:first-child::before{content:'\25BE  '}
+details.cur>summary{background:rgba(164,71,27,.12);font-weight:bold}
+table.ad{margin:4px 0 10px 18px;width:calc(100% - 18px);font-size:.85rem}
+ul.y li{position:relative}
+.sb{display:inline-block;margin-left:4px;padding:0 8px;border-radius:10px;color:#fff;font:bold .75rem/1.5 Num,Georgia,serif;cursor:help;white-space:nowrap;vertical-align:1px}
+.tp{display:none;position:absolute;left:0;right:0;top:1.8em;z-index:30;white-space:normal;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;box-shadow:0 4px 14px rgba(0,0,0,.2);font-weight:normal;font-size:.82rem;line-height:1.4;text-align:left;cursor:default}
+.sb:hover .tp,.sb:focus .tp{display:block}
+.tp b{color:var(--ac)}.tp div{padding:2px 4px;border-radius:4px}.tp .bd{color:var(--mu)}
+details.la{border-bottom:1px solid var(--bd)}
+details.la>summary{display:block;min-width:0;grid-template-columns:none;padding:9px 4px;font-weight:bold;color:var(--ac);font-size:1.02rem;border-bottom:0}
+details.la[open]>summary{margin-bottom:4px}
+.tp .tip{margin-top:6px;padding-top:4px;border-top:1px dashed var(--bd)}
+.tp .hw{margin-top:6px;padding-top:4px;border-top:1px solid var(--bd)}
+.tp .me{font-weight:bold;background:rgba(164,71,27,.14)}
+@font-face{font-family:Num;font-weight:400;unicode-range:U+0030-0039;src:local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Helvetica'),local('Arial'),local('Liberation Sans'),local('DejaVu Sans')}
+@font-face{font-family:Num;font-weight:700;unicode-range:U+0030-0039;src:local('Segoe UI Bold'),local('Segoe UI-Bold'),local('Roboto Bold'),local('Roboto-Bold'),local('HelveticaNeue-Bold'),local('Helvetica Neue Bold'),local('Helvetica-Bold'),local('Arial-BoldMT'),local('Arial Bold'),local('LiberationSans-Bold'),local('DejaVu Sans Bold')}
+body{font-variant-numeric:lining-nums}
+svg{font-family:Num,Georgia,serif}
+table,.dh,details>summary{font-variant-numeric:lining-nums tabular-nums}
+/* admin */
+#adm{padding:8px 10px}
+#adm .ah{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+#adm .ah button{width:auto;margin:0 0 0 6px;padding:3px 10px;font-size:.78rem}
+#adm .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:5px}
+#adm .ar{position:relative}
+#adm .ab{width:100%;margin:0;text-align:left;background:var(--bg);color:var(--fg);border:1px solid var(--bd);padding:4px 22px 4px 8px;font-weight:normal;font-size:.76rem;line-height:1.3}
+#adm .ax{position:absolute;right:1px;top:1px;width:auto;margin:0;padding:0 6px;background:transparent;color:var(--mu);border:0;font-size:1rem;line-height:1.2}
+/* chart peek */
+#pk{position:fixed;left:env(safe-area-inset-left,0px);top:50%;transform:translateY(-50%);width:26px;margin:0;padding:12px 0;border-radius:0 8px 8px 0;writing-mode:vertical-rl;letter-spacing:.06em;font-size:.85rem;z-index:60;box-shadow:2px 2px 8px rgba(0,0,0,.2)}
+#pk[aria-expanded=true]{background:var(--fg)}
+#pp{position:fixed;left:calc(env(safe-area-inset-left,0px) + 34px);top:calc(env(safe-area-inset-top,0px) + 10px);width:min(390px,calc(100vw - 46px));max-height:calc(100% - 20px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;overscroll-behavior:contain;background:var(--card);border:1px solid var(--bd);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.28);padding:8px;z-index:55}
+#pp .ph{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+#pp .t{display:flex;gap:6px}
+#pp .t button,#px{width:auto;margin:0}
+#pp .t button{padding:4px 12px;background:var(--bg);color:var(--fg);border:1px solid var(--bd);font-weight:normal}
+#pp .t button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#px{padding:0 8px;background:transparent;color:var(--mu);border:0;font-size:1.5rem;line-height:1}
+</style></head><body><main>
+<h1>South Indian Chart Generator</h1>
+<p class="s">Rasi and Navamsa charts, sidereal (Lahiri), from date, time and place.</p>
+<div class="card" id="adm" hidden></div>
+<div class="card"><div class="f">
+<div><label>Name (optional)</label><input id="nm"></div>
+<div><label>Birth year (type to search)</label><input id="yr" list="yl" inputmode="numeric" placeholder="e.g. 1990" autocomplete="off"></div>
+<datalist id="yl"></datalist>
+<div><label>Date of birth</label><input id="dt" type="date"></div>
+<div><label>Time (24h, local)</label><input id="tm" type="time" value="06:00"></div>
+<div><label>Place</label><select id="pl"></select></div>
+<div><label>Latitude (N+)</label><input id="la" type="number" step="0.0001"></div>
+<div><label>Longitude (E+)</label><input id="lo" type="number" step="0.0001"></div>
+<div><label>UTC offset (hours)</label><input id="tz" type="number" step="0.25" value="5.5"></div>
+</div><button id="go">Generate chart</button></div>
+<div id="out"></div>
+<p class="n">Planetary positions use compact approximate orbital elements and a truncated lunar series, accurate to roughly an arcminute or two for planets and a few arcminutes for the Moon. Verify borderline sign-boundary charts and pre-1947 timezone offsets against software you trust.</p>
+</main>
+<button id="pk" type="button" aria-expanded="false" aria-controls="pp" onclick="pkSet($('pp').hidden)">Chart</button>
+<aside id="pp" hidden aria-label="Chart preview"><div class="ph"><div class="t" id="pt"><button type="button" class="on" onclick="pkTab(0)">Rasi</button><button type="button" onclick="pkTab(1)">Navamsa</button></div><button id="px" type="button" aria-label="Close chart" onclick="pkSet(false)">&times;</button></div><div id="pb"></div></aside>
+<script>
+const TN=[["Chennai",13.0827,80.2707],["Coimbatore",11.0168,76.9558],["Madurai",9.9252,78.1198],["Tiruchirappalli",10.7905,78.7047],["Salem",11.6643,78.146],["Tirunelveli",8.7139,77.7567],["Tiruppur",11.1085,77.3411],["Erode",11.341,77.7172],["Vellore",12.9165,79.1325],["Thoothukudi",8.7642,78.1348],["Thanjavur",10.787,79.1378],["Dindigul",10.3673,77.9803],["Kanchipuram",12.8342,79.7036],["Kumbakonam",10.9617,79.3881],["Karur",10.9601,78.0766],["Nagercoil",8.1833,77.4119],["Cuddalore",11.748,79.7714],["Hosur",12.7409,77.8253],["Tiruvannamalai",12.2253,79.0747],["Sivakasi",9.4533,77.7979],["Rajapalayam",9.4511,77.5561],["Pudukkottai",10.3833,78.8001],["Ramanathapuram",9.3639,78.8395],["Rameswaram",9.2876,79.3129],["Namakkal",11.2189,78.1677],["Karaikudi",10.0667,78.7833],["Kodaikanal",10.2381,77.4892],["Udhagamandalam (Ooty)",11.4102,76.695],["Nagapattinam",10.7672,79.8449],["Chidambaram",11.3993,79.6914],["Villupuram",11.9401,79.4861],["Mayiladuthurai",11.1018,79.652],["Palani",10.45,77.5167],["Theni",10.0104,77.4768],["Virudhunagar",9.585,77.957],["Tiruchendur",8.4955,78.1203],["Pollachi",10.6609,77.0048],["Arakkonam",13.084,79.67],["Ambur",12.7916,78.7167],["Krishnagiri",12.5186,78.2137],["Dharmapuri",12.1211,78.1582],["Perambalur",11.2342,78.8808],["Ariyalur",11.1401,79.0786],["Tenkasi",8.9594,77.3152],["Thiruvarur",10.7661,79.6344]];
+const IN=[["Mumbai",19.076,72.8777],["Delhi",28.6139,77.209],["Bengaluru",12.9716,77.5946],["Hyderabad",17.385,78.4867],["Kolkata",22.5726,88.3639],["Pune",18.5204,73.8567],["Ahmedabad",23.0225,72.5714],["Jaipur",26.9124,75.7873],["Lucknow",26.8467,80.9462],["Kochi",9.9312,76.2673],["Thiruvananthapuram",8.5241,76.9366],["Kozhikode",11.2588,75.7804],["Visakhapatnam",17.6868,83.2185],["Vijayawada",16.5062,80.648],["Tirupati",13.6288,79.4192],["Mysuru",12.2958,76.6394],["Mangaluru",12.9141,74.856],["Puducherry",11.9416,79.8083],["Bhopal",23.2599,77.4126],["Indore",22.7196,75.8577],["Nagpur",21.1458,79.0882],["Surat",21.1702,72.8311],["Patna",25.5941,85.1376],["Bhubaneswar",20.2961,85.8245],["Ranchi",23.3441,85.3096],["Raipur",21.2514,81.6296],["Chandigarh",30.7333,76.7794],["Amritsar",31.634,74.8723],["Kanpur",26.4499,80.3319],["Varanasi",25.3176,82.9739],["Dehradun",30.3165,78.0322],["Srinagar",34.0837,74.7973],["Guwahati",26.1445,91.7362],["Panaji",15.4909,73.8278]];
+const $=id=>document.getElementById(id),R=Math.PI/180,m360=x=>((x%360)+360)%360;
+(function(){let h='<option value="c">Custom (enter lat/long)</option><optgroup label="Tamil Nadu">';TN.forEach((c,i)=>h+=`<option value="t${i}">${c[0]}</option>`);h+='</optgroup><optgroup label="Major Indian cities">';IN.forEach((c,i)=>h+=`<option value="i${i}">${c[0]}</option>`);$('pl').innerHTML=h+'</optgroup>';
+function sel(){const v=$('pl').value;if(v=='c')return;const c=(v[0]=='t'?TN:IN)[+v.slice(1)];$('la').value=c[1];$('lo').value=c[2];$('tz').value=5.5}
+$('pl').onchange=sel;$('pl').value='t0';sel();$('dt').value=new Date().toISOString().slice(0,10);})();
+const COL={Su:'#ff8c00',Mo:'#6aa0e0',Ma:'#e0443a',Me:'#2fb36b',Ju:'#c8a400',Ve:'#d867b0',Sa:'#8a7fb0',Ra:'#8c8c8c',Ke:'#b5714f'};
+const SG=["Mesha","Vrishabha","Mithuna","Kataka","Simha","Kanya","Tula","Vrischika","Dhanus","Makara","Kumbha","Meena"];
+const NK=["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const DL=["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"],DY=[7,20,6,10,7,18,16,19,17];
+// a,da,e,de,I,dI,L,dL,peri,dperi,node,dnode (per century, J2000)
+const EL={me:[.38709927,.00000037,.20563593,.00001906,7.00497902,-.00594749,252.2503235,149472.67411175,77.45779628,.16047689,48.33076593,-.12534081],
+ve:[.72333566,.0000039,.00677672,-.00004107,3.39467605,-.0007889,181.9790995,58517.81538729,131.60246718,.00268329,76.67984255,-.27769418],
+em:[1.00000261,.00000562,.01671123,-.00004392,-.00001531,-.01294668,100.46457166,35999.37244981,102.93768193,.32327364,0,0],
+ma:[1.52371034,.00001847,.0933941,.00007882,1.84969142,-.00813131,-4.55343205,19140.30268499,-23.94362959,.44441088,49.55953891,-.29257343],
+ju:[5.202887,-.00011607,.04838624,-.00013253,1.30439695,-.00183714,34.39644051,3034.74612775,14.72847983,.21252668,100.47390909,.20469106],
+sa:[9.53667594,-.0012506,.05386179,-.00050991,2.48599187,.00193609,49.95424423,1222.49362201,92.59887831,-.41897216,113.66242448,-.28867794]};
+const AY0=23.853;
+function hel(k,T){const q=EL[k],a=q[0]+q[1]*T,e=q[2]+q[3]*T,I=(q[4]+q[5]*T)*R,L=q[6]+q[7]*T,w=q[8]+q[9]*T,O=q[10]+q[11]*T;
+const M=m360(L-w)*R;let E=M;for(let i=0;i<14;i++)E=M+e*Math.sin(E);
+const xp=a*(Math.cos(E)-e),yp=a*Math.sqrt(1-e*e)*Math.sin(E),om=(w-O)*R,Or=O*R,cw=Math.cos(om),sw=Math.sin(om),cO=Math.cos(Or),sO=Math.sin(Or),cI=Math.cos(I);
+return[(cw*cO-sw*sO*cI)*xp+(-sw*cO-cw*sO*cI)*yp,(cw*sO+sw*cO*cI)*xp+(-sw*sO+cw*cO*cI)*yp]}
+function geo(k,T){const e=hel('em',T);if(k=='su')return m360(Math.atan2(-e[1],-e[0])/R);const p=hel(k,T);return m360(Math.atan2(p[1]-e[1],p[0]-e[0])/R)}
+const sd=l=>m360(l-AY0);
+function moonTrop(T){const r=x=>x*R,L=218.3164477+481267.88123421*T,D=r(297.8501921+445267.1114034*T),M=r(357.5291092+35999.0502909*T),P=r(134.9633964+477198.8675055*T),F=r(93.272095+483202.0175233*T);
+return m360(L+6.288774*Math.sin(P)+1.274027*Math.sin(2*D-P)+.658314*Math.sin(2*D)+.213618*Math.sin(2*P)-.185116*Math.sin(M)-.114332*Math.sin(2*F)+.058793*Math.sin(2*D-2*P)+.057066*Math.sin(2*D-M-P)+.053322*Math.sin(2*D+P)+.045758*Math.sin(2*D-M)-.040923*Math.sin(M-P)-.03472*Math.sin(D)-.030383*Math.sin(M+P)+.015327*Math.sin(2*D-2*F)-.012528*Math.sin(P+2*F)+.01098*Math.sin(P-2*F)+.010675*Math.sin(4*D-P)+.010034*Math.sin(3*P))}
+function jd(y,m,d,h){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24}
+function calc(J,lat,lon){const T=(J-2451545)/36525,ay=AY0+1.39697*T,P={};
+P.Su=sd(geo('su',T));P.Mo=m360(moonTrop(T)-ay);P.Ma=sd(geo('ma',T));P.Me=sd(geo('me',T));P.Ju=sd(geo('ju',T));P.Ve=sd(geo('ve',T));P.Sa=sd(geo('sa',T));
+P.Ra=m360(125.0445479-1934.1362891*T-ay);P.Ke=m360(P.Ra+180);
+const rt={};for(const [s,k] of [['Ma','ma'],['Me','me'],['Ju','ju'],['Ve','ve'],['Sa','sa']]){rt[s]=((geo(k,T+1/36525)-geo(k,T)+540)%360)-180<0}rt.Ra=rt.Ke=true;
+const eps=(23.439291-.0130042*T)*R,th=m360(280.46061837+360.98564736629*(J-2451545)+lon)*R;
+const asc=m360(Math.atan2(Math.cos(th),-(Math.sin(th)*Math.cos(eps)+Math.tan(lat*R)*Math.sin(eps)))/R-ay+ (0));
+return{P,rt,asc}}
+const POS={11:[0,0],0:[0,1],1:[0,2],2:[0,3],10:[1,0],3:[1,3],9:[2,0],4:[2,3],8:[3,0],7:[3,1],6:[3,2],5:[3,3]};
+const nav=l=>Math.floor(l*9/30)%12,dm=l=>{const d=l%30;return Math.floor(d)+'°'+String(Math.floor((d%1)*60)).padStart(2,'0')+'’'};
+function chart(title,sub,asSign,items){const by={};for(const [n,s,t] of items)(by[s]=by[s]||[]).push(t);let g='';
+for(const s in POS){const [r,c]=POS[s],x=c*100+10,y=r*100+10;g+=`<rect x="${x}" y="${y}" width="100" height="100" fill="none" stroke="var(--ac)" stroke-width="1.2"/>`;
+if(+s==asSign)g+=`<line x1="${x}" y1="${y+24}" x2="${x+24}" y2="${y}" stroke="var(--ac)" stroke-width="1.5"/>`;
+let L=(by[s]||[]).slice();if(+s==asSign)L.unshift('Asc');if(L.length>4){const q=[];for(let i=0;i<L.length;i+=2)q.push(L.slice(i,i+2).join(' '));L=q}
+L.forEach((t,i)=>g+=`<text x="${x+50}" y="${y+(L.length>3?30:38)+i*(L.length>3?16:17)}" text-anchor="middle" font-size="${L.length>3?12:13}" fill="var(--fg)" ${t.startsWith('Asc')?'font-weight="bold"':''}>${t}</text>`)}
+g+=`<text x="210" y="190" text-anchor="middle" font-size="17" fill="var(--ac)" font-weight="bold">${title}</text><text x="210" y="214" text-anchor="middle" font-size="12" fill="var(--mu)">${sub}</text>`;
+return`<svg viewBox="0 0 420 420" font-family="Georgia,serif" role="img" aria-label="${title}">${g}</svg>`}
+const LORD=['Ma','Ve','Me','Mo','Su','Me','Ve','Ma','Ju','Sa','Sa','Ju'],EX={Su:0,Mo:1,Ma:9,Me:5,Ju:3,Ve:11,Sa:6},DB={Su:6,Mo:7,Ma:3,Me:11,Ju:9,Ve:5,Sa:0},OWN={Su:[4],Mo:[3],Ma:[0,7],Me:[2,5],Ju:[8,11],Ve:[1,6],Sa:[9,10]},MT={Su:[4,0,20],Ma:[0,0,12],Me:[5,16,20],Ju:[8,0,10],Ve:[6,0,15],Sa:[10,0,20]},FR={Su:'MoMaJu',Mo:'SuMe',Ma:'SuMoJu',Me:'SuVe',Ju:'SuMoMa',Ve:'MeSa',Sa:'MeVe'},EN={Su:'VeSa',Mo:'',Ma:'Me',Me:'Mo',Ju:'MeVe',Ve:'SuMo',Sa:'SuMoMa'},CB={Mo:12,Ma:17,Me:14,Ju:11,Ve:10,Sa:15},NOW=Date.now()/864e5+2440587.5;
+const cd=s=>s.match(/../g)||[];
+function dig(k,l,P){const s=Math.floor(l/30),d=l%30;let r;
+if(k=='Ra'||k=='Ke'){r=s==(k=='Ra'?1:7)?'Exalted':s==(k=='Ra'?7:1)?'Debilitated':'—'}
+else if(EX[k]==s)r='Exalted';else if(DB[k]==s)r='Debilitated';
+else if(MT[k]&&MT[k][0]==s&&d>=MT[k][1]&&d<MT[k][2])r='Moolatrikona';
+else if(OWN[k].includes(s))r='Own sign';
+else{const L=LORD[s];r=cd(FR[k]).includes(L)?'Friend’s sign':cd(EN[k]).includes(L)?'Enemy’s sign':'Neutral sign'}
+const f=[];if(CB[k]){let x=Math.abs(l-P.Su);x=Math.min(x,360-x);if(x<CB[k])f.push('Combust')}
+if(s==nav(l))f.push('Vargottama');return r+(f.length?' · '+f.join(' · '):'')}
+function YD(P,asc,ord,full){const LS=Math.floor(asc/30),s={},H={},y=[],d=[];
+for(const k of ord){s[k]=Math.floor(P[k]/30);H[k]=(s[k]-LS+12)%12+1}
+const hl=h=>LORD[(LS+h-1)%12],K4=[1,4,7,10],same=(a,b)=>s[a]==s[b],fm=(a,b)=>(s[a]-s[b]+12)%12+1,pl=['Su','Mo','Ma','Me','Ju','Ve','Sa'],B=a=>full[a];
+const PM={Ma:'Ruchaka',Me:'Bhadra',Ju:'Hamsa',Ve:'Malavya',Sa:'Shasha'};
+for(const k in PM)if((EX[k]==s[k]||OWN[k].includes(s[k]))&&K4.includes(H[k]))y.push(`<b>${PM[k]} Yoga</b> (Pancha Mahapurusha) — ${B(k)} in ${SG[s[k]]}, its own or exalted sign, in house ${H[k]}`);
+if(K4.includes(fm('Ju','Mo')))y.push('<b>Gajakesari Yoga</b> — Jupiter is in a kendra (house '+fm('Ju','Mo')+') from the Moon');
+if(same('Su','Me'))y.push(`<b>Budhaditya Yoga</b> — Sun and Mercury together in ${SG[s.Su]}`);
+if(same('Mo','Ma'))y.push(`<b>Chandra-Mangala Yoga</b> — Moon and Mars together in ${SG[s.Mo]}`);
+const ot=['Ma','Me','Ju','Ve','Sa'],a2=ot.filter(k=>fm(k,'Mo')==2),a12=ot.filter(k=>fm(k,'Mo')==12),cj=ot.filter(k=>same(k,'Mo'));
+if(a2.length&&a12.length)y.push(`<b>Durudhara Yoga</b> — ${a2.map(B).join(', ')} in the 2nd and ${a12.map(B).join(', ')} in the 12th from the Moon`);
+else if(a2.length)y.push(`<b>Sunapha Yoga</b> — ${a2.map(B).join(', ')} in the 2nd from the Moon`);
+else if(a12.length)y.push(`<b>Anapha Yoga</b> — ${a12.map(B).join(', ')} in the 12th from the Moon`);
+for(const h of [4,7,10])for(const t of [5,9]){const a=hl(h),b=hl(t);if(a==b)y.push(`<b>Yogakaraka</b> — ${B(a)} rules houses ${h} and ${t}`);else if(same(a,b))y.push(`<b>Raja Yoga</b> — lord of house ${h} (${B(a)}) with lord of house ${t} (${B(b)}) in ${SG[s[a]]}`)}
+for(let i=0;i<7;i++)for(let j=i+1;j<7;j++){const a=pl[i],b=pl[j];if(LORD[s[a]]==b&&LORD[s[b]]==a)y.push(`<b>Parivartana Yoga</b> — ${B(a)} and ${B(b)} exchange signs`)}
+for(const h of [6,8,12]){const l=hl(h);if([6,8,12].includes(H[l]))y.push(`<b>Viparita Raja Yoga</b> — lord of house ${h} (${B(l)}) sits in house ${H[l]}`)}
+for(const k of pl)if(DB[k]==s[k]){const L=LORD[s[k]];if(K4.includes(H[L])||K4.includes(fm(L,'Mo')))y.push(`<b>Neecha Bhanga</b> — debilitated ${B(k)} in ${SG[s[k]]}; its sign lord ${B(L)} is in a kendra from the Lagna or Moon, which cancels the debilitation`)}
+const inS=x=>ord.filter(k=>s[k]==x%12),BEN=['Ju','Ve','Me'],MAL=['Su','Ma','Sa','Ra','Ke'],ok=x=>OWN[x].includes(s[x])||EX[x]==s[x],KT=[1,4,5,7,9,10];
+if([H.Ju,H.Ve,H.Me].every(h=>[1,2,4,5,7,9,10].includes(h))&&(ok('Ju')||cd(FR.Ju).includes(LORD[s.Ju])))y.push(`<b>Saraswati Yoga</b> — Jupiter, Venus and Mercury are all in kendra, trikona or the 2nd house (houses ${H.Ju}, ${H.Ve}, ${H.Me}), with Jupiter strong in ${SG[s.Ju]}`);
+const l9=hl(9),l1=hl(1),stg=x=>ok(x)||KT.includes(H[x]);
+if(ok(l9)&&KT.includes(H[l9])&&stg(l1))y.push(`<b>Lakshmi Yoga</b> — lord of the 9th (${B(l9)}) is in its own or exalted sign in house ${H[l9]}, and the Lagna lord (${B(l1)}) is strong`);
+for(const [nm,b] of [['Lagna',LS],['Moon',s.Mo]]){const t=inS(b+9);if(t.some(k=>BEN.includes(k))&&t.every(k=>BEN.includes(k)||k=='Mo'))y.push(`<b>Amala Yoga</b> (flawless character) — ${t.map(B).join(', ')} alone in the 10th from the ${nm}, with no malefic`);
+const a=inS(b+1),c=inS(b+11),ab=a.filter(k=>BEN.includes(k)),cb=c.filter(k=>BEN.includes(k)),am=a.filter(k=>MAL.includes(k)),cm=c.filter(k=>MAL.includes(k));
+if(ab.length&&cb.length&&!am.length&&!cm.length)y.push(`<b>Shubha Kartari Yoga</b> — benefics hem the ${nm}: ${ab.map(B).join(', ')} in the 2nd and ${cb.map(B).join(', ')} in the 12th`);
+if(am.length&&cm.length&&!ab.length&&!cb.length)d.push(`<b>Papa Kartari Dosha</b> — malefics hem the ${nm}: ${am.map(B).join(', ')} in the 2nd and ${cm.map(B).join(', ')} in the 12th`)}
+const mr=[['Lagna',H.Ma],['Moon',fm('Ma','Mo')],['Venus',fm('Ma','Ve')]].filter(x=>[1,2,4,7,8,12].includes(x[1]));
+if(mr.length)d.push(`<b>Mangal (Kuja / Sevvai) Dosha</b> — Mars in house ${mr.map(x=>x[1]+' from '+x[0]).join(', ')}${EX.Ma==s.Ma||OWN.Ma.includes(s.Ma)?'. Reduced: Mars is in its own or exalted sign':''}${mr[0][0]=='Lagna'?'':'. Not from the Lagna itself'}`);
+const rel=pl.map(k=>(P[k]-P.Ra+360)%360);if(rel.every(x=>x<180)||rel.every(x=>x>180))d.push('<b>Kala Sarpa Dosha</b> — all seven planets lie on one side, between Rahu and Ketu');
+if(same('Su','Ra')||same('Su','Ke'))d.push(`<b>Pitra / Grahan Dosha</b> — Sun with ${same('Su','Ra')?'Rahu':'Ketu'} in ${SG[s.Su]}`);
+if(same('Mo','Ra')||same('Mo','Ke'))d.push(`<b>Chandra Grahan Dosha</b> — Moon with ${same('Mo','Ra')?'Rahu':'Ketu'} in ${SG[s.Mo]}`);
+if(same('Ju','Ra'))d.push(`<b>Guru Chandala Dosha</b> — Jupiter with Rahu in ${SG[s.Ju]}`);
+if(same('Ma','Ra'))d.push(`<b>Angaraka Dosha</b> — Mars with Rahu in ${SG[s.Ma]}`);
+if(same('Sa','Ra'))d.push(`<b>Shrapit Dosha</b> — Saturn with Rahu in ${SG[s.Sa]}`);
+if(!a2.length&&!a12.length&&!cj.length){const ca=K4.includes(H.Mo)||ot.some(k=>K4.includes(fm(k,'Mo')));d.push(`<b>Kemadruma Dosha</b> — no planet (other than Sun and nodes) beside or adjacent to the Moon${ca?'. Mitigated: the Moon or another planet is in a kendra':''}`)}
+const ps=Math.floor(calc(NOW,0,0).P.Sa/30),r=(ps-s.Mo+12)%12+1;
+if([12,1,2].includes(r))d.push(`<b>Sade Sati (running now)</b> — transit Saturn in ${SG[ps]}, house ${r} from the natal Moon`);else if(r==4||r==8)d.push(`<b>Shani Dhaiya (running now)</b> — transit Saturn in ${SG[ps]}, house ${r} from the natal Moon`);
+const li=a=>a.length?'<ul class="y">'+a.map(t=>`<li>${t}</li>`).join('')+'</ul>':'<p class="n">None found by the rules used.</p>';
+return`<div class="card"><h2>Yogas and Doshas</h2><h3>Yogas</h3>${li(y)}<h3>Doshas</h3>${li(d)}<p class="n">These are indications from standard whole-sign rules only. Their strength depends on aspects, dignity, divisional charts and context, so please read them with a qualified jyotishi. Rahu and Ketu dignity follows the Taurus/Scorpio convention; traditions differ.</p></div>`}
+const LPA=3.5,LPC=.5;
+const ZQT=[[2.5,4.1,4.5,4.6,4.8,5.1,5.3,5.5,5.8,6.4,8.2],[2.5,4,4.3,4.6,4.8,5,5.3,5.5,5.8,6.1,7.9],[2.9,4,4.4,4.7,5,5.2,5.4,5.6,6,6.3,7.8],[2,3.5,4,4.3,4.5,4.8,5,5.3,5.62,6.2,8.1],[2.3,3.7,4,4.3,4.7,5,5.2,5.5,5.9,6.3,8.5],[2.2,3.7,4,4.17,4.3,4.6,4.8,5,5.3,5.7,7.4],[0.7,2.5,3.3,3.9,4.5,5,5.5,6.1,6.72,7.5,9.1]],ZN=600,Zcal=(i,x)=>{const q=ZQT[i];if(!q||!q.length)return x;let j=0;while(j<9&&x>q[j+1])j++;const a=q[j],b=q[j+1],p=b>a?Math.max(0,Math.min(1,(x-a)/(b-a))):0;return Math.round((j+p)*10)/10};
+const TIPS={'Overall chart strength':'Practical: use the strongest factors as your base and give the weakest extra planning. Traditional: strengthen the weakest planets in the table with their usual observances.','Career strength':'Practical: build skills, seek mentors and time big moves with a supportive dasha. Traditional: Sun, Saturn and 10th-lord observances.','Wealth strength':'Practical: steady saving, skills and avoiding debt. Traditional: Jupiter and Venus charity.','Family strength':'Practical: regular time, honest talks and shared rituals. Traditional: Moon and Jupiter observances.','Marriage strength':'Practical: readiness, communication and counselling. Traditional: Venus and Jupiter observances.','Education strength':'Practical: good teachers, a study routine and revision. Traditional: Mercury and Jupiter observances.','Health and vitality strength':'Practical: sleep, diet, exercise and checkups. Traditional: Sun and Mars strengthening.','Chances of marriage separation':'Practical: marry when both are ready, communicate openly, seek counselling early and avoid decisions in anger. Traditional: Venus and 7th-lord observances, Saturn or Rahu pacification, Mangal Dosha rituals where relevant.','Chances of multiple marriage':'Practical: take time to choose, and put shared values and commitment first. Traditional: Venus and Jupiter observances.','Self-confidence':'Practical: small wins, skill-building, good posture and public speaking grow it. Traditional: Sun strengthening (sunrise, Surya Namaskar).','Soul strength':'Practical: meditation, clear values, time in nature and service build it. Traditional: Sun and Jupiter practices, mantra japa.','Temperament':'Practical: sleep, exercise and a pause before replying steady a quick temper. Traditional: calming the Moon (Monday observances, water, white offerings).','Grace':'Practical: gentle speech, listening and courteous habits build it. Traditional: Venus and Mercury observances (Friday, Wednesday).','Helping tendency':'Practical: regular small acts of service or giving build the habit. Traditional: Jupiter charity (Thursday).','Forgiveness':'Practical: reflection, journaling or counselling soften old grudges. Traditional: Moon and Jupiter calming practices, meditation.','Courage':'Practical: gradual challenges, sport and public speaking grow it. Traditional: Mars and Sun strengthening (Tuesday, sunrise discipline).','Intelligence':'Practical: reading, practice and good sleep improve it far more than any chart. Traditional: Mercury and Jupiter study observances.','Knowledge':'Practical: steady study, good teachers and revision. Traditional: Jupiter and Mercury observances, Saraswati worship.','Quality of education':'Practical: choosing the right institution, mentors and study plan matters most. Traditional: Jupiter and Mercury observances.','Wisdom':'Practical: reflection, mentors, reading and time with elders deepen it. Traditional: Jupiter practices, meditation.','Leadership':'Practical: take responsibility in small teams and learn from feedback. Traditional: Sun strengthening (sunrise, Surya Namaskar).','Wealth at birth':'Practical: birth circumstances are fixed, but skills and saving build your own base. Traditional: Jupiter and Venus charity.','Wealth potential':'Practical: skills, steady saving, wise investing and avoiding debt. Traditional: Jupiter and Venus observances, Lakshmi worship.','Younger siblings':'Practical: the bond improves with time, support and regular contact. Traditional: Mars observances.','Elder siblings':'Practical: the bond improves with respect and regular contact. Traditional: Jupiter observances.','Fortune and luck':'Practical: preparation, networks and good timing create luck. Traditional: Jupiter practices, charity, elders’ blessings.','Fame and recognition':'Practical: consistent visible work, networking and a portfolio. Traditional: Sun strengthening.','Defamation risk':'Practical: transparent conduct, careful speech and online privacy lower it. Traditional: Sun and Saturn propitiation.','Love before marriage':'Practical: the pull is fixed, but how you choose, communicate and set boundaries shapes the outcome. Traditional: Venus observances (Friday).','Close association with the opposite gender before marriage':'Practical: social habits and ease with others grow with practice. Traditional: Venus and Mercury observances.','Longing for love':'Practical: self-worth, friendships and fulfilling interests balance the need. Traditional: Venus and Moon calming practices.','Love failures':'Practical: slower choices, honest communication and counselling reduce repeat patterns. Traditional: pacifying Venus, Rahu or Saturn, with patience.','Married life':'Practical: communication, shared goals and counselling matter most. Traditional: Venus and Jupiter observances, Lakshmi-Narayana worship.','Timing of marriage':'Practical: readiness, finances and family talks are the practical drivers. Traditional: Jupiter and Venus observances, Mangal Dosha rituals where relevant.','Beauty':'Practical: grooming, fitness and posture change how you appear. Traditional: Venus observances.','Attraction':'Practical: confidence, warmth and personal style. Traditional: Venus and Moon observances.','Sexiness':'Practical: fitness, self-care and confidence. Traditional: Venus observances.','Fitness and stamina':'Practical: regular exercise, sleep and nutrition make the biggest difference. Traditional: Mars and Sun strengthening.','Vitality':'Practical: sleep, diet, exercise and regular health checks. Traditional: Sun strengthening.','Mother':'Practical: time, calls and care strengthen the bond. Traditional: Moon observances, service to mother.','Father':'Practical: time, respect and care strengthen the bond. Traditional: Sun observances, service to father.','Paternal grandparents':'Practical: visits, respect and keeping in touch. Traditional: ancestor rites (tarpanam).','Maternal grandparents':'Practical: visits, respect and keeping in touch. Traditional: ancestor rites (tarpanam).','Children':'Practical: healthy lifestyle and medical guidance matter most; please consult a doctor for any concern. Traditional: Jupiter practices.','Dancing and performance':'Practical: training and regular practice matter far more than any chart. Traditional: Venus and Mercury observances.','Happiness':'Practical: sleep, relationships, routine and professional support when needed. Traditional: Moon calming practices, meditation.','Fulfilment':'Practical: clear goals, meaningful work and gratitude. Traditional: Jupiter practices, service.','Support from teachers':'Practical: respect, curiosity and actively seeking mentors. Traditional: Jupiter observances, honouring gurus.','Support from bosses':'Practical: reliability, clear communication and visible results. Traditional: Sun observances.','Blessings in this birth':'Practical: serving elders and everyday kindness. Traditional: Jupiter practices, guru and elders’ blessings.','Punya from previous births':'Practical: charity, service and righteous conduct build merit now. Traditional: dana, temple service, ancestor rites.','Debt':'Practical: budgeting, avoiding loans and an emergency fund. Traditional: Saturn and Mercury observances.','Permanent enemies':'Practical: forgive and let go early, avoid feuds, use mediation. Traditional: Mars and Saturn pacification.','Life threats':'Practical: safety precautions, insurance and care when travelling or in confrontations. Traditional: Mrityunjaya chanting, Jupiter protection.','Open enemies and opposition':'Practical: diplomacy, clear records and calm responses. Traditional: Mars pacification.','Overcoming opponents':'Practical: preparation, allies and patience. Traditional: Mars and Sun strengthening.','Hidden enemies':'Practical: discretion, a trusted circle and careful sharing of plans. Traditional: Jupiter and Ketu practices.','Litigation':'Practical: settle early through mediation and keep good records. Traditional: Mars and Saturn pacification.'};
+const LAX=h=>{let n=0;return h.replace(/<h3>([\s\S]*?)<\/h3>/g,(m,t)=>(n++?'</details>':'<p class="n"><a href="#" onclick="document.querySelectorAll(\'details.la\').forEach(d=>d.open=true);return false">Expand all</a> · <a href="#" onclick="document.querySelectorAll(\'details.la\').forEach(d=>d.open=false);return false">Collapse all</a></p>')+'<details class="la"'+(t=='Overall Chart Strength'?' open':'')+'><summary><span>'+t+'</span></summary>').replace('<p class="n">Genetics','</details><p class="n">Genetics')};
+function LA(P,asc,ord,full,J0){const LS=Math.floor(asc/30),s={},H={};
+for(const k of ord){s[k]=Math.floor(P[k]/30);H[k]=(s[k]-LS+12)%12+1}
+const hl=h=>LORD[(LS+h-1)%12],B=a=>full[a],hs=h=>ord.filter(k=>H[k]==h),sn=h=>(LS+h-1)%12,
+AS={Ma:[4,7,8],Ju:[5,7,9],Sa:[3,7,10],Ra:[5,7,9],Ke:[5,7,9]},
+ap=(k,h)=>H[k]!=h&&(AS[k]||[7]).includes((h-H[k]+12)%12+1),asp=h=>ord.filter(k=>ap(k,h)),
+ok=x=>!!OWN[x]&&(OWN[x].includes(s[x])||EX[x]==s[x]),db=x=>DB[x]!==undefined&&DB[x]==s[x],
+BEN=['Ju','Ve','Me'],MAL=['Su','Ma','Sa','Ra','Ke'],wax=((P.Mo-P.Su+360)%360)<180,
+cmb=x=>{if(!CB[x])return false;let d=Math.abs(P[x]-P.Su);d=Math.min(d,360-d);return d<CB[x]},
+KE=[1,4,7,10],TR=[1,5,9],DU=[6,8,12],UP=[3,6,10,11],l1=hl(1),l6=hl(6),l8=hl(8),l12=hl(12),
+cj=(k,L)=>L.filter(x=>x!=k&&s[x]==s[k]),
+mk=()=>{const o={t:0,l:[],w:[],p(n,x){o.t+=n;o.l.push((n>0?'+ ':'− ')+x);o.w.push(n)}};return o},
+AR=['head, brain and eyes','face, throat, neck and thyroid','arms, shoulders, lungs and nerves','chest, stomach and breasts','heart, upper back and spine','intestines and digestion','kidneys, lower back and skin','reproductive and excretory organs','hips, thighs and liver','knees, bones, joints and teeth','calves, ankles and circulation','feet, lymph and sleep'],
+TH={Su:'heart, spine, eyes, vitality',Mo:'mind, sleep, fluids, stomach',Ma:'blood, inflammation, blood pressure, injuries',Me:'nerves, skin, allergies, breathing',Ju:'liver, weight, sugar, hips',Ve:'kidneys, hormones, throat, sugar',Sa:'bones, joints, teeth, chronic fatigue',Ra:'toxins, allergies, infections, hard-to-diagnose complaints',Ke:'fevers, skin eruptions, accidents, hard-to-diagnose complaints'},
+BD=['medium, athletic frame with a prominent head or brow','sturdy and well built, thick neck, strong face','tall and slim, long arms, lively','medium height, round face, soft features','broad shoulders, dignified bearing','slender, youthful and neat','well proportioned, balanced and graceful','strong and stocky with intense eyes','tall and athletic with long limbs','lean and bony with prominent joints','tall to medium, even build','soft, rounded build with large eyes'],
+TV={Mo:1,Ve:1.5,Ju:2,Me:2.5,Su:3.5,Ma:3.5,Ke:4,Ra:4.5,Sa:5},
+DT={Mo:'pale and soft',Ve:'glowing and attractive',Ju:'golden, warm fair',Me:'wheatish with a youthful look',Su:'reddish or coppery glow',Ma:'ruddy or reddish',Ke:'dusky, uneven tone',Ra:'dusky, smoky tone',Sa:'deep or dark tone'};
+const bs=mk();
+if(ok('Ve'))bs.p(2,'Venus is in its own or exalted sign');else if(db('Ve'))bs.p(-1,'Venus is debilitated');
+if(KE.includes(H.Ve))bs.p(1,`Venus is in a kendra (house ${H.Ve})`);
+if(cmb('Ve'))bs.p(-1,'Venus is combust');
+if(wax)bs.p(1,'the Moon is waxing');if(ok('Mo'))bs.p(1,'the Moon is in its own or exalted sign');
+if(ok(l1))bs.p(1,`Lagna lord ${B(l1)} is in its own or exalted sign`);else if(db(l1))bs.p(-1,`Lagna lord ${B(l1)} is debilitated`);
+for(const k of hs(1)){if(BEN.includes(k)||(k=='Mo'&&wax))bs.p(1,`${B(k)} is in the Lagna`);else if(MAL.includes(k))bs.p(-1,`${B(k)} is in the Lagna`)}
+if(H.Ju!=1&&ap('Ju',1))bs.p(1,'Jupiter aspects the Lagna');
+if([1,3,6].includes(LS))bs.p(1,'Lagna is a Venus- or Moon-ruled sign');
+const bl=bs.t>=5?'Strikingly attractive and charming':bs.t>=3?'Attractive, with a pleasing presence':bs.t>=1?'Pleasant, with above-average appeal':'Simple looks; character and presence count for more';
+const TW={},add=(k,w)=>TW[k]=(TW[k]||0)+w;add(l1,3);hs(1).forEach(k=>add(k,2));asp(1).forEach(k=>add(k,1));add(LORD[s.Mo],1);
+let tw=0,tv=0;for(const k in TW){tw+=TW[k];tv+=TW[k]*TV[k]}const av=tv/tw,dom=Object.keys(TW).sort((a,b)=>TW[b]-TW[a])[0];
+const tone=av<1.8?'Fair, bright complexion':av<2.7?'Fair to light wheatish':av<3.4?'Wheatish, medium tone':av<4.1?'Medium brown, warm tone':'Dusky to dark';
+const fs=mk();
+if(ok(l1))fs.p(1,`Lagna lord ${B(l1)} is in its own or exalted sign`);if(KE.includes(H[l1])||TR.includes(H[l1]))fs.p(1,`Lagna lord is in house ${H[l1]}`);
+if(DU.includes(H[l1]))fs.p(-1,`Lagna lord is in house ${H[l1]}`);if(db(l1))fs.p(-1,'Lagna lord is debilitated');
+if(ok('Ma')||UP.includes(H.Ma))fs.p(1,'Mars (stamina) is well placed');if(db('Ma')||cmb('Ma'))fs.p(-1,'Mars is weak');
+if(ok('Su')||KE.includes(H.Su))fs.p(1,'Sun (vitality) is strong');if(db('Su'))fs.p(-1,'Sun is debilitated');
+if(UP.includes(H.Sa))fs.p(1,'Saturn (endurance) is in an upachaya house');
+const fl=fs.t>=3?'Strong constitution and good stamina':fs.t>=1?'Reasonable fitness; responds well to routine':'Needs conscious effort to stay fit; build stamina steadily';
+const o6=hs(6),os=mk();
+if(o6.length)os.p(o6.length,`${o6.map(B).join(', ')} in the 6th`);
+if(asp(6).some(k=>MAL.includes(k)))os.p(.5,'a malefic aspects the 6th');
+if([1,7].includes(H[l6]))os.p(1,`6th lord ${B(l6)} is in house ${H[l6]}, so conflict is personal and visible`);
+const ol=os.t>=3?'High':os.t>=1?'Moderate':'Low';
+const wn=[];if(o6.some(k=>MAL.includes(k)))wn.push('a malefic in the 6th');if(DU.includes(H[l6]))wn.push(`6th lord in house ${H[l6]}`);if(ok('Ma')||UP.includes(H.Ma))wn.push('Mars is well placed');
+const wl=wn.length>=2?'Likely to overcome opponents':wn.length==1?'Can hold their own':'Opponents may be persistent; diplomacy works better than confrontation';
+const hd=mk(),m12=hs(12).filter(k=>MAL.includes(k));
+if(m12.length)hd.p(1,`${m12.map(B).join(', ')} in the 12th`);
+for(const k of ['Ra','Ke'])if(DU.includes(H[k]))hd.p(1,`${B(k)} in house ${H[k]}`);
+if([6,8].includes(H[l12]))hd.p(1,`12th lord ${B(l12)} in house ${H[l12]}`);
+if([8,12].includes(H[l6]))hd.p(1,`6th lord ${B(l6)} in house ${H[l6]}`);
+if(hs(8).some(k=>MAL.includes(k)))hd.p(1,'a malefic in the 8th');
+const prot=H.Ju==12||ap('Ju',12),hv=Math.max(hd.t-(prot?1:0),0),hdl=hv>=3?'High':hv>=1?'Moderate':'Low';
+const vt=mk();
+if(ok(l1))vt.p(2,`Lagna lord ${B(l1)} is in its own or exalted sign`);else if(KE.includes(H[l1])||TR.includes(H[l1]))vt.p(1,`Lagna lord is in house ${H[l1]}`);
+if(DU.includes(H[l1]))vt.p(-2,`Lagna lord is in house ${H[l1]}`);if(db(l1))vt.p(-1,'Lagna lord is debilitated');
+for(const k of hs(1)){if(BEN.includes(k))vt.p(1,`${B(k)} in the Lagna`);else if(MAL.includes(k))vt.p(-1,`${B(k)} in the Lagna`)}
+if(H.Ju==1||ap('Ju',1))vt.p(1,'Jupiter supports the Lagna');
+if(ok('Su')||KE.includes(H.Su))vt.p(1,'Sun (vitality) is strong');if(db('Su'))vt.p(-1,'Sun is debilitated');
+const vl=vt.t>=3?'Strong vitality':vt.t>=0?'Moderate vitality':'Needs steady care';
+const mi=[],rc=[],mj=[];
+for(const k of hs(6))mi.push(`${B(k)} in the 6th: ${TH[k]}`);
+mi.push(`Lagna in ${SG[LS]}: the ${AR[LS]} are sensitive areas`);mi.push(`6th house in ${SG[sn(6)]}: ailments tend to show in the ${AR[sn(6)]}`);
+if(DU.includes(H.Mo))mi.push(`Moon in house ${H.Mo}: emotional and digestive sensitivity`);
+const mm=cj('Me',['Sa','Ra','Ke','Ma']);if(mm.length)mi.push(`Mercury with ${mm.map(B).join(', ')}: nerves, skin or allergy trouble`);
+for(const x of ['Mo','Ma','Ju','Ve','Sa'])if(cmb(x))mi.push(`${B(x)} is combust: mild weakness in ${TH[x]}`);
+if(H.Sa&&[1,6,8,12].includes(H.Sa))rc.push(`Saturn in house ${H.Sa}: slow-building, chronic issues (${TH.Sa})`);
+if([1,6,8].includes(H.Ra))rc.push(`Rahu in house ${H.Ra}: allergies, infections or hard-to-diagnose complaints`);
+if([1,6,8].includes(H.Ke))rc.push(`Ketu in house ${H.Ke}: fevers, skin eruptions or hard-to-diagnose complaints`);
+const lc=cj(l1,['Sa','Ra','Ke']);if(lc.length)rc.push(`Lagna lord ${B(l1)} with ${lc.map(B).join(', ')}: slow recovery and flare-ups`);
+const mc=cj('Mo',['Sa','Ra','Ke','Ma']);if(mc.length)rc.push(`Moon with ${mc.map(B).join(', ')}: recurring low mood, colds or sleep disturbance`);
+const sc=cj(l6,MAL);if(sc.length)rc.push(`6th lord ${B(l6)} with ${sc.map(B).join(', ')}: ailments that return`);
+for(const k of hs(8).filter(k=>MAL.includes(k)))mj.push(`${B(k)} in the 8th: long-term vulnerability in the ${AR[sn(8)]}; ${TH[k]}`);
+if([8,12].includes(H[l1])&&(db(l1)||cj(l1,MAL).length))mj.push(`Lagna lord ${B(l1)} in house ${H[l1]} and afflicted: weak vitality over the long run`);
+for(const k of hs(1).filter(k=>['Sa','Ra','Ke','Ma'].includes(k)))if(!(H.Ju==1||ap('Ju',1)))mj.push(`${B(k)} in the Lagna without Jupiter's support: constitution needs protecting`);
+if(db('Su')||cj('Su',['Sa','Ra','Ke']).length)mj.push('Sun is afflicted: heart, spine, eyes and vitality deserve regular checks');
+if(cj('Ma',['Sa']).length)mj.push('Mars and Saturn together: risk of injury, surgery, joint or blood-related trouble');
+if([1,6].includes(H[l8]))mj.push(`8th lord ${B(l8)} in house ${H[l8]}: health needs steady attention`);
+const ul=a=>a.length?`<ul class="y">${a.map(t=>`<li>${t}</li>`).join('')}</ul>`:'<p class="n">None indicated.</p>',nn=t=>t.l.join('; ')||'No strong indicators either way';
+
+const og=h=>h+(h==1?'st':h==2?'nd':h==3?'rd':'th'),pk=x=>KE.includes(H[x])||TR.includes(H[x]),
+bnf=h=>hs(h).filter(k=>BEN.includes(k)||(k=='Mo'&&wax)),mlf=h=>hs(h).filter(k=>['Sa','Ra','Ke','Ma'].includes(k)),
+nl=a=>a.map(B).join(', '),lk=(a,b)=>a!=b&&(s[a]==s[b]||(LORD[s[a]]==b&&LORD[s[b]]==a)),
+lr=(t,x,w,g)=>{if(ok(x))t.p(2,`${w} ${B(x)} is in its own or exalted sign`);else if(g(x))t.p(1,`${w} ${B(x)} is in house ${H[x]}`);if(DU.includes(H[x]))t.p(-1,`${w} ${B(x)} is in house ${H[x]}`);if(db(x))t.p(-1,`${w} ${B(x)} is debilitated`)},
+lb=(t,a)=>(a.find(z=>t.t>=z[0])||a[a.length-1])[1],gd=x=>pk(x)||[2,11].includes(H[x]),
+l2=hl(2),l3=hl(3),l4=hl(4),l5=hl(5),l9=hl(9),l10=hl(10),l11=hl(11);
+const it=mk();lr(it,l5,'5th lord',pk);
+bnf(5).forEach(k=>it.p(1,`${B(k)} in the 5th`));mlf(5).forEach(k=>it.p(-1,`${B(k)} in the 5th`));
+if(ap('Ju',5))it.p(1,'Jupiter aspects the 5th');
+if(ok('Me'))it.p(2,'Mercury is in its own or exalted sign');else if(pk('Me'))it.p(1,`Mercury is in house ${H.Me}`);if(db('Me'))it.p(-1,'Mercury is debilitated');
+if(ok('Ju')||pk('Ju'))it.p(1,`Jupiter is strong (house ${H.Ju})`);if(db('Ju'))it.p(-1,'Jupiter is debilitated');
+if(pk('Me')&&pk('Ju'))it.p(1,'Mercury and Jupiter are both in kendra or trikona');
+if(wax)it.p(1,'the Moon is waxing');const im=cj('Mo',['Sa','Ra','Ke']);if(im.length)it.p(-1,`Moon with ${nl(im)}`);
+const ld=mk();
+if(ok('Su'))ld.p(2,'Sun is in its own or exalted sign');else if((pk('Su')||[10,11].includes(H.Su))&&!db('Su'))ld.p(1,`Sun is well placed in house ${H.Su}`);if(db('Su'))ld.p(-1,'Sun is debilitated');
+lr(ld,l10,'10th lord',x=>pk(x)||H[x]==11);
+if(ok(l1)||pk(l1))ld.p(1,`Lagna lord ${B(l1)} is strong`);
+if(ok('Ma')||UP.includes(H.Ma))ld.p(1,'Mars (command and courage) is well placed');if(db('Ma'))ld.p(-1,'Mars is debilitated');
+if([3,6,10,11].includes(H.Sa)&&!db('Sa'))ld.p(1,`Saturn in house ${H.Sa}: disciplined, long-term authority`);
+if(H.Ju==10||ap('Ju',10))ld.p(1,'Jupiter supports the 10th');
+if(l10==l9||l10==l5||lk(l10,l9)||lk(l10,l5))ld.p(1,'10th lord is linked with, or also rules, the 9th or 5th (Raja Yoga-type link)');
+const wb=mk();lr(wb,l2,'2nd lord',gd);lr(wb,l4,'4th lord',gd);lr(wb,l9,'9th lord (father\u2019s fortune)',gd);
+[2,4,9].forEach(h=>bnf(h).forEach(k=>wb.p(1,`${B(k)} in the ${og(h)}`)));[2,4].forEach(h=>mlf(h).forEach(k=>wb.p(-1,`${B(k)} in the ${og(h)}`)));
+if(ap('Ju',2)||ap('Ju',4))wb.p(1,'Jupiter aspects the 2nd or 4th');
+const wp=mk(),DH=[2,5,9,11],DP=[l2,l5,l9,l11],dpr=[];
+for(let i=0;i<4;i++)for(let j=i+1;j<4;j++){const a=DP[i],b=DP[j];if(a==b)dpr.push(`${B(a)} rules both the ${og(DH[i])} and ${og(DH[j])}`);else if(lk(a,b))dpr.push(`${og(DH[i])} lord ${B(a)} is linked with ${og(DH[j])} lord ${B(b)}`)}
+if(dpr.length)wp.p(Math.min(dpr.length+1,4),'Dhana Yoga: '+dpr.join('; '));
+lr(wp,l11,'11th lord',gd);lr(wp,l2,'2nd lord',gd);
+if(gd(l10))wp.p(1,`10th lord ${B(l10)} (career income) is well placed in house ${H[l10]}`);
+if(hs(11).length)wp.p(1,`${nl(hs(11))} in the 11th (house of gains)`);
+if(ok('Ju')||DH.includes(H.Ju)||ap('Ju',2)||ap('Ju',11))wp.p(1,'Jupiter (wealth significator) is strong or linked to the wealth houses');
+mlf(2).forEach(k=>wp.p(-1,`${B(k)} in the 2nd`));
+if(ok(l9)&&pk(l9)&&(ok(l1)||pk(l1)))wp.p(2,'Lakshmi Yoga: 9th lord is strong in a kendra or trikona and the Lagna lord is strong');
+const yg=mk(),eg=mk();lr(yg,l3,'3rd lord',x=>pk(x)||[3,11].includes(H[x]));
+bnf(3).forEach(k=>yg.p(1,`${B(k)} in the 3rd`));['Sa','Ra','Ke'].forEach(k=>{if(H[k]==3)yg.p(-1,`${B(k)} in the 3rd`)});
+if(H.Ma==3)yg.p(1,'Mars in the 3rd');if(ok('Ma')||UP.includes(H.Ma))yg.p(1,'Mars (sibling significator) is well placed');if(db('Ma')||cmb('Ma'))yg.p(-1,'Mars is weak');
+if(ap('Ju',3))yg.p(1,'Jupiter aspects the 3rd');
+lr(eg,l11,'11th lord',gd);bnf(11).forEach(k=>eg.p(1,`${B(k)} in the 11th`));if(ap('Ju',11))eg.p(1,'Jupiter aspects the 11th');
+const lu=mk();lr(lu,l9,'9th lord',gd);bnf(9).slice(0,2).forEach(k=>lu.p(1,`${B(k)} in the 9th`));mlf(9).forEach(k=>lu.p(-1,`${B(k)} in the 9th`));
+if(ap('Ju',9))lu.p(1,'Jupiter aspects the 9th');
+if(ok('Ju')||pk('Ju'))lu.p(1,`Jupiter (fortune significator) is strong in house ${H.Ju}`);if(db('Ju'))lu.p(-1,'Jupiter is debilitated');
+if(lk(l1,l9)||H[l1]==9||H[l9]==1)lu.p(1,'Lagna lord and 9th lord are linked');
+
+const l7=hl(7),fm=mk(),df=mk(),mr=mk(),md=mk();
+if(ok('Su'))fm.p(2,'Sun is in its own or exalted sign');else if((pk('Su')||[10,11].includes(H.Su))&&!db('Su'))fm.p(1,`Sun is well placed in house ${H.Su}`);if(db('Su'))fm.p(-1,'Sun is debilitated');
+lr(fm,l10,'10th lord',x=>pk(x)||H[x]==11);
+const o10=hs(10).filter(k=>k!='Ke');if(o10.length)fm.p(1,`${nl(o10)} in the 10th (visibility)`);
+if([10,11].includes(H.Ra))fm.p(1,`Rahu in house ${H.Ra}: sudden or mass-media recognition`);
+if(wax&&(ok('Mo')||pk('Mo')))fm.p(1,'Moon is waxing and well placed (public appeal)');
+if(H.Ju==10||ap('Ju',10))fm.p(1,'Jupiter supports the 10th');
+if(l10==l9||l10==l5||lk(l10,l9)||lk(l10,l5)||lk(l10,l1))fm.p(1,'10th lord is linked with the 9th, 5th or Lagna lord (Raja Yoga-type link)');
+if(cj('Su',['Sa']).length)fm.p(-1,'Sun with Saturn: recognition comes late');
+if([l6,l8,l12].some(x=>H[x]==10))df.p(1,`${nl([l6,l8,l12].filter(x=>H[x]==10).filter((x,i,a)=>a.indexOf(x)==i))} (lord of the 6th, 8th or 12th) sits in the 10th`);
+if(cj('Su',['Ra','Ke']).length)df.p(1,`Sun with ${nl(cj('Su',['Ra','Ke']))}: reputation can be clouded`);
+if([6,8,12].includes(H.Su)&&!ok('Su'))df.p(1,`Sun is in house ${H.Su}`);
+if(H.Ra==10||H.Ke==10)df.p(1,`${B(H.Ra==10?'Ra':'Ke')} in the 10th: controversy follows visibility`);
+if(H[l6]==1)df.p(1,`6th lord ${B(l6)} in the Lagna: conflicts are personal and visible`);
+if(hv>=2)df.p(1,'hidden enemies are active (12th and 8th houses)');
+if(H.Ju==10||ap('Ju',10)||H.Ju==12)df.p(-1,'Jupiter shields the 10th or 12th');
+if(ok(l10)||pk(l10))df.p(-1,`10th lord ${B(l10)} is strong, which protects reputation`);
+lr(mr,l7,'7th lord',gd);bnf(7).forEach(k=>mr.p(1,`${B(k)} in the 7th`));mlf(7).forEach(k=>mr.p(-1,`${B(k)} in the 7th`));
+if(ap('Ju',7))mr.p(1,'Jupiter aspects the 7th');
+if(ok('Ve'))mr.p(1,'Venus (marriage significator) is in its own or exalted sign');if(db('Ve'))mr.p(-1,'Venus is debilitated');if(cmb('Ve'))mr.p(-1,'Venus is combust');
+if(DU.includes(H.Ve)&&!ok('Ve'))mr.p(-1,`Venus is in house ${H.Ve}`);
+const vc=cj('Ve',['Sa','Ra','Ke']);if(vc.length)mr.p(-1,`Venus with ${nl(vc)}`);
+const l7c=cj(l7,['Sa','Ra','Ke']);if(l7c.length)mr.p(-1,`7th lord ${B(l7)} with ${nl(l7c)}`);
+const mh=[H.Ma,(s.Ma-s.Mo+12)%12+1].some(h=>[1,2,4,7,8,12].includes(h));if(mh&&!ok('Ma'))mr.p(-1,'Mars placement forms Mangal Dosha (see Yogas and Doshas)');
+if(mlf(2).length)mr.p(-1,`${nl(mlf(2))} in the 2nd (family life)`);
+if(lk(l1,l7))mr.p(1,'Lagna lord and 7th lord are linked');
+if(H.Sa==7||ap('Sa',7))md.p(1,'Saturn occupies or aspects the 7th');
+if(l7c.some(k=>k=='Sa'))md.p(1,`7th lord with Saturn`);if(DU.includes(H[l7]))md.p(1,`7th lord ${B(l7)} in house ${H[l7]}`);
+if(H.Ra==7||H.Ke==7)md.p(1,`${B(H.Ra==7?'Ra':'Ke')} in the 7th`);if(cmb('Ve'))md.p(1,'Venus is combust');
+if(H.Ju==7||ap('Ju',7))md.p(-1,'Jupiter supports the 7th');if(bnf(7).length)md.p(-1,`${nl(bnf(7))} in the 7th`);if(gd(l7))md.p(-1,`7th lord ${B(l7)} is well placed`);
+
+const rl=(k,x)=>(k!=x&&s[k]==s[x])||ap(k,H[x]),mal6=o6.filter(k=>MAL.includes(k)),SS=['Sa','Ra','Ke'];
+const th=[],tc=[],tr=[];
+if(H.Ma==1)th.push('Mars in the Lagna');if(rl('Ma','Mo'))th.push('Mars influences the Moon');
+if([0,4,8].includes(LS))th.push(`Lagna is a fire sign (${SG[LS]})`);if(['Ma','Su'].includes(l1))th.push(`Lagna lord is ${B(l1)}`);
+if(rl('Ra','Mo')||rl('Ke','Mo'))th.push('Rahu or Ketu influences the Moon (restless mind)');
+if(rl('Ju','Mo'))tc.push('Jupiter influences the Moon');if(rl('Ve','Mo'))tc.push('Venus influences the Moon');
+if(wax)tc.push('Moon is waxing');if(ok('Mo'))tc.push('Moon is in its own or exalted sign');
+if(['Ju','Ve','Mo'].includes(l1))tc.push(`Lagna lord is ${B(l1)}`);if(hs(1).some(k=>BEN.includes(k)))tc.push('a benefic in the Lagna');
+if(rl('Sa','Mo'))tr.push('Saturn influences the Moon');if(H.Sa==1)tr.push('Saturn in the Lagna');if(l1=='Sa')tr.push('Lagna lord is Saturn');
+const tl=th.length>=tc.length+2?'Fiery: quick to react and quick to cool down':tc.length>=th.length+2?'Calm and even-tempered':tr.length>=2?'Reserved and serious; slow to warm up and slow to anger':th.length>tc.length?'Warm, with a short fuse at times':tc.length>th.length?'Mostly gentle and patient':'Balanced; temper depends on the situation';
+const tn=[th.length?'Heat: '+th.join(', '):'',tc.length?'Calming: '+tc.join(', '):'',tr.length?'Reserve: '+tr.join(', '):''].filter(Boolean).join('. ')||'No strong indicators either way';
+const gr=mk();
+if(ok('Ve'))gr.p(2,'Venus is in its own or exalted sign');else if(pk('Ve'))gr.p(1,`Venus is in house ${H.Ve}`);if(db('Ve'))gr.p(-1,'Venus is debilitated');
+if(wax)gr.p(1,'the Moon is waxing');if(H.Ju==1||ap('Ju',1))gr.p(1,'Jupiter supports the Lagna (dignity)');
+if(ok('Me')||pk('Me'))gr.p(1,'Mercury is strong (courteous speech)');
+const gb=hs(1).filter(k=>['Ju','Ve','Me'].includes(k));if(gb.length)gr.p(1,`${nl(gb)} in the Lagna`);
+if(mlf(2).length)gr.p(-1,`${nl(mlf(2))} in the 2nd (speech can turn harsh)`);if(db(l1))gr.p(-1,`Lagna lord ${B(l1)} is debilitated`);
+const hp=mk();
+if(ok('Ju')||pk('Ju'))hp.p(1,`Jupiter is strong (house ${H.Ju})`);if(db('Ju'))hp.p(-1,'Jupiter is debilitated');
+if(wax)hp.p(1,'the Moon is waxing (compassion)');if(rl('Ju','Mo'))hp.p(1,'Jupiter influences the Moon');
+if(bnf(12).length)hp.p(1,`${nl(bnf(12))} in the 12th (charity)`);
+if(gd(l9)&&!DU.includes(H[l9]))hp.p(1,`9th lord ${B(l9)} is well placed (dharma)`);
+if(o6.length)hp.p(1,`${nl(o6)} in the 6th (service)`);
+if(rl('Sa','Mo')||rl('Ra','Mo')||rl('Ke','Mo'))hp.p(-1,'Moon is influenced by Saturn, Rahu or Ketu (guarded heart)');
+const fg=mk();
+if(wax)fg.p(1,'the Moon is waxing');if(rl('Ju','Mo'))fg.p(1,'Jupiter influences the Moon');if(rl('Ve','Mo'))fg.p(1,'Venus influences the Moon');
+if(db('Mo'))fg.p(-1,`Moon is debilitated in ${SG[7]}: feelings run deep and slights linger`);
+if(rl('Ma','Mo'))fg.p(-1,'Mars influences the Moon (grudges and flare-ups)');if(rl('Sa','Mo'))fg.p(-1,'Saturn influences the Moon (long memory)');
+if(rl('Ra','Mo')||rl('Ke','Mo'))fg.p(-1,'Rahu or Ketu influences the Moon (hard to settle)');
+const at=mk(),sx=mk();
+if(ok('Ve')){at.p(2,'Venus is in its own or exalted sign');sx.p(2,'Venus is in its own or exalted sign')}else if(pk('Ve')){at.p(1,`Venus is in house ${H.Ve}`);if(KE.includes(H.Ve))sx.p(1,`Venus is in a kendra (house ${H.Ve})`)}
+if(db('Ve')||cmb('Ve')){at.p(-1,'Venus is weak');sx.p(-1,'Venus is weak')}
+if(wax){at.p(1,'the Moon is waxing');sx.p(1,'the Moon is waxing')}
+if(H.Ve==1||cj(l1,['Ve']).length)at.p(1,'Venus is in the Lagna or with the Lagna lord');
+if(H.Ju==1||ap('Ju',1))at.p(1,'Jupiter supports the Lagna');
+if(H.Ra==1||H.Ra==7)at.p(1,`Rahu in the ${og(H.Ra)}: an exotic, magnetic pull`);
+if(rl('Ma','Ve')||rl('Ve','Ma')){at.p(1,'Mars and Venus are linked (strong chemistry)');sx.p(2,'Mars and Venus are linked (passion and drive)')}
+if(H.Sa==1&&!db('Sa'))at.p(-1,'Saturn in the Lagna: reserved first impression');
+if(rl('Sa','Mo'))at.p(-1,'Saturn influences the Moon');
+if(cj('Ve',['Ra']).length)sx.p(1,'Rahu with Venus (glamour and intensity)');
+if([1,5,7].includes(H.Ve))sx.p(1,`Venus in house ${H.Ve}`);
+if(H.Ma==1||H.Ma==7)sx.p(1,`Mars in house ${H.Ma}: strong physical presence`);
+if(cj('Ve',['Sa']).length)sx.p(-1,'Saturn with Venus (restrained expression)');
+const lv=mk();
+if(l5=='Ve')lv.p(1,'Venus rules the 5th');else if(lk(l5,'Ve'))lv.p(1,'5th lord is linked with Venus');
+if(l5==l7||lk(l5,l7)||H[l5]==7||H[l7]==5)lv.p(2,'5th and 7th lords are linked: love and marriage connect');
+if(H.Ra==5||H.Ra==7)lv.p(1,`Rahu in the ${og(H.Ra)}: intense or unconventional romance`);
+if(rl('Ma','Ve')||rl('Ve','Ma'))lv.p(1,'Mars and Venus are linked (strong attraction)');
+if(rl('Ve','Mo')||[5,7].includes(H.Mo))lv.p(1,'Moon is tied to Venus, the 5th or the 7th (emotional bonding)');
+if(l11==l5||l11==l7||lk(l11,l5)||lk(l11,l7))lv.p(1,'11th lord is linked with the 5th or 7th lord (desires get fulfilled)');
+bnf(5).slice(0,2).forEach(k=>lv.p(1,`${B(k)} in the 5th`));if(ap('Ju',5))lv.p(1,'Jupiter aspects the 5th');
+if(H.Sa==5||ap('Sa',5))lv.p(-1,'Saturn on the 5th: romance is cautious or delayed');if(H.Ke==5)lv.p(-1,'Ketu in the 5th: detached in romance');
+if(DU.includes(H[l5]))lv.p(-1,`5th lord ${B(l5)} in house ${H[l5]}: obstacles or heartbreak`);
+const ch={P:mk(),D:mk(),L:mk(),W:mk()};
+mal6.forEach(k=>ch.P.p(1,`${B(k)} in the 6th`));if([1,7,10].includes(H[l6]))ch.P.p(1,`6th lord ${B(l6)} in house ${H[l6]}`);
+if(asp(6).some(k=>MAL.includes(k)))ch.P.p(1,'a malefic aspects the 6th');
+const pc=cj(l6,['Ma','Ra','Su']);if(pc.length)ch.P.p(1,`6th lord ${B(l6)} with ${nl(pc)}`);
+o6.filter(k=>['Sa','Ke','Ra','Mo','Me'].includes(k)).forEach(k=>ch.D.p(1,`${B(k)} in the 6th (${TH[k]})`));
+if([1,8].includes(H[l6]))ch.D.p(1,`6th lord ${B(l6)} in house ${H[l6]}`);if(H[l1]==6)ch.D.p(1,`Lagna lord ${B(l1)} in the 6th`);
+const dc=cj(l6,SS);if(dc.length)ch.D.p(1,`6th lord ${B(l6)} with ${nl(dc)}`);
+o6.filter(k=>['Ma','Ra','Sa'].includes(k)).forEach(k=>ch.L.p(1,`${B(k)} in the 6th`));
+if(H[l6]==7)ch.L.p(2,`6th lord ${B(l6)} in the 7th: open opposition and disputes`);if(H[l7]==6)ch.L.p(2,`7th lord ${B(l7)} in the 6th`);
+const lc2=cj(l6,['Ma','Ra']);if(lc2.length)ch.L.p(1,`6th lord ${B(l6)} with ${nl(lc2)}`);if(lk(l6,l7))ch.L.p(1,'6th and 7th lords are linked');
+if(o6.some(k=>['Sa','Su','Ma','Me'].includes(k)))ch.W.p(1,`${nl(o6.filter(k=>['Sa','Su','Ma','Me'].includes(k)))} in the 6th (service and effort)`);
+if([2,6,10,11].includes(H[l6]))ch.W.p(1,`6th lord ${B(l6)} in house ${H[l6]}`);if(ok(l6))ch.W.p(1,`6th lord ${B(l6)} is in its own or exalted sign`);
+if(H.Sa==6||ap('Sa',6))ch.W.p(1,'Saturn on the 6th: long hours and steady effort');
+const CH=[['A person (rivals, open opponents)',ch.P],['Disease (health battles)',ch.D],['Litigation (disputes, legal fights)',ch.L],['Hard work (service, daily grind)',ch.W]].sort((a,b)=>b[1].t-a[1].t);
+const chh_=()=>CH.map(([n,c])=>ri(n,{t:c.t,f:fw(c),n:c.l.map(x=>x.slice(2)).join('; ')||'Nothing prominent'},[[3,'Strong'],[1,'Present'],[-99,'Minor']],{pre:'Strength',neu:1,lo:0,hi:5})).join('');
+const pos=mk();
+if(mal6.length)pos.p(1,`${nl(mal6)} in the 6th (malefics here fight well)`);
+if(ok(l6))pos.p(1,`6th lord ${B(l6)} is in its own or exalted sign`);else if([3,6,10,11].includes(H[l6]))pos.p(1,`6th lord ${B(l6)} in house ${H[l6]}`);
+if(db(l6))pos.p(-1,`6th lord ${B(l6)} is debilitated`);if([8,12].includes(H[l6]))pos.p(-1,`6th lord ${B(l6)} in house ${H[l6]}`);
+if(H[l6]==10||H[l10]==6||lk(l6,l10))pos.p(1,'6th and 10th are linked: career through service, healing or conflict');
+if(ok('Ma')||UP.includes(H.Ma))pos.p(1,'Mars is well placed');
+const S6=[...new Set([...o6,l6])],car=[['Doctor or healer',['Su','Ma','Ju','Mo','Me','Ke']],['Lawyer or judge',['Ju','Me','Sa']],['Police, military or security',['Ma','Su','Ra','Sa']]].map(([n,a])=>{const f=S6.filter(k=>a.includes(k));return f.length?`${n} (${nl(f)})`:null}).filter(Boolean);
+const pe=mk();
+const ps=mal6.filter(k=>SS.includes(k));if(ps.length)pe.p(1,`${nl(ps)} in the 6th: enmities that last`);
+const ds=cj(l6,SS);if(ds.length)pe.p(1,`6th lord ${B(l6)} with ${nl(ds)}`);
+if(H[l1]==6||H[l6]==1)pe.p(1,'Lagna lord and 6th lord are tied: feuds become personal');if(hv>=3)pe.p(1,'hidden enemies are strong (12th and 8th)');
+if(H.Ju==6||ap('Ju',6))pe.p(-1,'Jupiter protects the 6th');if(ok(l1)||pk(l1))pe.p(-1,`Lagna lord ${B(l1)} is strong`);
+const lt=mk();
+hs(8).filter(k=>['Ma','Ra','Ke','Sa'].includes(k)).forEach(k=>lt.p(1,`${B(k)} in the 8th`));
+if([1,6].includes(H[l8])&&(db(l8)||cj(l8,['Ma','Ra','Sa','Ke']).length))lt.p(1,`8th lord ${B(l8)} in house ${H[l8]} and afflicted`);
+if(cj('Ma',['Ra']).length)lt.p(1,'Mars with Rahu (accidents, aggression)');if(cj('Ma',['Sa']).length)lt.p(1,'Mars with Saturn (injury risk)');
+if(H[l6]==8)lt.p(1,`6th lord ${B(l6)} in the 8th: enemies can become dangerous`);if(db(l1)&&DU.includes(H[l1]))lt.p(1,`Lagna lord ${B(l1)} is weak`);
+if(H.Ju==1||ap('Ju',1)||ap('Ju',8))lt.p(-1,'Jupiter protects the Lagna or the 8th');if(ok(l1)||pk(l1))lt.p(-1,`Lagna lord ${B(l1)} is strong`);
+const dbt=mk();
+const dp=mal6.filter(k=>['Sa','Ra'].includes(k));if(dp.length)dbt.p(1,`${nl(dp)} in the 6th: loans and obligations`);
+if([2,11].includes(H[l6]))dbt.p(1,`6th lord ${B(l6)} in house ${H[l6]}: loans tied to income and savings`);
+if([6,8,12].includes(H[l2]))dbt.p(1,`2nd lord ${B(l2)} in house ${H[l2]}`);if([6,8,12].includes(H[l11]))dbt.p(1,`11th lord ${B(l11)} in house ${H[l11]}`);
+if([2,6].includes(H[hl(12)]))dbt.p(1,`12th lord ${B(hl(12))} in house ${H[hl(12)]}: expenses run high`);
+if([2,11].includes(H.Ju)||ap('Ju',2)||ap('Ju',11))dbt.p(-1,'Jupiter supports the 2nd or 11th (income and savings)');if(ok(l2)||ok(l11))dbt.p(-1,'2nd or 11th lord is strong');
+const en_=()=>`<h3>Enmity in Practice</h3><ul class="y"><li><b>How it shows up (strongest first):</b><ul class="y">${chh_()}</ul></li>
+${ri('Positive use (career through the 6th house)',{t:pos.t,f:fw(pos),n:(pos.l.map(x=>x.slice(2)).join('; ')||'No strong indicators either way')+(pos.t>=1&&car.length?'. Fits: '+car.join('; '):'')},[[3,'Strong: opposition and pressure turn into career strengths'],[1,'Some: service or competitive work suits you'],[-99,'Limited: not a strong career theme']])}</ul>
+<h3>Enmity: Negative Tendencies</h3><ul class="y">${ri('Permanent enemies',pe,[[3,'High: long-running feuds are likely'],[1,'Moderate: some lasting rivalries'],[-99,'Low: enmities fade with time']],{cap:'Risk'})}${ri('Life threats',lt,[[3,'High: take care with safety, travel and confrontations'],[1,'Moderate: ordinary caution is enough'],[-99,'Low: no strong indication']],{cap:'Risk'})}${ri('Litigation',{t:ch.L.t,f:fw(ch.L),n:(ch.L.l.map(x=>x.slice(2)).join('; ')||'Nothing prominent')+(ch.L.t>=1&&wn.length>=2?'. You are likely to come out ahead (see Overcoming opponents).':'')},[[3,'High: disputes can reach court; keep contracts and records in order'],[1,'Moderate: occasional legal or formal disputes'],[-99,'Low: no strong indication']],{cap:'Risk',lo:0,hi:6})}${ri('Debt',dbt,[[3,'High: avoid large loans and keep an emergency fund'],[1,'Moderate: borrowing is manageable if planned'],[-99,'Low: debt is not a strong theme']],{cap:'Risk'})}</ul><p class="n">For the risk items, + raises the risk and − lowers it. These are tendencies, not predictions.</p>`;
+
+const cg=mk();
+if(ok('Ma'))cg.p(2,'Mars is in its own or exalted sign');else if(UP.includes(H.Ma)||KE.includes(H.Ma))cg.p(1,`Mars is well placed in house ${H.Ma}`);
+if(db('Ma'))cg.p(-1,'Mars is debilitated');if(cmb('Ma'))cg.p(-1,'Mars is combust');
+lr(cg,l3,'3rd lord',x=>pk(x)||[3,10,11].includes(H[x]));
+hs(3).filter(k=>['Su','Ma','Sa','Ra'].includes(k)).forEach(k=>cg.p(1,`${B(k)} in the 3rd (courage and initiative)`));
+if(ok('Su')||pk('Su'))cg.p(1,'Sun is strong (confidence)');
+if(ok(l1)||pk(l1))cg.p(1,`Lagna lord ${B(l1)} is strong`);
+if(mal6.length)cg.p(1,`${nl(mal6)} in the 6th (fighting spirit)`);
+if(wax)cg.p(1,'the Moon is waxing (mental steadiness)');
+if(rl('Sa','Mo')||rl('Ra','Mo')||rl('Ke','Mo'))cg.p(-1,'Moon is influenced by Saturn, Rahu or Ketu (fear and anxiety)');
+
+const wi=mk();
+if(ok('Ju'))wi.p(2,'Jupiter is in its own or exalted sign');else if(pk('Ju'))wi.p(1,`Jupiter is in house ${H.Ju}`);if(db('Ju'))wi.p(-1,'Jupiter is debilitated');
+lr(wi,l9,'9th lord',pk);
+if([5,9].includes(H.Ju)||ap('Ju',9)||ap('Ju',5))wi.p(1,'Jupiter is linked to the 5th or 9th house');
+if(ok('Sa'))wi.p(1,'Saturn is strong (maturity and patience)');
+if([1,5,9,12].includes(H.Ke))wi.p(1,`Ketu in house ${H.Ke}: spiritual insight`);
+if(rl('Ju','Mo'))wi.p(1,'Jupiter influences the Moon (calm, balanced judgement)');
+if(bnf(9).length)wi.p(1,`${nl(bnf(9))} in the 9th`);
+if(cj('Ju',['Ra']).length)wi.p(-1,'Jupiter with Rahu (clouded judgement)');
+const ca=mk();
+if(ok('Ve'))ca.p(1,'Venus is in its own or exalted sign');if([3,7,11].includes(H.Ve))ca.p(1,`Venus in house ${H.Ve}`);
+if(l7==l11||lk(l7,l11))ca.p(1,'7th and 11th lords are linked (friends and partners overlap)');
+if(hs(7).length)ca.p(1,`${nl(hs(7))} in the 7th`);if(hs(11).length)ca.p(1,`${nl(hs(11))} in the 11th (wide friend circle)`);
+if(rl('Me','Ve')||rl('Ve','Me'))ca.p(1,'Mercury and Venus are linked (easy, friendly rapport)');
+if(rl('Mo','Ve')||rl('Ve','Mo'))ca.p(1,'Venus and the Moon are linked (comfortable emotional closeness)');
+if([7,11].includes(H.Ra)||cj('Ve',['Ra']).length)ca.p(1,'Rahu in the 7th or 11th, or with Venus (many unconventional connections)');
+if(H.Sa==7||H.Sa==11||rl('Sa','Ve'))ca.p(-1,'Saturn on the 7th, 11th or Venus (reserved, few close companions)');
+if([7,11].includes(H.Ke))ca.p(-1,`Ketu in the ${og(H.Ke)} (detached)`);if(db('Ve'))ca.p(-1,'Venus is debilitated');
+const ln=mk();
+if(rl('Mo','Ve')||rl('Ve','Mo'))ln.p(1,'Venus and the Moon are linked (emotional need for closeness)');
+if([5,7,12].includes(H.Ve))ln.p(1,`Venus in house ${H.Ve}`);if([5,7,12].includes(H.Mo))ln.p(1,`Moon in house ${H.Mo}`);
+if(rl('Ra','Ve')||rl('Ra','Mo'))ln.p(1,'Rahu influences Venus or the Moon (intense craving for connection)');
+if(rl('Ma','Ve')||rl('Ve','Ma'))ln.p(1,'Mars and Venus are linked (passion)');
+if(bnf(5).length)ln.p(1,`${nl(bnf(5))} in the 5th (warm heart)`);
+if(rl('Sa','Ve')||rl('Sa','Mo'))ln.p(1,'Saturn influences Venus or the Moon (longing deepens through waiting or unmet needs)');
+if(rl('Ke','Ve'))ln.p(-1,'Ketu influences Venus (detached from romantic need)');
+const lf=mk();
+if(DU.includes(H[l5]))lf.p(1,`5th lord ${B(l5)} in house ${H[l5]}`);if(db(l5))lf.p(1,`5th lord ${B(l5)} is debilitated`);
+const m5=hs(5).filter(k=>['Sa','Ra','Ke','Ma','Su'].includes(k)).slice(0,2);m5.forEach(k=>lf.p(1,`${B(k)} in the 5th`));
+if(db('Ve'))lf.p(1,'Venus is debilitated');if(cmb('Ve'))lf.p(1,'Venus is combust');
+const vs=cj('Ve',['Sa','Ra','Ke']);if(vs.length)lf.p(1,`Venus with ${nl(vs)}`);
+if(H.Ra==7)lf.p(1,'Rahu in the 7th: deception or sudden break-ups');if(H[l12]==5)lf.p(1,'12th lord in the 5th: losses in love');
+if(rl('Sa','Mo')||rl('Ra','Mo')||rl('Ke','Mo'))lf.p(1,'Moon is influenced by Saturn, Rahu or Ketu (emotional pain)');
+if(H.Ju==5||ap('Ju',5)||ap('Ju',H.Ve))lf.p(-1,'Jupiter protects the 5th or Venus');
+if(ok(l5))lf.p(-1,`5th lord ${B(l5)} is strong`);if(ok('Ve'))lf.p(-1,'Venus is in its own or exalted sign');if(bnf(5).length)lf.p(-1,`${nl(bnf(5))} in the 5th`);
+const fam=(h,sg,x)=>{const t=mk(),n=og(h);lr(t,hl(h),`${n} lord`,gd);
+bnf(h).forEach(k=>t.p(1,`${B(k)} in the ${n}`));mlf(h).forEach(k=>t.p(-1,`${B(k)} in the ${n}`));
+if(ap('Ju',h))t.p(1,`Jupiter aspects the ${n}`);
+sg.forEach(k=>{if(ok(k)||pk(k))t.p(1,`${B(k)} (${x}) is strong`);if(db(k)||cmb(k))t.p(-1,`${B(k)} (${x}) is weak`);const c=cj(k,['Sa','Ra','Ke']);if(c.length)t.p(-1,`${B(k)} with ${nl(c)}`)});return t};
+const mom=fam(4,['Mo'],'mother’s significator'),dad=fam(9,['Su'],'father’s significator'),gpp=fam(5,['Su'],'significator'),gpm=fam(12,['Mo'],'significator');
+if(wax)mom.p(1,'the Moon is waxing');
+const kid=mk();lr(kid,l5,'5th lord',pk);
+bnf(5).forEach(k=>kid.p(1,`${B(k)} in the 5th`));mlf(5).forEach(k=>kid.p(-1,`${B(k)} in the 5th`));
+if(ap('Ju',5))kid.p(1,'Jupiter aspects the 5th');if(ap('Sa',5))kid.p(-1,'Saturn aspects the 5th (delay)');
+if(ok('Ju')||pk('Ju'))kid.p(1,`Jupiter (children significator) is strong, house ${H.Ju}`);if(db('Ju'))kid.p(-1,'Jupiter is debilitated');
+const jc=cj('Ju',['Sa','Ra','Ke']);if(jc.length)kid.p(-1,`Jupiter with ${nl(jc)}`);
+const kn=mk();lr(kn,l4,'4th lord (education)',gd);lr(kn,l5,'5th lord',pk);
+bnf(4).forEach(k=>kn.p(1,`${B(k)} in the 4th`));mlf(4).forEach(k=>kn.p(-1,`${B(k)} in the 4th (interrupted schooling)`));
+if(ap('Ju',4)||ap('Ju',2)||ap('Ju',5))kn.p(1,'Jupiter aspects the 2nd, 4th or 5th');
+if(ok('Me'))kn.p(2,'Mercury is in its own or exalted sign');else if(pk('Me'))kn.p(1,`Mercury is in house ${H.Me}`);if(db('Me'))kn.p(-1,'Mercury is debilitated');
+if(ok('Ju')||pk('Ju'))kn.p(1,`Jupiter is strong (house ${H.Ju})`);
+if([H.Ju,H.Ve,H.Me].every(h=>[1,2,4,5,7,9,10].includes(h)))kn.p(2,'Jupiter, Venus and Mercury are all in kendra, trikona or the 2nd (Saraswati pattern)');
+const mc2=cj('Me',['Sa','Ra','Ke','Ma']);if(mc2.length)kn.p(-1,`Mercury with ${nl(mc2)}`);
+const dn=mk();
+if(ok('Ve'))dn.p(2,'Venus (arts) is in its own or exalted sign');else if(pk('Ve'))dn.p(1,`Venus is in house ${H.Ve}`);if(db('Ve'))dn.p(-1,'Venus is debilitated');
+if(rl('Ve','Me')||rl('Me','Ve'))dn.p(1,'Venus and Mercury are linked (rhythm, grace and expression)');
+if(rl('Ve','Mo')||rl('Mo','Ve'))dn.p(1,'Venus and the Moon are linked (emotion expressed through art)');
+if(rl('Ma','Ve')||rl('Ve','Ma'))dn.p(1,'Mars and Venus are linked (energy and movement)');
+if([3,5,10].includes(H.Ve))dn.p(1,`Venus in the ${og(H.Ve)} (performance and creativity)`);
+if(hs(3).some(k=>['Ve','Me','Mo'].includes(k)))dn.p(1,`${nl(hs(3).filter(k=>['Ve','Me','Mo'].includes(k)))} in the 3rd (performing skill)`);
+if(ok('Me')||pk('Me'))dn.p(1,'Mercury is strong (agility and rhythm)');
+if(H.Ra==5||cj('Ve',['Ra']).length)dn.p(1,'Rahu in the 5th or with Venus (flair and stage presence)');
+if(cj('Ve',['Sa']).length)dn.p(-1,'Saturn with Venus (inhibited expression)');if(DU.includes(H.Ve)&&!ok('Ve'))dn.p(-1,`Venus is in house ${H.Ve}`);
+const hap=mk();lr(hap,l4,'4th lord (inner contentment)',pk);
+bnf(4).forEach(k=>hap.p(1,`${B(k)} in the 4th`));mlf(4).forEach(k=>hap.p(-1,`${B(k)} in the 4th`));
+if(wax)hap.p(1,'the Moon is waxing');if(ok('Mo'))hap.p(1,'the Moon is in its own or exalted sign');if(db('Mo'))hap.p(-1,'the Moon is debilitated');
+if(rl('Sa','Mo')||rl('Ra','Mo')||rl('Ke','Mo'))hap.p(-1,'Moon is influenced by Saturn, Rahu or Ketu (restless or heavy mind)');
+if(rl('Ju','Mo')||rl('Ve','Mo'))hap.p(1,'Jupiter or Venus influences the Moon (peace of mind)');
+if(ok(l1)||pk(l1))hap.p(1,`Lagna lord ${B(l1)} is strong`);
+if(H.Ju==1||ap('Ju',1)||ap('Ju',4))hap.p(1,'Jupiter supports the Lagna or the 4th');
+if(ok('Ve')||pk('Ve'))hap.p(1,'Venus (comfort) is strong');
+const ful=mk();lr(ful,l11,'11th lord (desires)',gd);lr(ful,l9,'9th lord (purpose and fortune)',gd);lr(ful,l10,'10th lord (career)',x=>pk(x)||H[x]==11);
+bnf(11).forEach(k=>ful.p(1,`${B(k)} in the 11th`));
+if(hs(11).some(k=>['Sa','Ma','Ra','Su'].includes(k)))ful.p(1,'a malefic in the 11th (traditionally strong for gains)');
+if(ap('Ju',11)||ap('Ju',9)||ap('Ju',5))ful.p(1,'Jupiter aspects the 5th, 9th or 11th');
+if(ok(l1)||pk(l1))ful.p(1,`Lagna lord ${B(l1)} is strong`);
+if([l6,l8,l12].some(x=>H[x]==11))ful.p(-1,'lord of the 6th, 8th or 12th sits in the 11th (gains come with strain)');
+if(db('Ju'))ful.p(-1,'Jupiter is debilitated');
+const tch=fam(9,['Ju'],'teacher’s significator'),bos=fam(10,['Su'],'authority significator');
+if(H.Ju==1||ap('Ju',1)||rl('Ju','Mo'))tch.p(1,'Jupiter supports the Lagna or the Moon (respect for guides)');
+if(ok(l1)||pk(l1))bos.p(1,`Lagna lord ${B(l1)} is strong (carries authority well)`);if(ok('Sa')||pk('Sa'))bos.p(1,'Saturn (service) is strong');
+const qe=mk();lr(qe,l4,'4th lord (schooling)',gd);lr(qe,l9,'9th lord (higher learning)',pk);lr(qe,l5,'5th lord',pk);
+bnf(4).forEach(k=>qe.p(1,`${B(k)} in the 4th`));bnf(9).slice(0,2).forEach(k=>qe.p(1,`${B(k)} in the 9th`));mlf(4).forEach(k=>qe.p(-1,`${B(k)} in the 4th (disruptions)`));
+if(ap('Ju',4)||ap('Ju',9)||ap('Ju',5))qe.p(1,'Jupiter aspects the 4th, 5th or 9th');
+if(ok('Ju')||pk('Ju'))qe.p(1,`Jupiter is strong (house ${H.Ju})`);if(db('Ju'))qe.p(-1,'Jupiter is debilitated');
+if(ok('Me')||pk('Me'))qe.p(1,`Mercury is strong (house ${H.Me})`);
+if(lk(l4,l5)||lk(l4,l9)||lk(l5,l9))qe.p(1,'the lords of the education houses (4th, 5th, 9th) are linked');
+const bls=mk();
+if(H.Ju==1||ap('Ju',1))bls.p(2,'Jupiter blesses the Lagna');
+if(ok('Ju')||pk('Ju'))bls.p(1,`Jupiter (guru) is strong, house ${H.Ju}`);if(db('Ju'))bls.p(-1,'Jupiter is debilitated');
+lr(bls,l9,'9th lord (grace and elders’ blessings)',pk);
+bnf(9).forEach(k=>bls.p(1,`${B(k)} in the 9th`));mlf(9).forEach(k=>bls.p(-1,`${B(k)} in the 9th`));
+if([0,3,6,9].includes((s.Ju-s.Mo+12)%12))bls.p(2,'Jupiter is in a kendra from the Moon (Gajakesari)');
+if(rl('Ju','Mo'))bls.p(1,'Jupiter influences the Moon');
+if(ok(l1)||pk(l1))bls.p(1,`Lagna lord ${B(l1)} is strong`);if(hs(1).some(k=>BEN.includes(k)))bls.p(1,'a benefic in the Lagna');
+if(wax)bls.p(1,'the Moon is waxing');if(cj('Ju',['Ra']).length)bls.p(-1,'Jupiter with Rahu');
+const pp=mk();lr(pp,l5,'5th lord (past merit)',pk);
+bnf(5).forEach(k=>pp.p(1,`${B(k)} in the 5th`));mlf(5).forEach(k=>pp.p(-1,`${B(k)} in the 5th`));
+if(ap('Ju',5))pp.p(1,'Jupiter aspects the 5th');if(ok('Ju')||pk('Ju'))pp.p(1,`Jupiter is strong (house ${H.Ju})`);
+if(lk(l5,l9)||H[l5]==9||H[l9]==5)pp.p(2,'the 5th and 9th lords are linked (Dharma and merit combine)');
+if(ok(l9)||pk(l9))pp.p(1,`9th lord ${B(l9)} is strong`);if(wax)pp.p(1,'the Moon is waxing');
+const scf=mk();
+if(ok('Su'))scf.p(2,'Sun is in its own or exalted sign');else if(pk('Su'))scf.p(1,`Sun is in house ${H.Su}`);if(db('Su'))scf.p(-2,'Sun is debilitated');
+lr(scf,l1,'Lagna lord',pk);
+bnf(1).forEach(k=>scf.p(1,`${B(k)} in the Lagna`));if(hs(1).some(k=>['Ke','Sa'].includes(k)))scf.p(-1,'Ketu or Saturn in the Lagna (reserved, self-doubting)');
+if(ok('Ma')||pk('Ma'))scf.p(1,`Mars is strong, house ${H.Ma} (drive and boldness)`);
+if(ok('Mo')||(wax&&!db('Mo')))scf.p(1,'the Moon is steady (emotional balance)');if(db('Mo'))scf.p(-1,'the Moon is debilitated');
+if(rl('Sa','Su')||rl('Ra','Su')||rl('Ke','Su'))scf.p(-1,'the Sun is pressed by Saturn, Rahu or Ketu (self-doubt)');
+if(H.Ju==1||ap('Ju',1)||rl('Ju','Su'))scf.p(1,'Jupiter supports the Sun or the Lagna (inner assurance)');
+const sol=mk();
+if(ok('Su')||pk('Su'))sol.p(1,'the Sun (the soul) is strong');if(db('Su'))sol.p(-1,'the Sun is debilitated');
+lr(sol,l1,'Lagna lord',pk);lr(sol,l9,'9th lord (dharma)',pk);lr(sol,l5,'5th lord (purpose)',pk);
+if(ok('Ju')||pk('Ju'))sol.p(1,`Jupiter (guru) is strong, house ${H.Ju}`);if(ok('Sa')||pk('Sa'))sol.p(1,`Saturn (endurance) is strong, house ${H.Sa}`);
+if(ok('Mo')||(wax&&!db('Mo')))sol.p(1,'the Moon is steady (stable mind)');
+if([5,9,12].includes(H.Ke))sol.p(1,`Ketu in house ${H.Ke} (spiritual depth)`);
+if(H.Ju==1||ap('Ju',1))sol.p(1,'Jupiter blesses the Lagna');
+if(rl('Sa','Mo')||rl('Ra','Mo'))sol.p(-1,'the Moon is pressed by Saturn or Rahu (restless mind)');
+const sp=mk(),mp=mk();
+if(DU.includes(H[l7]))sp.p(1,`7th lord ${B(l7)} in house ${H[l7]}`);if(db(l7))sp.p(1,`7th lord ${B(l7)} is debilitated`);
+const m7=hs(7).filter(k=>['Sa','Ra','Ke','Ma','Su'].includes(k)).slice(0,3);m7.forEach(k=>sp.p(1,`${B(k)} in the 7th`));
+const a7=['Sa','Ra','Ke','Ma'].filter(k=>H[k]!=7&&ap(k,7));if(a7.length)sp.p(1,`${nl(a7)} aspect${a7.length>1?'':'s'} the 7th`);
+if([l6,l8,l12].some(x=>H[x]==7))sp.p(1,'lord of the 6th, 8th or 12th sits in the 7th');
+if(db('Ve'))sp.p(1,'Venus is debilitated');if(cmb('Ve'))sp.p(1,'Venus is combust');
+const sv2=cj('Ve',['Sa','Ra','Ke','Ma']);if(sv2.length)sp.p(1,`Venus with ${nl(sv2)}`);
+if(mh&&!ok('Ma'))sp.p(1,'Mangal Dosha is present');
+if(H.Ju==7||ap('Ju',7))sp.p(-1,'Jupiter supports the 7th');if(bnf(7).length)sp.p(-1,`${nl(bnf(7))} in the 7th`);
+if(ok(l7))sp.p(-1,`7th lord ${B(l7)} is strong`);if(ok('Ve'))sp.p(-1,'Venus is in its own or exalted sign');
+const DS=[2,5,8,11];
+if(DS.includes((LS+6)%12))mp.p(1,`the 7th house falls in a dual sign (${SG[(LS+6)%12]})`);if(DS.includes(s[l7]))mp.p(1,`7th lord ${B(l7)} is in a dual sign (${SG[s[l7]]})`);
+if(hs(7).length>=2)mp.p(1,`${nl(hs(7))} share the 7th house`);if(H.Ra==7||H.Ke==7)mp.p(1,`${B(H.Ra==7?'Ra':'Ke')} in the 7th`);
+if(lk(l7,l8)||H[l8]==7||H[l7]==8)mp.p(1,'the 7th and 8th lords are linked');
+if(DU.includes(H[l7]))mp.p(1,`7th lord ${B(l7)} in house ${H[l7]}`);
+if(sv2.length)mp.p(1,`Venus with ${nl(sv2)}`);
+if(H.Ju==7||ap('Ju',7))mp.p(-1,'Jupiter supports the 7th');if(ok(l7))mp.p(-1,`7th lord ${B(l7)} is strong`);if(ok('Ve'))mp.p(-1,'Venus is in its own or exalted sign');
+if(bnf(7).length&&hs(7).length==1)mp.p(-1,`${nl(bnf(7))} alone in the 7th`);
+const Zn=k=>nav(P[k]),ZL=nav(asc),Zh=k=>(Zn(k)-ZL+12)%12+1,Zq=x=>Math.round(x*10)/10,Zc=x=>Math.max(0,Math.min(10,x)),
+Zr=k=>(ok(k)?2:0)+(pk(k)?1:0)-(db(k)?2:0)-(cmb(k)?1:0)-(DU.includes(H[k])&&!ok(k)?1:0),
+Zv=k=>(Zn(k)==s[k]?2:0)+(OWN[k]&&(OWN[k].includes(Zn(k))||EX[k]==Zn(k))?1:0)-(DB[k]===Zn(k)?2:0)+([1,4,5,7,9,10].includes(Zh(k))?1:0)-([6,8,12].includes(Zh(k))?1:0),
+Zm=['Ma','Me','Ju','Ve','Sa'].filter(k=>ok(k)&&KE.includes(H[k])),gaj=[0,3,6,9].includes((s.Ju-s.Mo+12)%12),
+Zk=['Su','Mo','Ma','Me','Ju','Ve','Sa'].map(k=>(P[k]-P.Ra+360)%360),KS=Zk.every(x=>x<180)||Zk.every(x=>x>180),
+kem=!['Ma','Me','Ju','Ve','Sa'].some(k=>[0,1,11].includes((s[k]-s.Mo+12)%12))&&!KE.includes(H.Mo),
+lq=(a,b)=>a==b||lk(a,b),dh=[[l2,l11],[l2,l5],[l2,l9],[l11,l5],[l11,l9],[l5,l9]].some(x=>lq(x[0],x[1])),
+raj=lq(l10,l9)||lq(l10,l5)||lq(l9,l5)||lq(l1,l9)||lq(l1,l5),jh=h=>H.Ju==h||ap('Ju',h),
+Zf=(i,pl,yg)=>{pl=[...new Set(pl)];const g=x=>(x>0?'+':'')+x,
+ra=pl.reduce((q,k)=>q+Zr(k),0)/pl.length,na=pl.reduce((q,k)=>q+Zv(k),0)/pl.length,R=Zc((ra+3)/6*10),N=Zc((na+3)/7*10),Y=Zc(yg.reduce((q,y)=>q+y[0],0)*2.5),
+f=[[Zq(R*.45),`Rasi chart ${Zq(R)}/10 × 45%: ${pl.map(k=>B(k)+' '+g(Zr(k))).join(', ')}`],[Zq(N*.35),`Navamsa chart ${Zq(N)}/10 × 35%: ${pl.map(k=>B(k)+' '+g(Zv(k))+(Zn(k)==s[k]?' (vargottama)':'')).join(', ')}`],[Zq(Y*.2),`Yogas ${Zq(Y)}/10 × 20%: ${yg.filter(y=>y[0]).map(y=>y[1]).join('; ')||'none found'}`]];
+const raw=Zq(f[0][0]+f[1][0]+f[2][0]),cal=Zcal(i,raw);if(cal!==raw)f.push([Zq(cal-raw),`Calibration: a raw blend of ${raw} ranks above ${Math.round(cal*10)}% of ${ZN} random sample charts, so it scores ${cal}`]);
+return{t:Zq(f.reduce((q,z)=>q+z[0],0)),f,n:`Rasi ${Zq(R)} · Navamsa ${Zq(N)} · Yogas ${Zq(Y)} (each out of 10)`}},
+ZO=[['Career strength',Zf(0,[l10,l1,'Su','Sa'],[[raj?1:0,'Raja yoga (kendra and trikona lords linked)'],[Zm.length?1:0,`Pancha Mahapurusha (${Zm.map(B).join(', ')})`],[bnf(10).length?1:0,'benefic in the 10th (Amala)'],[lq(l9,l10)?1:0,'Dharma-Karmadhipati (9th and 10th lords linked)'],[KS?-1:0,'Kala Sarpa pattern']])],
+['Wealth strength',Zf(1,[l2,l11,l9,'Ju'],[[dh?1:0,'Dhana yoga (wealth lords linked)'],[ok(l9)&&pk(l9)?1:0,'strong 9th lord (Lakshmi type)'],[gaj?1:0,'Gajakesari'],[[2,5,11].includes(H.Ju)?1:0,'Jupiter in the 2nd, 5th or 11th'],[kem?-1:0,'Kemadruma'],[KS?-1:0,'Kala Sarpa pattern']])],
+['Family strength',Zf(2,[l4,l2,'Mo','Ju'],[[gaj?1:0,'Gajakesari'],[jh(2)||jh(4)?1:0,'Jupiter supports the 2nd or 4th'],[bnf(2).length||bnf(4).length?1:0,'benefic in the 2nd or 4th'],[wax?1:0,'waxing Moon'],[kem?-1:0,'Kemadruma']])],
+['Marriage strength',Zf(3,[l7,'Ve','Ju'],[[Zm.includes('Ve')?1:0,'Malavya (Venus)'],[jh(7)?1:0,'Jupiter supports the 7th'],[bnf(7).length?1:0,'benefic in the 7th'],[ok(l7)?1:0,'strong 7th lord'],[mh&&!ok('Ma')?-1:0,'Mangal Dosha']])],
+['Education strength',Zf(4,[l4,l5,'Me','Ju'],[[[H.Ju,H.Ve,H.Me].every(h=>[1,2,4,5,7,9,10].includes(h))?1:0,'Saraswati pattern'],[s.Su==s.Me?1:0,'Budhaditya (Sun with Mercury)'],[jh(5)?1:0,'Jupiter supports the 5th'],[ok(l5)?1:0,'strong 5th lord'],[Zm.includes('Me')||Zm.includes('Ju')?1:0,'Bhadra or Hamsa']])],
+['Health and vitality strength',Zf(5,[l1,'Su','Mo','Ma'],[[ok(l1)?1:0,'strong Lagna lord'],[jh(1)?1:0,'Jupiter supports the Lagna'],[Zm.some(k=>['Ma','Sa'].includes(k))?1:0,'Ruchaka or Sasha (stamina)'],[KS?-1:0,'Kala Sarpa pattern']])]],
+ZA={f:ZO.map(x=>[Zq(x[1].t/6),`${x[0].replace(' strength','')} ${x[1].t}/10 ÷ 6`])};ZA.t=Zq(ZA.f.reduce((q,z)=>q+z[0],0));{const raw=ZA.t,cal=Zcal(6,raw);if(cal!==raw){ZA.f.push([Zq(cal-raw),`Calibration: a raw average of ${raw} ranks above ${Math.round(cal*10)}% of ${ZN} random sample charts, so it scores ${cal}`]);ZA.t=Zq(ZA.f.reduce((q,z)=>q+z[0],0))}}
+ZA.n=`Average of the ${ZO.length} factors below`;
+const Zt=nm=>[[7.5,`Very strong ${nm}: both charts and the yogas support it`],[6,`Strong ${nm}: good support with a few weak spots`],[4.5,`Moderate ${nm}: mixed support, so effort and timing matter`],[3,`Below average ${nm}: needs extra effort and good timing`],[-99,`Weak ${nm}: the chart gives the least help here`]],ZW={lo:0,hi:10};
+let mage='',lifep='';
+{const MP=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'],YR=365.25,
+mw=k=>k==l7||k=='Ve'||H[k]==7?2:(k=='Ju'||k==l2||ap(k,7)?1:0),
+why=k=>k==l7?'7th lord':k=='Ve'?'Venus, the marriage significator':H[k]==7?'sits in the 7th':k=='Ju'?'Jupiter':k==l2?'2nd lord':'aspects the 7th',
+nk0=Math.floor(P.Mo/(360/27)),fr0=(P.Mo%(360/27))/(360/27),d0=nk0%9,AD=[];
+let st0=J0-fr0*DY[d0]*YR;
+for(let i=0;i<9;i++){const li=(d0+i)%9;let s0=st0;for(let a=0;a<9;a++){const aj=(li+a)%9,e=s0+DY[li]*DY[aj]/120*YR;AD.push([s0,e,li,aj]);s0=e}st0+=DY[li]*YR}
+const g7=(LS+6)%12,g7l=s[l7],iJ=(a,b)=>[0,4,6,8].includes((b-a+12)%12),iS=(a,b)=>[0,2,6,9].includes((b-a+12)%12),MS=[];
+for(let k=216;k<540;k++){const tt=J0+k*30.4375,T2=(tt-2451545)/36525,ay2=AY0+1.39697*T2,sj=Math.floor(m360(geo('ju',T2)-ay2)/30),ss=Math.floor(m360(geo('sa',T2)-ay2)/30),e=AD.find(z=>tt>=z[0]&&tt<z[1]),
+xj=iJ(sj,g7),xs=iS(ss,g7),ds=e?mw(MP[e[3]])+.5*mw(MP[e[2]]):0;
+MS.push({k,tt,e,xj,xs,tot:ds+(xj?1:0)+(xs?1:0)+(iJ(sj,g7l)?.5:0)})}
+const sm=[];for(let i=0;i+12<=MS.length;i++){let x=0;for(let j=i;j<i+12;j++)x+=MS[j].tot;sm.push([i,x])}
+sm.sort((a,b)=>b[1]-a[1]);const pick=[];for(const [i] of sm){if(pick.every(p=>Math.abs(p-i)>=18))pick.push(i);if(pick.length==3)break}
+const yr=tt=>new Date((tt-2440587.5)*864e5).getUTCFullYear();
+const rows=pick.map((i,n)=>{let b=MS[i];for(let j=i;j<i+12;j++)if(MS[j].tot>b.tot)b=MS[j];
+const a1=Math.floor(MS[i].k/12),a2=Math.floor((MS[i].k+12)/12),y1=yr(MS[i].tt),y2=yr(MS[i+11].tt),tr=b.xj&&b.xs?'Jupiter and Saturn both influence the 7th house':b.xj?'Jupiter influences the 7th house':b.xs?'Saturn influences the 7th house':'little transit support';
+return`<li><b>${n?'Also possible':'Most likely'}:</b> age ${a1}–${a2} (${y1}–${y2})<br><span class="n">${DL[b.e[2]]}–${DL[b.e[3]]} period (${why(MP[b.e[3]])}); ${tr}</span></li>`}).join('');
+const Lpo=h=>h+(['st','nd','rd'][h-1]||'th'),LpH={1:'self, health and identity',2:'family, speech and savings',3:'courage, skills and effort',4:'home, mother, property and peace of mind',5:'children, education, creativity and romance',6:'work, service, debts and health issues',7:'marriage and partnerships',8:'sudden change, research, health risks and inheritance',9:'luck, higher learning, father and travel',10:'career, status and public life',11:'gains, networks and fulfilment of goals',12:'expenses, foreign lands, solitude and spiritual growth'},
+LpP={Su:'authority and recognition',Mo:'emotions and home life',Ma:'energy, drive and conflict',Me:'learning, trade and communication',Ju:'growth, wisdom and blessings',Ve:'relationships, comforts and the arts',Sa:'discipline, hard work and delays',Ra:'ambition and sudden change',Ke:'detachment and spiritual turns'},
+LpO=k=>{const d=(k=='Ra'||k=='Ke')?LORD[s[k]]:k;return[1,2,3,4,5,6,7,8,9,10,11,12].filter(h=>hl(h)==d)},
+LpS=k=>{const d=(k=='Ra'||k=='Ke')?LORD[s[k]]:k,w=LpO(d).reduce((q,h)=>q+([1,5,9].includes(h)?1:[4,7,10].includes(h)?.5:[2,11].includes(h)?.5:[6,8,12].includes(h)?-1:0),0),b=Zr(d)+Zv(d)+w;return d==k?b:.6*b+(pk(k)?1:0)-(DU.includes(H[k])?1:0)-.5},
+LpV={};ord.forEach(k=>LpV[k]=LpS(k));
+const LpT=k=>`${LpP[k]}, with the ${Lpo(H[k])} house in focus (${LpH[H[k]]})`,
+LpB=x=>x>=LPA?['Auspicious','#2e7d4f']:x>=LPC?['Mixed','#b7791f']:['Challenging','#b23b3b'],LpD=x=>`<span class="sb" style="background:${LpB(x)[1]}">${LpB(x)[0]}</span>`,
+Lpy=t=>new Date((t-2440587.5)*864e5).getUTCFullYear(),Lpa=t=>Math.max(0,Math.round((t-J0)/YR)),
+LpAS=e=>{if(!e)return 0;const a=MP[e[2]],b=MP[e[3]];return .6*LpV[a]+.4*LpV[b]+((FR[a]||'').includes(b)?.7:(EN[a]||'').includes(b)?-.7:0)},
+jgz=h=>[2,5,7,9,11].includes(h)?1:-.3,sgz=h=>[3,6,11].includes(h)?1:[12,1,2,4,8].includes(h)?-1.5:0;
+const LpM=[];for(let k=0;k<=1008;k++){const tt=J0+k*30.4375,T2=(tt-2451545)/36525,ay2=AY0+1.39697*T2;LpM.push({k,tt,sj:Math.floor(m360(geo('ju',T2)-ay2)/30),ss:Math.floor(m360(geo('sa',T2)-ay2)/30),e:AD.find(z=>tt>=z[0]&&tt<z[1])})}
+const LpR=m=>{const e=m.e,jh=(m.sj-s.Mo+12)%12+1,sh=(m.ss-s.Mo+12)%12+1,r=[e?`${B(MP[e[2]])}–${B(MP[e[3]])} period`:''];
+if([2,5,7,9,11].includes(jh))r.push(`Jupiter in the ${Lpo(jh)} from the Moon (${({2:'family and wealth',5:'children, learning and creativity',7:'marriage and partnerships',9:'luck and higher learning',11:'gains and goals'})[jh]})`);
+if([12,1,2].includes(sh))r.push('Sade Sati (Saturn near the Moon)');else if(sh==4)r.push('Saturn in the 4th from the Moon (pressure on home and peace of mind)');else if(sh==8)r.push('Ashtama Shani (health and sudden changes)');else if([3,6,11].includes(sh))r.push(`Saturn in the ${Lpo(sh)} from the Moon (steady progress)`);
+return r.filter(Boolean).join('; ')};
+const LpY=[];for(let y=0;y<84;y++){let v=0;for(let q=0;q<12;q++){const x=LpM[y*12+q],jh=(x.sj-s.Mo+12)%12+1,sh=(x.ss-s.Mo+12)%12+1;v+=LpAS(x.e)+jgz(jh)+sgz(sh)}LpY.push({y,v:v/12,m:LpM[y*12+6]})}
+const LpQ=a=>{const o=[];for(const x of a){if(o.every(z=>Math.abs(z.y-x.y)>=2))o.push(x);if(o.length==5)break}return o.sort((a,b)=>a.y-b.y)},LpSr=LpY.slice(1).sort((a,b)=>b.v-a.v);
+const LpYr=a=>a.map(x=>`<li><b>Age ${x.y}–${x.y+1} (around ${Lpy(x.m.tt)})</b> ${LpD(x.v)}${x.m.tt>NOW?' · upcoming':''}<br><span class="n">${LpR(x.m)}.${x.m.e?' Theme: '+LpT(MP[x.m.e[3]]):''}</span></li>`).join('');
+const LpG=(f,from)=>{const r=[];let st=null;for(const m of LpM){const g=m.k>=from&&f(m);if(g&&st===null)st=m;if(!g&&st!==null){r.push([st,LpM[m.k-1]]);st=null}}if(st!==null)r.push([st,LpM[LpM.length-1]]);return r},
+LpL=r=>r.map(x=>`age ${Math.floor(x[0].k/12)}–${Math.ceil((x[1].k+1)/12)} (${Lpy(x[0].tt)}–${Lpy(x[1].tt)})`).join('; ')||'none before age 84',
+LpI=(t,w,n)=>`<li><b>${t}:</b> ${w}<br><span class="n">${n}</span></li>`;
+const LpCu=AD.find(z=>NOW>=z[0]&&NOW<z[1]),LpMd=[];
+for(let i=0;i<9;i++){const a=AD[i*9],z=AD[i*9+8],k=MP[a[2]];if(Lpa(a[0])>=90)continue;LpMd.push(`<li><b>${B(k)} period</b> · age ${Lpa(a[0])}–${Lpa(z[1])} (${Lpy(Math.max(a[0],J0))}–${Lpy(z[1])}) ${LpD(LpV[k])}${NOW>=a[0]&&NOW<z[1]?' <b>← now</b>':''}<br><span class="n">${LpT(k)}${LpO(k).length?'; rules the '+LpO(k).map(Lpo).join(' and ')+' house':''}</span></li>`)}
+lifep=`<h3>Life Periods and Years</h3><ul class="y">${LpCu?`<li><b>Now:</b> ${B(MP[LpCu[2]])}–${B(MP[LpCu[3]])} period, age ${Lpa(NOW)}, until ${Lpy(LpCu[1])} ${LpD(LpAS(LpCu))}<br><span class="n">${LpT(MP[LpCu[3]])}</span></li>`:''}</ul>
+<p style="margin:8px 0 2px"><b>Major periods (Vimshottari Mahadasha)</b></p><ul class="y">${LpMd.join('')}</ul>
+<p style="margin:8px 0 2px"><b>Most auspicious years</b></p><ul class="y">${LpYr(LpQ(LpSr))}</ul>
+<p style="margin:8px 0 2px"><b>Most challenging years</b></p><ul class="y">${LpYr(LpQ([...LpSr].reverse()))}</ul>
+<p style="margin:8px 0 2px"><b>Significant periods</b></p><ul class="y">${LpI('Saturn return',LpL(LpG(m=>m.ss==s.Sa,240).slice(0,3)),'A coming-of-age checkpoint: responsibility, career restructuring and commitments that last.')}${LpI('Jupiter return',`around age ${LpG(m=>m.sj==s.Ju,60).map(x=>Math.round((x[0].k+x[1].k)/24)).join(', ')}`,'About every 12 years: renewal, opportunity, learning and growth.')}${LpI('Sade Sati',LpL(LpG(m=>[(s.Mo+11)%12,s.Mo,(s.Mo+1)%12].includes(m.ss),0)),'A testing 7½-year stretch: heavier workload, delays and emotional weight. Discipline and patience pay off.')}${LpI('Ashtama Shani',LpL(LpG(m=>m.ss==(s.Mo+7)%12,0)),'About 2½ years: care for health, avoid risky commitments and expect sudden changes.')}${LpI('Nodal returns','around age 19, 37, 56 and 74','Rahu and Ketu return to their birth places: turning points in direction, relationships and beliefs.')}</ul>
+<p class="n">Ratings combine the strength of the period lords (Rasi and Navamsa, house ownership and friendships) with Jupiter and Saturn transits from the Moon. Years run birthday to birthday. These are tendencies, not predictions: use challenging stretches for patience, health checks and careful decisions.</p>`;
+mage=`<li><b>Possible marriage age (strongest windows):</b><ul class="y">${rows}</ul><span class="n">Windows combine Vimshottari periods of marriage-linked planets (7th lord, Venus, Jupiter, 2nd lord, planets in or aspecting the 7th) with Jupiter and Saturn transits over the 7th house, scanned from age 18 to 45. They show when marriage is most favoured, not a certainty.${md.t>=3?' This chart also shows delay indicators, so the later windows are more likely than the earliest.':md.t<=-1?' This chart shows early-marriage indicators, so the earlier windows are more likely.':''}</span></li>`}
+const fw=o=>o.l.map((x,i)=>[o.w[i],x.slice(2)]);
+const ri=(w,t,a,o)=>{o=o||{};const ns=a.map(z=>z[0]).filter(n=>n>-99),lo=o.lo!=null?o.lo:Math.min(...ns)-3,hi=o.hi!=null?o.hi:Math.max(...ns)+3,
+f=x=>Math.max(0,Math.min(10,10*(x-lo)/(hi-lo))),r1=x=>Math.round(x*10)/10,v=r1(f(t.t)),cur=Math.max(a.findIndex(z=>t.t>=z[0]),0),
+pre=o.pre||o.cap||'',gd2=o.cap?10-v:v,col=o.neu?'#a4471b':gd2>=6.5?'#2e7d4f':gd2>=3.5?'#b7791f':'#b23b3b',
+rows=a.map((z,i)=>`<div${i==cur?' class="me"':''}>${i==cur?'▶ ':''}${z[1]} <span class="bd">(${r1(z[0]<=-99?0:f(z[0]))}–${r1(i?f(a[i-1][0]):10)})</span>${i==cur?' ← you are here':''}</div>`).join('');
+const fl=t.f||(t.l&&t.w?fw(t):null),sm=fl?fl.reduce((q,z)=>q+z[0],0):t.t,sgn=p=>(p>0?'+':'−')+Math.abs(p),tp=TIPS[w.split(' (')[0]]||'',
+hw=`<div class="hw"><b>How the score is calculated</b>${fl?(fl.length?fl.map(z=>`<div>${sgn(z[0])} ${z[1]}</div>`).join(''):'<div>No chart factors triggered, so the total is 0.</div>'):''}<div><b>Total: ${r1(t.t)} point${Math.abs(t.t)==1?'':'s'}</b>${fl&&Math.abs(sm-t.t)>.01?' (raw sum '+r1(sm)+'; adjusted so it does not go below 0)':''}</div><div>Score = (total − low) ÷ (high − low) × 10, kept between 0 and 10, where low = ${r1(lo)} points (scores 0) and high = ${r1(hi)} points (scores 10). Here: (${r1(t.t)} − (${r1(lo)})) ÷ ${r1(hi-lo)} × 10 = ${v}</div>${tp?`<div class="tip"><b>What can change it</b><br>${tp}</div>`:''}</div>`;
+return`<li><b>${w}:</b> ${lb(t,a)} <span class="sb" tabindex="0" style="background:${col}">${pre?pre+' ':''}${v}/10<span class="tp"><b>${w}</b> · your score ${v}/10${o.cap?' (higher = more '+o.cap.toLowerCase()+')':''}${rows}${hw}</span></span><br><span class="n">${t.n!=null?t.n:nn(t)}</span></li>`};
+const en=en_();
+const nw=`<h3>Character</h3><ul class="y">${ri('Temperament',{t:tc.length-th.length,f:tc.map(x=>[1,x]).concat(th.map(x=>[-1,x])),n:tn},[[2,'Calm and even-tempered'],[1,'Mostly gentle and patient'],[0,'Balanced; temper depends on the situation'],[-1,'Warm, with a short fuse at times'],[-99,'Fiery: quick to react and quick to cool down']],{pre:'Calm',neu:1,lo:-3,hi:3})}${ri('Grace',gr,[[4,'Graceful, refined and courteous'],[2,'Pleasant and polite in manner'],[0,'Plain-spoken and direct'],[-99,'Blunt in manner; grace comes with effort']])}${ri('Helping tendency',hp,[[4,'Very helpful and generous; gives without being asked'],[2,'Helpful when it matters; generous with time and money'],[0,'Helps selectively; looks after your own circle first'],[-99,'Cautious about giving; helps once trust is built']])}${ri('Forgiveness',fg,[[3,'Forgiving; lets go quickly'],[1,'Forgives after some time'],[-1,'Forgives, but does not forget easily'],[-99,'Slow to forgive; long memory for slights']])}${ri('Courage',cg,[[6,'Fearless: faces risk and confrontation head-on'],[4,'Brave and determined; acts well under pressure'],[2,'Courageous when it matters'],[0,'Cautious by nature; courage grows with experience'],[-99,'Prone to hesitation or anxiety; preparation and support help']])}</ul>
+<h3>Mind and Leadership</h3><ul class="y">${ri('Intelligence',it,[[6,'Exceptional intellect: sharp, original and quick to learn'],[4,'High intelligence with strong learning ability'],[2,'Good intelligence; sound judgement and steady learning'],[0,'Average intellect; practical skill counts more than theory'],[-99,'Learns best through experience rather than books']])}${ri('Knowledge',kn,[[7,'Highly learned: deep formal knowledge and strong academic ability'],[5,'Well educated: good schooling and strong learning'],[3,'Solid education; knowledge grows with steady study'],[1,'Practical knowledge counts more than formal degrees'],[-99,'Formal education may be interrupted; learning comes through experience']])}${ri('Quality of education (schooling and institutions)',qe,[[7,'Excellent: reputed institutions and a high level of schooling'],[5,'Very good: sound schooling and good higher education'],[3,'Good: a solid education; some interruptions possible'],[1,'Basic: adequate schooling; skills count more than credentials'],[-99,'Uneven: interrupted or limited formal education; learning comes by other routes']])}${ri('Wisdom',wi,[[6,'Deep wisdom: far-sighted, reflective and spiritually inclined'],[4,'Wise beyond your years; good judgement and perspective'],[2,'Sound common sense; wisdom grows with age'],[0,'Learns mostly through experience and mistakes'],[-99,'Judgement is impulsive early on; wisdom comes late and through experience']])}${ri('Self-confidence (Sun, Lagna lord)',scf,[[6,'Very confident: self-assured, bold and comfortable leading'],[4,'Confident: steady belief in yourself'],[2,'Moderate: confidence grows with experience and success'],[0,'Reserved: self-doubt shows up under pressure'],[-99,'Low at times: confidence needs deliberate building']])}${ri('Soul strength (Sun, Jupiter, 9th and 5th lords)',sol,[[7,'Deep inner strength: resilient, purposeful and spiritually grounded'],[4,'Strong: you recover well and hold to your values'],[2,'Moderate: inner strength builds through experience'],[0,'Still developing: purpose and resilience need nurturing'],[-99,'Often tested: strength grows through trials']])}${ri('Leadership',ld,[[6,'Natural leader who commands authority and respect'],[4,'Strong leadership potential, especially in a field of your own'],[2,'Capable leader when given responsibility'],[0,'Better as a team player or trusted advisor than as the chief'],[-99,'Leadership is not a strong theme; influence comes through expertise']])}</ul>
+<h3>Wealth</h3><ul class="y">${ri('Wealth at birth (family circumstances)',wb,[[5,'Born into comfort or affluence'],[3,'Comfortable, secure start in life'],[1,'Modest start; enough at home, little surplus'],[-99,'Self-made beginnings; wealth is built by your own effort']])}${ri('Wealth potential (lifetime earning)',wp,[[8,'Very strong wealth potential'],[5,'Strong wealth potential'],[3,'Good potential; steady accumulation'],[1,'Moderate; wealth comes through consistent effort'],[-99,'Gradual; saving discipline matters more than income']])}</ul>
+<h3>Siblings</h3><ul class="y">${ri('Younger siblings (3rd house, Mars)',yg,[[3,'Strong indication of younger sibling(s) and a close, supportive bond'],[1,'Younger sibling likely; cordial bond'],[-99,'Few or none indicated, or a distant bond']])}${ri('Elder siblings (11th house)',eg,[[3,'Strong indication of elder sibling(s) and a supportive bond'],[1,'Elder sibling likely; cordial bond'],[-99,'Few or none indicated, or a distant bond']])}</ul><p class="n">Sibling indications are the least reliable part of a chart reading. Take them as closeness and support, not as a head count.</p>
+<h3>Luck</h3><ul class="y">${ri('Fortune and luck',lu,[[6,'Very fortunate: opportunities and support arrive at the right moments'],[4,'Fortunate; help and timing tend to be on your side'],[2,'Decent luck, helped by your own effort'],[0,'Average luck; effort counts more than fortune'],[-99,'Fortune comes late and through persistence; discipline pays off']])}</ul><h3>Fame and Reputation</h3><ul class="y">${ri('Fame and recognition',fm,[[6,'Strong prospects of fame and public recognition'],[4,'Good recognition in your field'],[2,'Respected within your circle or profession'],[0,'Quiet, private reputation'],[-99,'Recognition comes late or stays low-key; the work speaks for you']])}${ri('Defamation risk',df,[[3,'High: take care with reputation, contracts and public statements'],[1,'Moderate: occasional rumours or misunderstandings'],[-99,'Low: reputation is well protected']],{cap:'Risk'})}</ul><p class="n">For defamation risk, + raises the risk and − lowers it.</p>
+<h3>Married Life</h3><ul class="y">${ri('Love before marriage',lv,[[5,'Very likely: strong romantic attachments before marriage; a love marriage is possible'],[3,'Likely: you will know romance before marriage'],[1,'Possible: a few serious attachments'],[-99,'Unlikely: marriage tends to come through family or introductions']])}${ri('Close association with the opposite gender before marriage',ca,[[4,'Very close: frequent, strong bonds with the opposite gender'],[2,'Comfortable: good friendships with the opposite gender'],[0,'Occasional: a few close associations'],[-99,'Limited: reserved around the opposite gender; close companionship is rare']])}${ri('Longing for love',ln,[[5,'Intense: a deep need for love and closeness'],[3,'Strong: love is a central emotional need'],[1,'Moderate: values love, but not at any cost'],[-99,'Low: self-contained; love is not a driving need']])}${ri('Love failures',lf,[[4,'High: love is likely to bring heartbreak or break-ups'],[2,'Moderate: some disappointment or a major setback in love'],[-99,'Low: love tends to be stable']],{cap:'Risk'})}${ri('Married life',mr,[[4,'Harmonious and stable'],[2,'Good, with minor adjustments'],[0,'Mixed: needs patience and understanding'],[-99,'Challenging: communication and compromise are essential']])}${ri('Timing of marriage',md,[[3,'Likely delayed'],[1,'Possible mild delay'],[-99,'Typically on time or early']],{cap:'Delay'})}${ri('Chances of marriage separation',sp,[[4,'High: separation, long separation or divorce is a real possibility'],[2,'Moderate: periods of strain or separation are possible'],[-99,'Low: the marriage tends to stay together']],{cap:'Risk'})}${ri('Chances of multiple marriage',mp,[[4,'High: a second marriage or a major earlier bond is quite possible'],[2,'Some chance: a remarriage or significant earlier relationship is possible'],[-99,'Low: one stable marriage is indicated']],{cap:'Chance'})}${mage}</ul><p class="n">Venus is used as the marriage significator for everyone since no gender is entered. For a woman, Jupiter is traditionally read alongside it. For timing, + means delay and − means earlier. Mangal Dosha is covered in Yogas and Doshas.</p>
+<h3>Family</h3><ul class="y">${ri('Mother (4th house, Moon)',mom,[[5,'Strong: a caring, supportive mother and a close bond'],[3,'Good: a warm relationship and generally good support'],[1,'Mixed: some distance, strain or separation at times'],[-99,'Challenging: the bond needs effort; her health or presence may be a concern']])}${ri('Father (9th house, Sun)',dad,[[5,'Strong: a protective, guiding father and good support'],[3,'Good: a respectful bond and steady guidance'],[1,'Mixed: some distance, strain or separation at times'],[-99,'Challenging: the bond needs effort; his health or presence may be a concern']])}${ri('Paternal grandparents (5th house, Sun)',gpp,[[4,'Well supported: a blessing from the father’s line'],[2,'Moderate: a cordial bond'],[-99,'Limited: little contact or early separation indicated']])}${ri('Maternal grandparents (12th house, Moon)',gpm,[[4,'Well supported: a blessing from the mother’s line'],[2,'Moderate: a cordial bond'],[-99,'Limited: little contact or early separation indicated']])}${ri('Children (5th house, Jupiter)',kid,[[6,'Strong indication of children and a happy bond with them'],[3,'Children likely; the bond is warm'],[1,'Some delay or fewer children possible; patience and care help'],[-99,'Delay or extra effort indicated; a tendency only, not a fact']])}</ul><p class="n">Mother is read from the 4th house and Moon, father from the 9th house and Sun, paternal grandparents from the 5th (9th from the father’s 9th) and maternal grandparents from the 12th (9th from the mother’s 4th). Children come from the 5th house and Jupiter. These are traditional tendencies only.</p>
+<h3>Arts and Talents</h3><ul class="y">${ri('Dancing and performance',dn,[[5,'Gifted: strong flair for dance, rhythm and performance'],[3,'Good aptitude; dance or performing arts can be a real strength'],[1,'Some grace and rhythm; more a pastime than a calling'],[-99,'Not a strong theme; other talents come to the fore']])}</ul>
+<h3>Happiness and Fulfilment</h3><ul class="y">${ri('Happiness (contentment, 4th house and Moon)',hap,[[6,'Deeply content: peace of mind and a happy home'],[4,'Generally happy, with a good emotional footing'],[2,'Moderate: happiness comes in phases'],[0,'Mixed: contentment needs conscious effort'],[-99,'Restless or heavy at times; inner peace takes work']])}${ri('Fulfilment (desires and purpose, 11th, 9th and 10th)',ful,[[7,'Highly fulfilled: desires, purpose and effort come together'],[4,'Largely fulfilled: most goals are achieved'],[2,'Fulfilment comes in stages, through steady effort'],[0,'Wants outrun results for long stretches'],[-99,'Fulfilment comes late; purpose matters more than outcomes']])}</ul>
+<h3>Teachers and Bosses</h3><ul class="y">${ri('Support from teachers (Jupiter, 9th house)',tch,[[5,'Strong: gurus and teachers are generous with guidance and support'],[3,'Good: teachers take an interest and help you along'],[1,'Mixed: some good mentors, some distance or strictness'],[-99,'Limited: you tend to learn on your own; mentors may be absent or demanding']])}${ri('Support from bosses (Sun, 10th house)',bos,[[5,'Strong: bosses and superiors back you and recognise your work'],[3,'Good: generally supportive superiors and fair treatment'],[1,'Mixed: support depends on the boss; you earn it through results'],[-99,'Limited: friction with authority is likely; independent work suits you better']])}</ul>
+<h3>Blessings and Past-Life Merit</h3><ul class="y">${ri('Blessings in this birth (Jupiter, 9th house, Lagna)',bls,[[7,'Richly blessed: grace, protection and the goodwill of elders and gurus'],[4,'Blessed: help arrives when needed and elders’ goodwill supports you'],[2,'Moderately blessed: support comes with effort'],[0,'Few visible blessings: your own effort matters most'],[-99,'Blessings come late; discipline and service open the way']])}${ri('Punya from previous births (5th house, Jupiter)',pp,[[7,'Very strong merit: talents, opportunities and ease come naturally'],[4,'Good past merit: natural gifts and timely opportunities'],[2,'Moderate merit: effort is rewarded steadily'],[0,'Modest merit: results come mainly through present effort'],[-99,'Karmic lessons stand out: growth comes through effort, service and patience']])}</ul><p class="n">Teachers are read from Jupiter and the 9th house, bosses from the Sun and the 10th house. Past-life merit (purva punya) is read from the 5th house and its lord, with the 9th and Jupiter. It is a traditional idea and cannot be verified, so treat it as a reflection, not a fact.</p>`;
+return LAX(`<div class="card"><h2>Life Attributes</h2><p class="n">Traditional astrological indications only. They describe tendencies, not facts or medical advice.</p><p class="n">Each score runs 0 to 10 on the rules used here. Hover over (or tap) a score badge to see every possible outcome, how the score is calculated and what can change it. Birth-chart tendencies are fixed, but outcomes respond to effort and choices; traditional remedies are beliefs, not proven, so practical steps matter most. For risk items a higher number means more risk. Skin tone and build are descriptive, so they are not scored.</p>
+<h3>Overall Chart Strength</h3><ul class="y">${ri('Overall chart strength',ZA,Zt('overall chart'),ZW)}${ZO.map(x=>ri(x[0],x[1],Zt(x[0].split(' ')[0].toLowerCase()),ZW)).join('')}</ul><p class="n">Each factor blends its key planets in the Rasi chart (45%), the same planets in the Navamsa chart (35%: own or exalted sign, vargottama, good houses) and the yogas that support it (20%). Raw blends are then calibrated against random sample charts, so 5 is a typical chart and 8 means stronger than about 80% of charts. Hover a score to see the planets and yogas behind it.</p>
+${lifep}
+<h3>Appearance</h3><ul class="y">${ri('Beauty',bs,[[5,'Strikingly attractive and charming'],[3,'Attractive, with a pleasing presence'],[1,'Pleasant, with above-average appeal'],[-99,'Simple looks; character and presence count for more']])}
+${ri('Attraction',at,[[5,'Magnetic: draws attention easily'],[3,'Strong personal magnetism'],[1,'Pleasant appeal that grows on people'],[-99,'Understated; appeal comes through character and competence']])}${ri('Sexiness',sx,[[5,'Very alluring: sensual, magnetic presence'],[3,'Noticeably sensual, with a romantic aura'],[1,'Subtle charm, more warm than sultry'],[-99,'Understated; attraction is quiet and slow-building']])}<li><b>Skin tone and colour:</b> ${tone}; dominant influence ${B(dom)} (${DT[dom]})<br><span class="n">Relative to your family and regional complexion.</span></li>
+<li><b>Build:</b> ${BD[LS]}</li>
+${ri('Fitness and stamina',fs,[[3,'Strong constitution and good stamina'],[1,'Reasonable fitness; responds well to routine'],[-99,'Needs conscious effort to stay fit; build stamina steadily']])}</ul>
+${nw}<h3>Enmity</h3><ul class="y">${ri('Open enemies and opposition',{t:os.t,f:fw(os),n:os.l.map(x=>x.slice(2)).join('; ')||'Nothing prominent in the 6th house'},[[3,'High'],[1,'Moderate'],[-99,'Low']],{cap:'Risk',lo:0,hi:6})}
+${ri('Overcoming opponents',{t:wn.length,f:wn.map(x=>[1,x]),n:wn.join('; ')||'No strong indicators either way'},[[2,'Likely to overcome opponents'],[1,'Can hold their own'],[-99,'Opponents may be persistent; diplomacy works better than confrontation']],{lo:0,hi:3})}
+${ri('Hidden enemies',{t:hv,f:fw(hd).concat(prot?[[-1,'Jupiter protects the 12th']]:[]),n:(hd.l.map(x=>x.slice(2)).join('; ')||'Nothing prominent in the 12th or 8th')+(prot?(hd.l.length?'; ':'')+'Jupiter protects the 12th':'')},[[3,'High'],[1,'Moderate'],[-99,'Low']],{cap:'Risk',lo:0,hi:6})}</ul>
+${en}<h3>Health</h3><ul class="y">${ri('Vitality',vt,[[3,'Strong vitality'],[0,'Moderate vitality'],[-99,'Needs steady care']])}
+<li><b>Minor issues:</b>${ul(mi)}</li><li><b>Recurring issues:</b>${ul(rc)}</li><li><b>Major or long-term tendencies:</b>${ul(mj)}</li></ul>
+<p class="n">Genetics, environment and lifestyle matter far more than any chart. For any health concern, please see a doctor.</p></div>`)}
+function gen(){const dt=$('dt').value,tm=$('tm').value||'00:00';if(!dt){alert('Please enter a date');return}
+const [y,mo,d]=dt.split('-').map(Number),[hh,mi]=tm.split(':').map(Number),lat=+$('la').value,lon=+$('lo').value,tz=+$('tz').value;
+if(isNaN(lat)||isNaN(lon)){alert('Enter latitude and longitude');return}
+const ut=hh+mi/60-tz,J=jd(y,mo,d,ut),{P,rt,asc}=calc(J,lat,lon),ord=['Su','Mo','Ma','Me','Ju','Ve','Sa','Ra','Ke'],
+full={Su:'Sun',Mo:'Moon',Ma:'Mars',Me:'Mercury',Ju:'Jupiter',Ve:'Venus',Sa:'Saturn',Ra:'Rahu',Ke:'Ketu'},
+sg=l=>Math.floor(l/30),rI=[],nI=[];
+for(const k of ord){const l=P[k],r=rt[k]?'℞':'';rI.push([k,sg(l),`<tspan fill="${COL[k]}">${k}${r} ${dm(l)}</tspan>`]);nI.push([k,nav(l),`<tspan fill="${COL[k]}">${k}${r}</tspan>`])}
+const nm=$('nm').value.trim()||'Chart',place=$('pl').selectedOptions[0].textContent,sub=`${dt} ${tm}`+($('pl').value=='c'?'':' · '+place);
+let rows='';for(const k of ord){const l=P[k],nk=Math.floor(l/(360/27)),pd=Math.floor((l%(360/27))/(360/108))+1;rows+=`<tr><td style="color:${COL[k]};font-weight:bold">${full[k]}${rt[k]?' ℞':''}</td><td>${SG[sg(l)]}</td><td>${dm(l)}</td><td>${NK[nk]} ${pd}</td><td>${SG[nav(l)]}</td><td>${dig(k,l,P)}</td></tr>`}
+const ml=P.Mo,nk=Math.floor(ml/(360/27)),fr=(ml%(360/27))/(360/27),dl=nk%9,bal=(1-fr)*DY[dl];let dr='',st=J;
+for(let i=0;i<9;i++){const li=(dl+i)%9,yrs=i?DY[li]:bal,en=st+yrs*365.25,f=j=>new Date((j-2440587.5)*864e5).toISOString().slice(0,7),g=j=>new Date((j-2440587.5)*864e5).toISOString().slice(0,10),ag=j=>Math.max((j-J)/365.25,0).toFixed(1),run=NOW>=st&&NOW<en;
+let s0=i?st:J-fr*DY[li]*365.25,ab='';
+for(let a=0;a<9;a++){const aj=(li+a)%9,ae=s0+DY[li]*DY[aj]/120*365.25;if(ae>J)ab+=`<tr${NOW>=s0&&NOW<ae?' class="cur"':''}><td>${DL[li]}–${DL[aj]}${NOW>=s0&&NOW<ae?' (running)':''}</td><td>${ag(s0)} – ${ag(ae)}</td><td>${s0<J?'Birth':g(s0)}</td><td>${g(ae)}</td><td>${(DY[li]*DY[aj]/120).toFixed(2)} yrs</td></tr>`;s0=ae}
+dr+=`<details${run?' class="cur" open':''}><summary><span>${DL[li]}${run?' (running)':''}</span><span>${ag(st)} – ${ag(en)}</span><span>${i?f(st):'Birth'}</span><span>${f(en)}</span><span>${yrs.toFixed(2)} yrs</span></summary><table class="ad"><tr><th>Antardasha</th><th>Age</th><th>From</th><th>To</th><th>Length</th></tr>${ab}</table></details>`;st=en}
+$('out').innerHTML=`<div class="card"><div class="ch"><div>${chart('Rasi',nm+'<tspan> </tspan>',sg(asc),rI).replace(/<text x="210" y="214"[^>]*>.*?<\/text>/,`<text x="210" y="212" text-anchor="middle" font-size="11" fill="var(--mu)">${sub}</text><text x="210" y="230" text-anchor="middle" font-size="11" fill="var(--mu)">${nm}</text>`)}</div><div>${chart('Navamsa','D9',nav(asc),nI)}</div></div><div class="lg">${ord.map(k=>`<span><b style="background:${COL[k]}"></b>${full[k]} (${k})</span>`).join('')}<span><b style="background:var(--ac)"></b>Lagna (Asc)</span></div></div>
+<div class="card sc"><h2>Positions (sidereal, Lahiri)</h2><p class="n">Lagna: ${SG[sg(asc)]} ${dm(asc)} · ${NK[Math.floor(asc/(360/27))]} · Moon nakshatra: ${NK[nk]}</p><table><tr><th>Planet</th><th>Rasi</th><th>Degree</th><th>Nakshatra pada</th><th>Navamsa</th><th>Dignity</th></tr>${rows}</table></div>
+<div class="card sc"><h2>Vimshottari Mahadasha and Antardasha</h2><p class="n">Tap a Mahadasha to see its Antardashas. Age is counted from birth.</p><div class="dh"><span>Lord</span><span>Age (years)</span><span>From</span><span>To</span><span>Length</span></div>${dr}</div>${YD(P,asc,ord,full)}${LA(P,asc,ord,full,J)}`}
+(function(){let h='';for(let y=1800;y<=2100;y++)h+=`<option value="${y}">`;$('yl').innerHTML=h;
+const f=()=>{const n=parseInt($('yr').value,10);if(!(n>=1&&n<=9999))return;const v=$('dt').value||'2000-01-01';let md=v.slice(4);if(md=='-02-29'&&!(n%4==0&&(n%100||n%400==0)))md='-02-28';$('dt').value=String(n).padStart(4,'0')+md};
+$('yr').onchange=f;$('yr').oninput=()=>{if(/^\d{4}$/.test($('yr').value))f()};$('dt').onchange=()=>{$('yr').value=$('dt').value.slice(0,4)};$('yr').value=$('dt').value.slice(0,4)})();
+let pkI=0,SV=[];
+function showPk(){$('pb').innerHTML=SV[pkI]||'';[...$('pt').children].forEach((b,i)=>b.classList.toggle('on',i==pkI))}
+function pkTab(i){pkI=i;showPk()}
+function pkSet(o){$('pp').hidden=!o;$('pk').setAttribute('aria-expanded',String(!!o))}
+function peek(){SV=[...$('out').querySelectorAll('.ch svg')].map(x=>x.outerHTML);showPk()}
+document.addEventListener('keydown',e=>{if(e.key=='Escape')pkSet(false)});
+document.addEventListener('click',e=>{if(!$('pp').hidden&&innerWidth<700&&!$('pp').contains(e.target)&&e.target!=$('pk'))pkSet(false)});
+$('go').onclick=()=>{gen();peek()};gen();peek();
+(function(){const q=new URLSearchParams(location.search);if(!q.has('admin')||['0','false','no'].includes((q.get('admin')||'').toLowerCase()))return;
+const K='sicg_admin_v2',ea=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),XP={'New Delhi':['',28.6139,77.209],'Nellore':['',14.4426,79.9865]},
+seed=()=>[['Venkatesh','1994-04-16','12:06','Ramanathapuram'],['Gowri','1994-09-17','22:06','Virudhunagar'],['Anushka','1993-12-25','17:30','Chennai'],['Kowsalya','1993-08-13','19:05','Erode'],['Vijay','1974-06-22','11:50','Chennai'],['Virat','1998-11-05','10:28','New Delhi'],['Surya','1975-07-22','16:30','Chennai'],['Rajanikanth','1950-12-12','23:49','Bengaluru'],['Varsha','1999-10-01','06:51','Nellore'],['Parthiban','1995-04-18','06:50','Virudhunagar'],['Pavitha','1997-07-12','19:31','Ramanathapuram'],['Ambattur','1996-01-10','12:00','Chennai']].map(([n,d,t,p])=>{const c=TN.find(z=>z[0]==p)||IN.find(z=>z[0]==p)||XP[p];return{n,d,t,p,la:c[1],lo:c[2],tz:5.5}}),
+ld=()=>{try{const v=JSON.parse(localStorage.getItem(K));if(Array.isArray(v))return v}catch(e){}let o=[];try{o=JSON.parse(localStorage.getItem('sicg_admin_v1'))||[]}catch(e){}if(!Array.isArray(o)||!o.length)return seed();return o.concat(seed().filter(x=>!o.some(y=>y.n==x.n&&y.d==x.d)))},
+sv=L=>{try{localStorage.setItem(K,JSON.stringify(L))}catch(e){}},fd=d=>d.split('-').reverse().join('/'),A=$('adm');
+let L=ld();
+function draw(){A.hidden=false;A.innerHTML='<div class="ah"><b>Saved birth details</b><span><button type="button" data-a="save">Save current</button><button type="button" data-a="reset">Reset list</button></span></div><div class="g">'+(L.length?L.map((e,i)=>`<div class="ar"><button type="button" class="ab" data-i="${i}"><b>${ea(e.n||'(no name)')}</b><br>${fd(e.d)} · ${ea(e.t)} · ${ea(e.p)}</button><button type="button" class="ax" data-x="${i}" aria-label="Delete">&times;</button></div>`).join(''):'<span class="n">No saved details yet.</span>')+'</div>'}
+A.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const D=b.dataset;
+if(D.i!=null){const e=L[+D.i];$('nm').value=e.n;$('dt').value=e.d;$('yr').value=e.d.slice(0,4);$('tm').value=e.t;const o=[...$('pl').options].find(x=>x.textContent==e.p);$('pl').value=o?o.value:'c';if($('pl').onchange)$('pl').onchange();$('la').value=e.la;$('lo').value=e.lo;$('tz').value=e.tz;gen();peek();if($('out').scrollIntoView)$('out').scrollIntoView({behavior:'smooth'})}
+else if(D.x!=null){L.splice(+D.x,1);sv(L);draw()}
+else if(D.a=='save'){if(!$('dt').value){alert('Enter a date first');return}L.push({n:$('nm').value.trim(),d:$('dt').value,t:$('tm').value||'00:00',p:$('pl').selectedOptions[0].textContent,la:+$('la').value,lo:+$('lo').value,tz:+$('tz').value});sv(L);draw()}
+else if(D.a=='reset'){L=seed();sv(L);draw()}};
+draw()})();
+</script></body></html>
