@@ -353,6 +353,87 @@ main h3{margin:18px 0 8px;font-size:17px;color:#24466f}
 <tr><td class="planet">Rahu / Ketu</td><td colspan="2">Sign and degree assignments differ among traditions; no single universally accepted table.</td></tr>
 </tbody></table></div>
 
+<h3>2.1 South Indian Rasi Chart — Dignities by Sign</h3>
+<p class="sub">Same fixed-sign layout as the sign classifications. Each sign shows which planets are exalted, debilitated, in moolatrikona, in own sign, or friendly / neutral / hostile there.</p>
+<style>
+.dig-chart .detail strong{font-size:11px}
+.dig-chart .detail strong.dg-ex{color:#166534}.dig-chart .detail strong.dg-deb{color:#b91c1c}.dig-chart .detail strong.dg-mt{color:#b45309}.dig-chart .detail strong.dg-own{color:#1d4ed8}.dig-chart .detail strong.dg-fr{color:#0f766e}.dig-chart .detail strong.dg-sama{color:#475569}.dig-chart .detail strong.dg-en{color:#9f1239}
+.dig-chart .class-cell>b small{font-weight:600;font-size:10px;color:#65758c;margin-left:auto}
+.dgc{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;margin:2px 3px 0 0;line-height:1.3;white-space:nowrap}.dgc.dg-ex{background:#166534}.dgc.dg-deb{background:#b91c1c}.dgc.dg-mt{background:#b45309}.dgc.dg-own{background:#1d4ed8}.dgc.dg-fr{background:#0f766e}.dgc.dg-sama{background:#64748b}.dgc.dg-en{background:#9f1239}.dg-slots{display:grid;gap:4px;flex:1}.dg-slot{display:flex;flex-wrap:wrap;align-items:center;align-content:center;gap:2px;padding:3px 5px;border-radius:6px;border-left:4px solid;min-width:0}.dg-slot.dg-ex{border-color:#166534;background:#16653416}.dg-slot.dg-deb{border-color:#b91c1c;background:#b91c1c14}.dg-slot.dg-mt{border-color:#b45309;background:#b4530916}.dg-slot.dg-own{border-color:#1d4ed8;background:#1d4ed814}.dg-slot.dg-fr{border-color:#0f766e;background:#0f766e16}.dg-slot.dg-sama{border-color:#64748b;background:#64748b16}.dg-slot.dg-en{border-color:#9f1239;background:#9f123914}@media(max-width:700px){.dg-slot{padding:2px 3px;border-left-width:3px}}.dg-chips{display:flex;flex-wrap:wrap;gap:2px;align-content:flex-start;padding-top:2px}.dg-none{color:#8a97aa;font-size:11px}#digLegend{align-items:center}@media(max-width:700px){.dig-chart .dgc{font-size:9px;padding:2px 5px;margin:1px 2px 0 0}}
+</style>
+<div class="card">
+  <div class="classification-toolbar">
+    <div class="classification-toggle" role="group" aria-label="Choose dignity view">
+      <button type="button" class="view-toggle dig-toggle active" data-dview="exdeb" aria-pressed="true"><span class="toggle-number">01</span><span><strong>Exaltation</strong><small>Uccha &amp; Neecha</small></span></button>
+      <button type="button" class="view-toggle dig-toggle" data-dview="mtown" aria-pressed="false"><span class="toggle-number">02</span><span><strong>Moolatrikona</strong><small>&amp; Own sign</small></span></button>
+      <button type="button" class="view-toggle dig-toggle" data-dview="rel" aria-pressed="false"><span class="toggle-number">03</span><span><strong>Relationships</strong><small>Friend · Neutral · Enemy</small></span></button>
+    </div>
+    <div class="classification-current"><span class="current-kicker">CURRENT VIEW</span><strong id="digDesc">Exaltation &amp; Debilitation</strong></div>
+  </div>
+  <div class="legend classification-legend">
+    <span class="chip elem-fire">Fire · Agni</span><span class="chip elem-earth">Earth · Prithvi</span><span class="chip elem-air">Air · Vayu</span><span class="chip elem-water">Water · Jala</span>
+  </div>
+  <div id="digLegend" class="legend classification-legend"></div>
+  <div class="chart classification-chart merged-classification-chart dig-chart" id="digChart" aria-label="South Indian sign dignity chart"></div>
+  <p class="note" id="digNote"></p>
+</div>
+<h3>Compound relationship (Panchadha Maitri)</h3>
+<p class="sub">A sign's lord gives the natural relationship; temporary friendship (lord placed 2, 3, 4, 10, 11 or 12 from the planet) depends on the chart, so Adhimitra and Adhishatru appear only once a horoscope is known.</p>
+<div class="card scroll"><table class="dignities"><thead><tr><th>Natural</th><th>Temporary</th><th>Compound result</th></tr></thead><tbody>
+<tr><td>Friend</td><td>Friend</td><td class="ex">Adhimitra (great friend)</td></tr>
+<tr><td>Friend</td><td>Enemy</td><td>Sama (neutral)</td></tr>
+<tr><td>Neutral</td><td>Friend</td><td class="ex">Mitra (friend)</td></tr>
+<tr><td>Neutral</td><td>Enemy</td><td class="deb">Shatru (enemy)</td></tr>
+<tr><td>Enemy</td><td>Friend</td><td>Sama (neutral)</td></tr>
+<tr><td>Enemy</td><td>Enemy</td><td class="deb">Adhishatru (great enemy)</td></tr>
+</tbody></table></div>
+<script>
+(function(){
+const N=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+const EL=["fire","earth","air","water"];
+const grid=["1/2","1/3","1/4","2/4","3/4","4/4","4/3","4/2","4/1","3/1","2/1","1/1"];
+const P=["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"];
+const ex={Sun:[0,10],Moon:[1,3],Mars:[9,28],Mercury:[5,15],Jupiter:[3,5],Venus:[11,27],Saturn:[6,20]};
+const mt={Sun:[4,0,20],Moon:[1,4,30],Mars:[0,0,12],Mercury:[5,16,20],Jupiter:[8,0,10],Venus:[6,0,15],Saturn:[10,0,20]};
+const own={Sun:[4],Moon:[3],Mars:[0,7],Mercury:[2,5],Jupiter:[8,11],Venus:[1,6],Saturn:[9,10]};
+const fr={Sun:["Moon","Mars","Jupiter"],Moon:["Sun","Mercury"],Mars:["Sun","Moon","Jupiter"],Mercury:["Sun","Venus"],Jupiter:["Sun","Moon","Mars"],Venus:["Mercury","Saturn"],Saturn:["Mercury","Venus"]};
+const en={Sun:["Venus","Saturn"],Moon:[],Mars:["Mercury"],Mercury:["Moon"],Jupiter:["Mercury","Venus"],Venus:["Sun","Moon"],Saturn:["Sun","Moon","Mars"]};
+const lordOf=s=>P.find(p=>own[p].includes(s));
+const data=N.map((n,s)=>{
+  const lord=lordOf(s);
+  const exl=P.filter(p=>ex[p][0]===s).map(p=>p+" "+ex[p][1]+"°");
+  const deb=P.filter(p=>(ex[p][0]+6)%12===s).map(p=>p+" "+ex[p][1]+"°");
+  const mtl=P.filter(p=>mt[p][0]===s).map(p=>p+" "+mt[p][1]+"–"+mt[p][2]+"°");
+  const m=mt[lord];
+  const ownl=[lord];
+  const taken=new Set([lord,...P.filter(p=>ex[p][0]===s||(ex[p][0]+6)%12===s||mt[p][0]===s)]);
+  const rest=P.filter(p=>!taken.has(p));
+  return {n,s,lord,exl,deb,mtl,own:ownl,
+    mitra:rest.filter(p=>fr[p].includes(lord)),
+    shatru:rest.filter(p=>en[p].includes(lord)),
+    sama:rest.filter(p=>!fr[p].includes(lord)&&!en[p].includes(lord))};
+});
+const cfg={
+ exdeb:{t:"Exaltation & Debilitation",sub:"Uccha · Neecha (peak degree)",f:[["Exalted · Uccha","exl","dg-ex"],["Debilitated · Neecha","deb","dg-deb"]],note:"Peak degree is the point of deepest exaltation or debilitation; the debilitation sign is always the 7th from the exaltation sign. Rahu / Ketu omitted because traditions differ."},
+ mtown:{t:"Moolatrikona & Own Sign",sub:"Moolatrikona range · Swakshetra",f:[["Moolatrikona","mtl","dg-mt"],["Own sign · Swakshetra","own","dg-own"]],note:"Own sign applies across the full 30°. Where the moolatrikona lies inside the lord's own sign, that degree range is read as moolatrikona (the higher dignity) and the rest as plain own sign. Ranges follow the Planetary Dignities table above."},
+ rel:{t:"Friend, Neutral & Enemy Signs",sub:"Planets by their natural relationship to the sign lord",f:[["Mitra / Adhimitra*","mitra","dg-fr"],["Sama · Neutral","sama","dg-sama"],["Shatru / Adhishatru*","shatru","dg-en"]],note:"Natural relationship of each planet to the sign's lord. *Becomes Adhimitra or Adhishatru when temporary friendship agrees (see table below). Planets already exalted, debilitated, in moolatrikona or own sign there are not repeated. Rahu / Ketu omitted."}
+};
+function render(v){
+  const c=cfg[v];
+  document.getElementById("digDesc").textContent=c.t;
+  document.getElementById("digNote").textContent=c.note;
+  const box=document.getElementById("digChart");
+  box.className="chart classification-chart merged-classification-chart dig-chart view-"+v;
+  const list=a=>a.length?a.join(", "):"—";
+  document.getElementById("digLegend").innerHTML='<span class="current-kicker">COLOUR CODE</span>'+c.f.map(([l,k,cl])=>`<span class="dgc ${cl}">${l}</span>`).join("");
+  box.innerHTML=data.map(d=>`<div class="cell elem-${EL[d.s%4]}" style="grid-area:${grid[d.s]}"><div class="class-cell"><b>${d.n}<small>${d.lord}</small></b><div class="dg-slots" style="grid-template-rows:repeat(${c.f.length},minmax(34px,auto))">${c.f.map(([l,k,cl])=>`<div class="dg-slot ${cl}">${d[k].map(x=>`<span class="dgc ${cl}">${x}</span>`).join("")||'<span class="dg-none">—</span>'}</div>`).join("")}</div></div></div>`).join("")+`<div class="center"><b>${c.t}</b><span class="meta">${c.sub}</span></div>`;
+  document.querySelectorAll(".dig-toggle").forEach(b=>{const a=b.dataset.dview===v;b.classList.toggle("active",a);b.setAttribute("aria-pressed",a)});
+}
+document.querySelectorAll(".dig-toggle").forEach(b=>b.addEventListener("click",()=>render(b.dataset.dview)));
+render("exdeb");
+})();
+</script>
+
 <h2>3. Permanent (Natural) Subathuvam / Paavathuvam</h2>
 <p class="sub">This is the natural benefic or malefic nature of grahas. It does not change with Lagna; the Moon and Mercury need context.</p>
 <div class="card scroll"><table><thead><tr><th>Graha</th><th>Permanent / Natural Nature</th><th>Rule</th></tr></thead><tbody>
