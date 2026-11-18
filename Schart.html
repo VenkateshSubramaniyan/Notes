@@ -16,6 +16,11 @@ p.s{color:var(--mu);margin:0 0 14px}
 .f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 label{display:block;font-size:.8rem;color:var(--mu)}
 input,select,button{width:100%;font:inherit;padding:7px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg)}
+.city-search{position:relative}
+.city-suggestions{position:absolute;top:100%;left:0;right:0;z-index:40;max-height:240px;overflow:auto;background:var(--card);border:1px solid var(--bd);border-radius:6px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.city-suggestions[hidden]{display:none}
+.city-suggestions button{display:block;width:100%;margin:0;padding:8px 10px;text-align:left;background:var(--card);color:var(--fg);border:0;border-radius:0;font-weight:normal}
+.city-suggestions button:hover,.city-suggestions button[aria-selected="true"]{background:var(--bd)}
 button{background:var(--ac);color:#fff;border:0;cursor:pointer;margin-top:12px;font-weight:bold}
 .ch{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .ch>div{flex:1 1 320px;max-width:430px;text-align:center}
@@ -104,7 +109,8 @@ details.oc[open]>summary{margin-bottom:8px}
 <datalist id="yl"></datalist>
 <div><label>Date of birth</label><input id="dt" type="date"></div>
 <div><label>Time (24h, local)</label><input id="tm" type="time" value="06:00"></div>
-<div><label>Place</label><select id="pl"></select></div>
+<div><label>Major Cities in Tamil Nadu</label><select id="tnpl"></select></div>
+<div><label for="pl">Search all cities</label><div class="city-search"><input id="pl" value="Chennai, TN" autocomplete="off" placeholder="Type a city name" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="city-suggestions"><div id="city-suggestions" class="city-suggestions" role="listbox" hidden></div></div></div>
 <div><label>Latitude (N+)</label><input id="la" type="number" step="0.0001"></div>
 <div><label>Longitude (E+)</label><input id="lo" type="number" step="0.0001"></div>
 <div><label>UTC offset (hours)</label><input id="tz" type="number" step="0.25" value="5.5"></div>
@@ -112,15 +118,25 @@ details.oc[open]>summary{margin-bottom:8px}
 <div id="out"></div>
 <p class="n">Planetary positions use compact approximate orbital elements and a truncated lunar series, accurate to roughly an arcminute or two for planets and a few arcminutes for the Moon. Verify borderline sign-boundary charts and pre-1947 timezone offsets against software you trust.</p>
 </main>
+<script src="./city-list.js"></script>
 <button id="pk" type="button" aria-expanded="false" aria-controls="pp" onclick="pkSet($('pp').hidden)">Chart</button>
 <aside id="pp" hidden aria-label="Chart preview"><div class="ph"><b id="pt">Rasi and Navamsa</b><button id="px" type="button" aria-label="Close chart" onclick="pkSet(false)">&times;</button></div><div id="pb"></div></aside>
 <script>
 const TN=[["Chennai",13.0827,80.2707],["Coimbatore",11.0168,76.9558],["Madurai",9.9252,78.1198],["Tiruchirappalli",10.7905,78.7047],["Salem",11.6643,78.146],["Tirunelveli",8.7139,77.7567],["Tiruppur",11.1085,77.3411],["Erode",11.341,77.7172],["Vellore",12.9165,79.1325],["Thoothukudi",8.7642,78.1348],["Thanjavur",10.787,79.1378],["Dindigul",10.3673,77.9803],["Kanchipuram",12.8342,79.7036],["Kumbakonam",10.9617,79.3881],["Karur",10.9601,78.0766],["Nagercoil",8.1833,77.4119],["Cuddalore",11.748,79.7714],["Hosur",12.7409,77.8253],["Tiruvannamalai",12.2253,79.0747],["Sivakasi",9.4533,77.7979],["Rajapalayam",9.4511,77.5561],["Pudukkottai",10.3833,78.8001],["Ramanathapuram",9.3639,78.8395],["Rameswaram",9.2876,79.3129],["Namakkal",11.2189,78.1677],["Karaikudi",10.0667,78.7833],["Kodaikanal",10.2381,77.4892],["Udhagamandalam (Ooty)",11.4102,76.695],["Nagapattinam",10.7672,79.8449],["Chidambaram",11.3993,79.6914],["Villupuram",11.9401,79.4861],["Mayiladuthurai",11.1018,79.652],["Palani",10.45,77.5167],["Theni",10.0104,77.4768],["Virudhunagar",9.585,77.957],["Tiruchendur",8.4955,78.1203],["Pollachi",10.6609,77.0048],["Arakkonam",13.084,79.67],["Ambur",12.7916,78.7167],["Krishnagiri",12.5186,78.2137],["Dharmapuri",12.1211,78.1582],["Perambalur",11.2342,78.8808],["Ariyalur",11.1401,79.0786],["Tenkasi",8.9594,77.3152],["Thiruvarur",10.7661,79.6344]];
 const IN=[["Mumbai",19.076,72.8777],["Delhi",28.6139,77.209],["Bengaluru",12.9716,77.5946],["Hyderabad",17.385,78.4867],["Kolkata",22.5726,88.3639],["Pune",18.5204,73.8567],["Ahmedabad",23.0225,72.5714],["Jaipur",26.9124,75.7873],["Lucknow",26.8467,80.9462],["Kochi",9.9312,76.2673],["Thiruvananthapuram",8.5241,76.9366],["Kozhikode",11.2588,75.7804],["Visakhapatnam",17.6868,83.2185],["Vijayawada",16.5062,80.648],["Tirupati",13.6288,79.4192],["Mysuru",12.2958,76.6394],["Mangaluru",12.9141,74.856],["Puducherry",11.9416,79.8083],["Bhopal",23.2599,77.4126],["Indore",22.7196,75.8577],["Nagpur",21.1458,79.0882],["Surat",21.1702,72.8311],["Patna",25.5941,85.1376],["Bhubaneswar",20.2961,85.8245],["Ranchi",23.3441,85.3096],["Raipur",21.2514,81.6296],["Chandigarh",30.7333,76.7794],["Amritsar",31.634,74.8723],["Kanpur",26.4499,80.3319],["Varanasi",25.3176,82.9739],["Dehradun",30.3165,78.0322],["Srinagar",34.0837,74.7973],["Guwahati",26.1445,91.7362],["Panaji",15.4909,73.8278]];
 const $=id=>document.getElementById(id),R=Math.PI/180,m360=x=>((x%360)+360)%360;
-(function(){let h='<option value="c">Custom (enter lat/long)</option><optgroup label="Tamil Nadu">';TN.forEach((c,i)=>h+=`<option value="t${i}">${c[0]}</option>`);h+='</optgroup><optgroup label="Major Indian cities">';IN.forEach((c,i)=>h+=`<option value="i${i}">${c[0]}</option>`);$('pl').innerHTML=h+'</optgroup>';
-function sel(){const v=$('pl').value;if(v=='c')return;const c=(v[0]=='t'?TN:IN)[+v.slice(1)];$('la').value=c[1];$('lo').value=c[2];$('tz').value=5.5}
-$('pl').onchange=sel;$('pl').value='t0';sel();$('dt').value=new Date().toISOString().slice(0,10);})();
+(function(){const TN_CITIES=ASTRO_CITIES.filter(c=>c[0].endsWith(", TN"));$('tnpl').innerHTML=TN_CITIES.map(c=>`<option value="${c[0]}">${c[0].split(",")[0]}</option>`).join('');
+let activeCity=-1;
+function hideSuggestions(){$('city-suggestions').hidden=true;$('pl').setAttribute('aria-expanded','false');$('pl').removeAttribute('aria-activedescendant');activeCity=-1}
+function showSuggestions(){const query=$('pl').value.trim().toLowerCase(),matches=ASTRO_CITIES.filter(c=>!query||c[0].toLowerCase().includes(query)).slice(0,8),list=$('city-suggestions');list.innerHTML=matches.map((c,i)=>`<button type="button" id="city-option-${i}" role="option" aria-selected="${i===activeCity}">${c[0]}</button>`).join('');list.hidden=matches.length===0;$('pl').setAttribute('aria-expanded',String(matches.length>0));if(!matches.length)$('pl').removeAttribute('aria-activedescendant')}
+function setCity(c){$('pl').value=c[0];$('la').value=c[1];$('lo').value=c[2];$('tz').value=c[3];$('tnpl').value=TN_CITIES.includes(c)?c[0]:'';hideSuggestions()}
+function findCity(value){const q=value.trim().toLowerCase();return ASTRO_CITIES.find(c=>c[0].toLowerCase()===q)||ASTRO_CITIES.find(c=>c[0].split(",")[0].toLowerCase()===q)}
+function syncCity(){const c=findCity($('pl').value);if(c){$('la').value=c[1];$('lo').value=c[2];$('tz').value=c[3];$('tnpl').value=TN_CITIES.includes(c)?c[0]:''}else{$('tnpl').value='';$('la').value='';$('lo').value=''}activeCity=-1;showSuggestions()}
+$('tnpl').addEventListener('change',()=>{const c=ASTRO_CITIES.find(x=>x[0]===$('tnpl').value);if(c)setCity(c)});
+$('pl').addEventListener('input',syncCity);$('pl').addEventListener('focus',showSuggestions);$('pl').addEventListener('blur',()=>setTimeout(hideSuggestions,150));
+$('pl').addEventListener('keydown',e=>{const options=$('city-suggestions').querySelectorAll('[role="option"]');if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!$('city-suggestions').hidden){activeCity=activeCity<0?(e.key==='ArrowDown'?0:options.length-1):(activeCity+(e.key==='ArrowDown'?1:-1)+options.length)%options.length;options.forEach((o,i)=>o.setAttribute('aria-selected',String(i===activeCity)));$('pl').setAttribute('aria-activedescendant',options[activeCity].id)}}else if(e.key==='Enter'&&activeCity>=0&&options[activeCity]){e.preventDefault();setCity(ASTRO_CITIES.find(c=>c[0]===options[activeCity].textContent))}else if(e.key==='Escape')hideSuggestions()});
+$('city-suggestions').addEventListener('mousedown',e=>e.preventDefault());$('city-suggestions').addEventListener('click',e=>{const option=e.target.closest('[role="option"]');if(option)setCity(ASTRO_CITIES.find(c=>c[0]===option.textContent))});
+$('tnpl').value=TN_CITIES[0][0];setCity(TN_CITIES[0]);$('dt').value=new Date().toISOString().slice(0,10);})();
 const COL={Su:'#ff8c00',Mo:'#6aa0e0',Ma:'#e0443a',Me:'#2fb36b',Ju:'#c8a400',Ve:'#d867b0',Sa:'#8a7fb0',Ra:'#8c8c8c',Ke:'#b5714f'};
 const SG=["Mesha","Vrishabha","Mithuna","Kataka","Simha","Kanya","Tula","Vrischika","Dhanus","Makara","Kumbha","Meena"];
 const NK=["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
@@ -713,7 +729,7 @@ const ut=hh+mi/60-tz,J=jd(y,mo,d,ut),{P,rt,asc}=calc(J,lat,lon),ord=['Su','Mo','
 full={Su:'Sun',Mo:'Moon',Ma:'Mars',Me:'Mercury',Ju:'Jupiter',Ve:'Venus',Sa:'Saturn',Ra:'Rahu',Ke:'Ketu'},
 sg=l=>Math.floor(l/30),rI=[],nI=[];
 for(const k of ord){const l=P[k],r=rt[k]?'℞':'';rI.push([k,sg(l),`<tspan fill="${COL[k]}">${k}${r} ${dm(l)}</tspan>`]);nI.push([k,nav(l),`<tspan fill="${COL[k]}">${k}${r}</tspan>`])}
-const nm=$('nm').value.trim()||'Chart',place=$('pl').selectedOptions[0].textContent,sub=`${dt} ${tm}`+($('pl').value=='c'?'':' · '+place);
+const nm=$('nm').value.trim()||'Chart',place=$('pl').value.trim(),sub=`${dt} ${tm}`+(place?' · '+place:'');
 let rows='';for(const k of ord){const l=P[k],nk=Math.floor(l/(360/27)),pd=Math.floor((l%(360/27))/(360/108))+1;rows+=`<tr><td style="color:${COL[k]};font-weight:bold">${full[k]}${rt[k]?' ℞':''}</td><td>${SG[sg(l)]}</td><td>${dm(l)}</td><td>${NK[nk]} ${pd}</td><td>${SG[nav(l)]}</td><td>${dig(k,l,P)}</td></tr>`}
 const ml=P.Mo,nk=Math.floor(ml/(360/27)),fr=(ml%(360/27))/(360/27),dl=nk%9,bal=(1-fr)*DY[dl];let dr='',st=J;
 for(let i=0;i<9;i++){const li=(dl+i)%9,yrs=i?DY[li]:bal,en=st+yrs*365.25,f=j=>new Date((j-2440587.5)*864e5).toISOString().slice(0,7),g=j=>new Date((j-2440587.5)*864e5).toISOString().slice(0,10),ag=j=>Math.max((j-J)/365.25,0).toFixed(1),run=NOW>=st&&NOW<en;
@@ -758,9 +774,9 @@ o=(o||[]).filter(x=>!BAD.some(b=>b[0]==x.n&&b[1]==x.d));L=o.concat(seed().filter
 const sv=()=>{try{localStorage.setItem(K,JSON.stringify({L,g:G}))}catch(e){}};
 function draw(){A.hidden=false;A.innerHTML='<div class="ah"><b>Saved birth details</b><span><button type="button" data-a="save">Save current</button><button type="button" data-a="reset">Reset list</button></span></div><div class="g">'+(L.length?L.map((e,i)=>`<div class="ar"><button type="button" class="ab" data-i="${i}"><b>${ea(e.n||'(no name)')}</b><br>${fd(e.d)} · ${ea(e.t)} · ${ea(e.p)}</button><button type="button" class="ax" data-x="${i}" aria-label="Delete">&times;</button></div>`).join(''):'<span class="n">No saved details yet.</span>')+'</div>'}
 A.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const D=b.dataset;
-if(D.i!=null){const e=L[+D.i];$('nm').value=e.n;$('dt').value=e.d;$('yr').value=e.d.slice(0,4);$('tm').value=e.t;const o=[...$('pl').options].find(x=>x.textContent==e.p);$('pl').value=o?o.value:'c';if($('pl').onchange)$('pl').onchange();$('la').value=e.la;$('lo').value=e.lo;$('tz').value=e.tz;gen();peek();vw();if($('out').scrollIntoView)$('out').scrollIntoView({behavior:'smooth'})}
+if(D.i!=null){const e=L[+D.i];$('nm').value=e.n;$('dt').value=e.d;$('yr').value=e.d.slice(0,4);$('tm').value=e.t;$('pl').value=e.p;if($('pl').onchange)$('pl').onchange();$('la').value=e.la;$('lo').value=e.lo;$('tz').value=e.tz;gen();peek();vw();if($('out').scrollIntoView)$('out').scrollIntoView({behavior:'smooth'})}
 else if(D.x!=null){const e=L.splice(+D.x,1)[0];if(seed().some(z=>kk(z)==kk(e)))G.push(kk(e));sv();draw()}
-else if(D.a=='save'){if(!$('dt').value){alert('Enter a date first');return}L.push({n:$('nm').value.trim(),d:$('dt').value,t:$('tm').value||'00:00',p:$('pl').selectedOptions[0].textContent,la:+$('la').value,lo:+$('lo').value,tz:+$('tz').value});sv();draw()}
+else if(D.a=='save'){if(!$('dt').value){alert('Enter a date first');return}L.push({n:$('nm').value.trim(),d:$('dt').value,t:$('tm').value||'00:00',p:$('pl').value.trim(),la:+$('la').value,lo:+$('lo').value,tz:+$('tz').value});sv();draw()}
 else if(D.a=='reset'){L=seed();G=[];sv();draw()}};
 draw()})();
 </script></body></html>
