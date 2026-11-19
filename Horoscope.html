@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ta"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ஜாதகம் · South Indian Birth Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1eff8;--card:#fff;--ink:#1d1a3a;--mut:#6a6688;--ln:#a8902f;--ac:#6b2fa8;--tint:#efe3b8;--g:#17724a;--b:#b3322e;--n:#6a6688;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+
+.bk{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.bk table{border-collapse:separate;border-spacing:0}.bk table+table{border-left:2px solid var(--ln);padding-left:14px}@media(max-width:520px){.bk{grid-template-columns:1fr}.bk table+table{border-left:0;padding-left:0;border-top:2px solid var(--ln)}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Noto Serif Tamil",Georgia,"Latha",serif}
+[hidden]{display:none!important}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:28px;margin:0 0 4px}h1 small{display:block;font-size:15px;font-weight:400;color:var(--mut)}
+h2{font-size:19px;margin:28px 0 10px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:14px;margin-top:14px}
+.row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+label{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:3px;flex:1 1 150px}
+input,select,button{font:inherit;font-size:15px;padding:8px 10px;border-radius:6px;border:1px solid var(--ln);background:var(--bg);color:var(--ink)}
+button{cursor:pointer;background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:600}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+svg{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--ln);border-radius:8px}
+.cell{fill:none;stroke:var(--ln);stroke-width:1.5}.cell.lg{fill:var(--tint)}
+.sn{font-size:9px;fill:var(--mut)}.pl{font-size:11px;font-weight:600;fill:var(--ink)}.as{font-size:11px;font-weight:700;fill:var(--ac)}
+.ct{font-size:15px;font-weight:600;text-anchor:middle;fill:var(--ink)}.cs{font-size:11px;text-anchor:middle;fill:var(--mut)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid color-mix(in srgb,var(--ln) 35%,transparent);white-space:nowrap}th{color:var(--mut);font-weight:600}
+.b{display:inline;margin-right:4px;font-weight:600;font-size:12px}.b+.b::before{content:"· ";color:var(--mut);font-weight:400}.b.g{color:var(--g)}.b.b{color:var(--b)}.b.n{color:var(--n)}
+details{border:1px solid var(--ln);border-radius:8px;margin-bottom:8px;background:var(--card)}
+summary{display:grid;grid-template-columns:1.3fr 1fr .8fr 1.1fr;gap:6px;padding:8px 10px;cursor:pointer;list-style:none;font-size:14px}
+summary::-webkit-details-marker{display:none}summary b{color:var(--ac)}
+details.cur{border-width:2px}details>.bk{padding:0 10px 10px}tr.cur td{background:var(--tint)}
+.hd{display:grid;grid-template-columns:1.5fr 1fr .6fr 1fr;gap:8px;padding:0 12px 4px;font-size:13px;color:var(--mut)}
+.cb{position:relative;flex:2 1 280px}#rs{position:absolute;top:100%;left:0;right:0;z-index:20;max-height:260px;overflow:auto;list-style:none;margin:2px 0 0;padding:0;background:var(--card);border:1px solid var(--ln);border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+#rs li{padding:7px 10px;cursor:pointer;color:var(--ink);font-size:14px}#rs li:hover{background:var(--tint)}#rs li.gh{font-size:11.5px;color:var(--mut);background:var(--bg);cursor:default}
+#pr{background:transparent;color:var(--ac);margin-left:8px}.ph{display:none}.dh2{display:none}.lb{font-style:normal}
+.pc{padding:6px 10px}.pt{font-size:13px;table-layout:auto}.pt th,.pt td{white-space:normal;padding:6px 6px;vertical-align:top}.pt td:last-child{width:34%}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:8px}.dl details{margin:0}.po{display:none;grid-template-columns:1.3fr 1fr .8fr 1.1fr;gap:6px;padding:2px 10px 8px;font-size:13px}
+@media(max-width:640px){.pt{font-size:12px}.pt th,.pt td{padding:5px 3px}.dl{grid-template-columns:1fr}}
+@media print{@page{size:A4;margin:0}body{background:#fff;font-size:11px;padding:8mm}#fm,h1{display:none!important}main{padding:0;max-width:none}.card,svg,details{break-inside:avoid}.charts,.dl{grid-template-columns:1fr 1fr;gap:6px}.charts svg{width:92%;margin:0 auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.bk{display:none!important}.dh2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.hd{grid-template-columns:1.3fr 1fr .8fr 1.1fr;gap:6px;padding:0 9px 2px;font-size:10px;font-weight:600;border-bottom:1px solid var(--ln)}.lb{display:none}.ph{display:flex;gap:14px;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ln);padding-bottom:4px;margin-bottom:4px;font-size:12px}.ph b{font-size:17px}.po{display:grid}h2{font-size:13px;margin:8px 0 4px}.pc{padding:2px 6px}.pt{font-size:10.5px}.pt th,.pt td{padding:2px 4px}summary{font-size:11px;padding:4px 8px}.b{font-size:9.5px;margin-right:2px}}
+</style></head><body><main>
+<h1 data-i="Jathagam|ஜாதகம்"></h1>
+<section class="card" id="fm">
+<div class="row">
+<label><span data-i="Name|பெயர்"></span><input id="nm" data-p="Name|பெயர்"></label>
+<label><span data-i="Date of birth|பிறந்த தேதி"></span><input type="date" id="dt"></label>
+<label><span data-i="Time of birth|பிறந்த நேரம்"></span><input type="time" id="tm"></label>
+<label><span data-i="UTC offset|நேர மண்டலம்"></span><input type="number" step="0.25" id="tz"></label>
+<label><span data-i="Language|மொழி"></span><select id="lg"><option value="t">தமிழ்<option value="e">English</select></label>
+</div>
+<div class="row">
+<label class="cb"><span data-i="Birth place (pick from list or search any city)|பிறந்த இடம் (பட்டியலில் தேர்வு அல்லது எந்த ஊரையும் தேடுக)"></span><input id="q" autocomplete="off" data-p="Search city…|ஊரைத் தேடுக…"><ul id="rs" hidden></ul></label>
+<label><span data-i="Latitude|அட்சரேகை"></span><input id="la" type="number" step="any"></label>
+<label><span data-i="Longitude|தீர்க்கரேகை"></span><input id="lo" type="number" step="any"></label>
+</div>
+<button id="pr" type="button" data-i="Print|அச்சிடு"></button>
+</section>
+<div id="out"></div>
+
+</main>
+<script>
+const $=id=>document.getElementById(id),R=Math.PI/180,n360=x=>((x%360)+360)%360,Y=365.25*864e5,NW=360/27;
+const EN=["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu","Lagna"],TA=["சூரியன்","சந்திரன்","செவ்வாய்","புதன்","குரு","சுக்கிரன்","சனி","ராகு","கேது","லக்னம்"],
+AE=["Su","Mo","Ma","Me","Ju","Ve","Sa","Ra","Ke","As"],AT=["சூ","சந்","செ","பு","கு","சு","சனி","ரா","கே","லக்"],
+SE=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"],
+ST=["மேஷம்","ரிஷபம்","மிதுனம்","கடகம்","சிம்மம்","கன்னி","துலாம்","விருச்சிகம்","தனுசு","மகரம்","கும்பம்","மீனம்"],
+NE="Ashwini,Bharani,Krittika,Rohini,Mrigashira,Ardra,Punarvasu,Pushya,Ashlesha,Magha,Purva Phalguni,Uttara Phalguni,Hasta,Chitra,Swati,Vishakha,Anuradha,Jyeshtha,Mula,Purva Ashadha,Uttara Ashadha,Shravana,Dhanishta,Shatabhisha,Purva Bhadrapada,Uttara Bhadrapada,Revati".split(","),
+NT="அஸ்வினி,பரணி,கார்த்திகை,ரோகிணி,மிருகசீரிடம்,திருவாதிரை,புனர்பூசம்,பூசம்,ஆயில்யம்,மகம்,பூரம்,உத்திரம்,அஸ்தம்,சித்திரை,சுவாதி,விசாகம்,அனுஷம்,கேட்டை,மூலம்,பூராடம்,உத்திராடம்,திருவோணம்,அவிட்டம்,சதயம்,பூரட்டாதி,உத்திரட்டாதி,ரேவதி".split(",");
+const TN=[["Chennai","சென்னை",13.0827,80.2707],["Coimbatore","கோயம்புத்தூர்",11.0168,76.9558],["Madurai","மதுரை",9.9252,78.1198],["Tiruchirappalli","திருச்சிராப்பள்ளி",10.7905,78.7047],["Salem","சேலம்",11.6643,78.146],["Tirunelveli","திருநெல்வேலி",8.7139,77.7567],["Erode","ஈரோடு",11.341,77.7172],["Vellore","வேலூர்",12.9165,79.1325],["Thoothukudi","தூத்துக்குடி",8.7642,78.1348],["Thanjavur","தஞ்சாவூர்",10.787,79.1378],["Dindigul","திண்டுக்கல்",10.3673,77.9803],["Kanyakumari","கன்னியாகுமரி",8.0883,77.5385],["Kumbakonam","கும்பகோணம்",10.9617,79.3881],["Tiruppur","திருப்பூர்",11.1085,77.3411],["Nagercoil","நாகர்கோவில்",8.1833,77.4119],["Karur","கரூர்",10.9601,78.0766],["Cuddalore","கடலூர்",11.748,79.7714],["Hosur","ஓசூர்",12.7409,77.8253],["Kancheepuram","காஞ்சிபுரம்",12.8342,79.7036],["Pudukkottai","புதுக்கோட்டை",10.3833,78.8001],["Sivakasi","சிவகாசி",9.4533,77.8024],["Udhagamandalam (Ooty)","உதகமண்டலம்",11.4102,76.695],["Karaikudi","காரைக்குடி",10.0667,78.7833],["Rameswaram","இராமேஸ்வரம்",9.2876,79.3129],["Namakkal","நாமக்கல்",11.2189,78.1677],["Tiruvannamalai","திருவண்ணாமலை",12.2253,79.0747],["Virudhunagar","விருதுநகர்",9.585,77.957],["Nagapattinam","நாகப்பட்டினம்",10.7672,79.8449],["Ramanathapuram","இராமநாதபுரம்",9.3639,78.8395],["Kovilpatti","கோவில்பட்டி",9.1726,77.8688],["Srivilliputtur","ஸ்ரீவில்லிபுத்தூர்",9.512,77.6333]].sort((a,b)=>a[0].localeCompare(b[0]));
+const EL={Me:[.38709927,.20563593,7.00497902,252.2503235,77.45779628,48.33076593,.00000037,.00001906,-.00594749,149472.67411175,.16047689,-.12534081],Ve:[.72333566,.00677672,3.39467605,181.9790995,131.60246718,76.67984255,.0000039,-.00004107,-.0007889,58517.81538729,.00268329,-.27769418],Ea:[1.00000261,.01671123,-.00001531,100.46457166,102.93768193,0,.00000562,-.00004392,-.01294668,35999.37244981,.32327364,0],Ma:[1.52371034,.0933941,1.84969142,-4.55343205,-23.94362959,49.55953891,.00001847,.00007882,-.00813131,19140.30268499,.44441088,-.29257343],Ju:[5.202887,.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-.00011607,-.00013253,-.00183714,3034.74612775,.21252668,.20469106],Sa:[9.53667594,.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-.0012506,-.00050991,.00193609,1222.49362201,-.41897216,-.28867794]};
+function helio(k,T){const q=EL[k],v=i=>q[i]+q[i+6]*T,e=v(1),I=v(2)*R,O=v(5)*R,om=(v(4)-v(5))*R,M=n360(v(3)-v(4))*R,c=Math.cos,s=Math.sin;let E=M;for(let i=0;i<40;i++)E=M+e*s(E);const x=v(0)*(c(E)-e),y=v(0)*Math.sqrt(1-e*e)*s(E);return[(c(om)*c(O)-s(om)*s(O)*c(I))*x+(-s(om)*c(O)-c(om)*s(O)*c(I))*y,(c(om)*s(O)+s(om)*c(O)*c(I))*x+(-s(om)*s(O)+c(om)*c(O)*c(I))*y,s(I)*(s(om)*x+c(om)*y)]}
+function pos(jd){const T=(jd-2451545)/36525,ay=23.85306+1.39697*T,ea=helio("Ea",T),o=[],s=x=>Math.sin(x*R);
+o[0]=n360(Math.atan2(-ea[1],-ea[0])/R-.0057-23.85306);
+const L=218.3164477+481267.88123421*T,D=297.8501921+445267.1114034*T,M=357.5291092+35999.0502909*T,P=134.9633964+477198.8675055*T,F=93.272095+483202.0175233*T;
+o[1]=n360(L+6.288774*s(P)+1.274027*s(2*D-P)+.658314*s(2*D)+.213618*s(2*P)-.185116*s(M)-.114332*s(2*F)+.058793*s(2*D-2*P)+.057066*s(2*D-M-P)+.053322*s(2*D+P)+.045758*s(2*D-M)-.040923*s(M-P)-.03472*s(D)-.030383*s(M+P)-ay);
+[["Ma",2],["Me",3],["Ju",4],["Ve",5],["Sa",6]].forEach(([k,i])=>{const p=helio(k,T);(o.lat=o.lat||[])[i]=Math.atan2(p[2]-ea[2],Math.hypot(p[0]-ea[0],p[1]-ea[1]))/R;o[i]=n360(Math.atan2(p[1]-ea[1],p[0]-ea[0])/R-23.85306)});
+o[7]=n360(125.0445479-1934.1362891*T-ay);o[8]=n360(o[7]+180);return o}
+function asc(jd,la,lo){const d=jd-2451545,T=d/36525,th=n360(280.46061837+360.98564736629*d+lo)*R,e=(23.439291-.0130042*T)*R;return n360(Math.atan2(Math.cos(th),-(Math.sin(th)*Math.cos(e)+Math.tan(la*R)*Math.sin(e)))/R-23.85306-1.39697*T)}
+const OWN=[[4],[3],[0,7],[2,5],[8,11],[1,6],[9,10]],EX=[0,1,9,5,3,11,6],LORD=[2,5,3,1,0,3,5,2,4,6,6,4],MT=[[4,0,20],[1,3,30],[0,0,12],[5,16,20],[8,0,10],[6,0,15],[10,0,20]],FR=[[1,2,4],[0,3],[0,1,4],[0,5],[0,1,2],[3,6],[3,5]],EY=[[5,6],[],[3],[1],[3,5],[0,1],[0,1,2]];
+const DG=[["Exalted","உச்சம்","g"],["Debilitated","நீசம்","b"],["Moolatrikona","மூலத்திரிகோணம்","g"],["Own sign","ஆட்சி","g"],["Friend’s sign","நட்பு","g"],["Neutral","சமம்","n"],["Enemy’s sign","பகை","b"],["—","—","n"]];
+function dig(i,s,d){if(i>6)return i==7?(s==1?0:s==7?1:s==10?3:7):(s==7?0:s==1?1:7);if(EX[i]==s)return 0;if((EX[i]+6)%12==s)return 1;const m=MT[i];if(m[0]==s&&d>=m[1]&&d<m[2])return 2;if(OWN[i].includes(s))return 3;const l=LORD[s];return FR[i].includes(l)?4:EY[i].includes(l)?6:5}
+const DY=[7,20,6,10,7,18,16,19,17],DO=[8,5,0,1,2,7,4,6,3];
+function dasa(moon,b){const n=Math.floor(moon/NW),k=n%9,fr=(moon%NW)/NW;let st=b-fr*DY[k]*Y;const r=[];for(let j=0;j<9;j++){const q=(k+j)%9,len=DY[q]*Y,bk=[];let bs=st;for(let u=0;u<9;u++){const z=(q+u)%9,bl=len*DY[z]/120;bk.push({p:DO[z],s:bs,e:bs+bl});bs+=bl}r.push({p:DO[q],s:st,e:st+len,b:bk});st+=len}return r}
+let S=null,L="t";
+const T=(e,t)=>L=="e"?e:t,N=i=>T(EN[i],TA[i]),AB=i=>T(AE[i],AT[i]," "),SN=g=>T(SE[g],ST[g]," ");
+const POS=[[0,1],[0,2],[0,3],[1,3],[2,3],[3,3],[3,2],[3,1],[3,0],[2,0],[1,0],[0,0]];
+const esc=x=>String(x).replace(/[&<>"]/g,c=>"&#"+c.charCodeAt(0)+";"),PC=["#d9480f","#4f6d8f","#c92a2a","#2b8a3e","#c98a00","#d6336c","#1c3d99","#6d5f7a","#8a5a2b","#6b2fa8"],NC=i=>`<span style="color:${PC[i]};font-weight:600">${N(i)}</span>`;
+function placeSel(){if(PS)return PS;const q=(+$("la").value).toFixed(2)+", "+(+$("lo").value).toFixed(2);return[q,q]}
+function chart(sg,dgs,ttl,sub){const by=[...Array(12)].map(()=>[]);sg.forEach((g,i)=>by[g].push(i));let s='<svg viewBox="0 0 400 400" role="img" aria-label="'+ttl+'"><rect x="100" y="100" width="200" height="200" class="cell"/>';
+for(let g=0;g<12;g++){const[r,c]=POS[g],x=c*100,y=r*100,nn=by[g].length,fs=[0,15,15,14,12.5,11.5,10.5,9.5,8.5,8,7.5][nn],st=Math.min(fs*1.25,(92-16-fs)/Math.max(nn-1,1));s+=`<rect x="${x}" y="${y}" width="100" height="100" class="${g==sg[9]?"cell lg":"cell"}"/><text x="${x+4}" y="${y+12}" class="sn">${SN(g)}</text>`;by[g].forEach((i,k)=>s+=`<text x="${x+5}" y="${y+16+fs+k*st}" style="fill:${PC[i]}" class="${i==9?"as":"pl"}"><tspan style="font-size:${fs}px">${AB(i)}</tspan>${i<9&&S.rt[i]?`<tspan dy="${-fs*.5}" style="font-size:${fs*.62}px">${T("R","வ")}</tspan>`:""}<tspan dx="${fs*.5}" dy="${i<9&&S.rt[i]?fs*.5:0}" style="font-size:${fs*.72}px;font-weight:400">${dg(dgs[i])}</tspan></text>`)}
+const pl=L=="e"?S.pl[0]:S.pl[1];
+return s+`<text x="200" y="165" class="ct">${esc(S.nm)}</text><text x="200" y="190" class="cs" style="font-size:14px;font-weight:600">${ttl}</text><text x="200" y="212" class="cs">${sub}</text><text x="200" y="232" class="cs">${esc(pl)}</text></svg>`}
+const dg=d=>Math.floor(d)+"°"+String(Math.floor(d%1*60)).padStart(2,"0")+"′",fd=m=>new Date(m).toISOString().slice(0,10),ag=m=>Math.max(0,(m-S.ms)/Y).toFixed(1);
+const ad=(x,y)=>Math.abs((x-y+540)%360-180);
+function cond(i,lon,rs){const b=[],d=lon[i]%30,s=rs[i],B=(e,t,c)=>b.push(`<span class="b ${c}">${T(e,t)}</span>`),wax=(lon[1]-lon[0]+360)%360<180,ben=k=>k==1?wax:k==3||k==4||k==5,mal=k=>k==1?!wax:k==0||k==2||k==6||k==7||k==8;
+if(i>0&&i<7){let o=[0,12,17,14,11,10,15][i];if(S.rt[i]&&i==3)o=12;if(S.rt[i]&&i==5)o=8;if(ad(lon[i],lon[0])<o)B("Asta","அஸ்தம்","b")}
+if(i>1&&i<7)for(let j=2;j<7;j++)if(j!=i&&ad(lon[i],lon[j])<1){const w=S.p.lat[i]>S.p.lat[j];B(w?"Jaya":"Parajaya",w?"ஜெயம்":"பராஜயம்",w?"g":"b")}
+if(d<1||d>=29)B("Sandhi","சந்தி","n");
+if(([3,7,11].includes(s)&&d>=80/3)||([0,4,8].includes(s)&&d<10/3))B("Gandanta","கண்டாந்தம்","b");
+const oc=g=>[0,1,2,3,4,5,6,7,8].filter(k=>k!=i&&rs[k]==g),a=oc((s+11)%12),c=oc((s+1)%12),h=(r,f)=>r.some(f);
+if(h(a,mal)&&h(c,mal)&&!h(a,ben)&&!h(c,ben))B("Papa Kartari","பாப கர்த்தரி","b");else if(h(a,ben)&&h(c,ben)&&!h(a,mal)&&!h(c,mal))B("Shubha Kartari","சுப கர்த்தரி","g");
+return b.join(" ")}
+function draw(){if(!S)return;L=$("lg").value;const lon=[...S.p,S.as],rs=lon.map(x=>Math.floor(x/30)),nv=lon.map(x=>Math.floor(x/(10/3))%12),cur=Date.now();
+const hs=g=>(g-rs[9]+12)%12+1,ord=[...Array(10).keys()].sort((a,b)=>hs(rs[a])-hs(rs[b])||(a==9?-1:b==9?1:0)||lon[a]%30-lon[b]%30);let rows="";for(const i of ord){const s=rs[i],d=lon[i]%30,nk=Math.floor(lon[i]/NW),pd=Math.floor(lon[i]%NW/(NW/4))+1,di=i<9?dig(i,s,d):7,bd=[];
+if(i<9&&di!=7)bd.push(`<span class="b ${DG[di][2]}">${T(DG[di][0],DG[di][1])}</span>`);if(i<9&&s==nv[i])bd.push(`<span class="b g">${T("Vargottama","வர்கோத்தமம்")}</span>`);bd.push(cond(i,lon,rs));
+rows+=`<tr><td>${NC(i)}${i<9&&S.rt[i]?" ᴿ":""}</td><td>${hs(s)}</td><td>${SN(s)}</td><td>${dg(d)}</td><td>${T(NE[nk],NT[nk])} ${pd}</td><td>${SN(nv[i])}</td><td>${bd.filter(Boolean).join(" ")||"—"}</td></tr>`}
+const DS=dasa(lon[1],S.ms).filter(D=>D.e>S.ms);
+const dh=DS.map(D=>{const s0=Math.max(D.s,S.ms),on=cur>=D.s&&cur<D.e;return`<details class="${on?"cur":""}"${on?" open":""}><summary><b>${NC(D.p)}${D.s<S.ms?" "+T("(balance)","(இருப்பு)"):""}</b><span>${fd(s0)}</span><span><i class="lb">${T("Age","வயது")} </i>${ag(s0)}</span><span><i class="lb">${T("to","வரை")} </i>${fd(D.e)}</span></summary>${(cb=>cb?`<div class="po"><span>${T("Bhukti","புக்தி")}: ${NC(cb.p)}</span><span>${fd(Math.max(cb.s,S.ms))}</span><span><i class="lb">${T("Age","வயது")} </i>${ag(Math.max(cb.s,S.ms))}</span><span></span></div>`:"")(on&&D.b.find(b=>cur>=b.s&&cur<b.e))}<div class="bk">${(bl=>[bl.slice(0,5),bl.slice(5)])(D.b.filter(b=>b.e>S.ms)).map(c=>`<table><tr><th>${T("Bhukti","புக்தி")}</th><th>${T("Start","தொடக்கம்")}</th><th>${T("Age","வயது")}</th></tr>${c.map(b=>{const s1=Math.max(b.s,S.ms);return`<tr class="${cur>=b.s&&cur<b.e?"cur":""}"><td>${NC(b.p)}</td><td>${fd(s1)}</td><td>${ag(s1)}</td></tr>`}).join("")}</table>`).join("")}</div></details>`}).join("");
+const sub=$("dt").value.split("-").reverse().join("-")+" "+$("tm").value;
+const[dd,tm]=sub.split(" "),pl=L=="e"?S.pl[0]:S.pl[1];$("out").innerHTML=`<div class="ph"><b>${esc(S.nm)}</b><span>${T("Date","தேதி")}: ${dd}</span><span>${T("Time","நேரம்")}: ${tm}</span><span>${T("Place","இடம்")}: ${esc(pl)}</span></div><h2>${T("Charts","சக்கரங்கள்")}</h2><div class="charts">${chart(rs,lon.map(x=>x%30),T("Rasi","ராசி"),sub)}${chart(nv,lon.map(x=>x%(10/3)*9),T("Navamsa","நவாம்சம்"),sub)}</div>
+<h2>${T("Planets & dignity","கிரக நிலை & பலம்")}</h2><div class="card pc"><table class="pt"><tr><th>${T("Planet","கிரகம்")}</th><th>${T("House","பாவம்")}</th><th>${T("Rasi","ராசி")}</th><th>${T("Degree","பாகை")}</th><th>${T("Nakshatra · Pada","நட்சத்திரம் · பாதம்")}</th><th>${T("Navamsa","நவாம்சம்")}</th><th>${T("Dignity & conditions","பலம் & நிலைகள்")}</th></tr>${rows}</table></div>
+<h2>${T("Vimsottari Dasa","விம்சோத்தரி தசை")}</h2><div class="dh2"><div class="hd"><span>${T("Dasa","தசை")}</span><span>${T("Start","தொடக்கம்")}</span><span>${T("Age","வயது")}</span><span>${T("End","முடிவு")}</span></div><div class="hd"><span>${T("Dasa","தசை")}</span><span>${T("Start","தொடக்கம்")}</span><span>${T("Age","வயது")}</span><span>${T("End","முடிவு")}</span></div></div><div class="dl">${dh}</div>`}
+function run(){const[y,m,d]=$("dt").value.split("-").map(Number),[h,mi]=$("tm").value.split(":").map(Number),tz=+$("tz").value,la=+$("la").value,lo=+$("lo").value;if(!y||isNaN(h)||$("la").value===""||$("lo").value===""){$("out").textContent="தேதி, நேரம், இடம் உள்ளிடவும் · Enter date, time and place.";return}
+const ms=Date.UTC(y,m-1,d,h,mi)-tz*36e5,jd=ms/864e5+2440587.5,p=pos(jd),a=pos(jd+.5),b=pos(jd-.5);
+S={nm:$("nm").value.trim(),pl:placeSel(),ms,p,as:asc(jd,la,lo),rt:p.map((x,i)=>i>6||(a[i]-b[i]+540)%360-180<0)};draw()}
+let PS=null,TZN=null,EXT=[],SS="",tmr;
+function off(z){try{const d=new Date(($("dt").value||"2000-01-01")+"T"+($("tm").value||"12:00")+"Z"),p=new Intl.DateTimeFormat("en",{timeZone:z,timeZoneName:"longOffset"}).formatToParts(d).find(x=>x.type=="timeZoneName").value,m=p.match(/([+-])(\d\d):?(\d\d)?/);return m?(m[1]=="-"?-1:1)*(+m[2]+(+m[3]||0)/60):0}catch(e){return 5.5}}
+function I18(){L=$("lg").value;document.querySelectorAll("[data-i]").forEach(e=>{const[a,b]=e.dataset.i.split("|");e.textContent=L=="e"?a:b});document.querySelectorAll("[data-p]").forEach(e=>{const[a,b]=e.dataset.p.split("|");e.placeholder=L=="e"?a:b})}
+const ok=()=>$("dt").value&&$("tm").value&&$("la").value!==""&&$("lo").value!==""&&$("tz").value!=="";
+function auto(){if(ok())run()}
+function pick(en,ta,la,lo,tz,tzn){PS=[en,ta];TZN=tzn||null;$("q").value=L=="e"?en:ta;$("la").value=la;$("lo").value=lo;$("tz").value=tz;$("rs").hidden=true;auto()}
+function show(){if(document.activeElement!=$("q"))return;const ul=$("rs"),raw=$("q").value.trim().toLowerCase(),q=PS&&(raw==PS[0].toLowerCase()||raw==PS[1])?"":raw;ul.innerHTML="";
+const add=(t,f,c)=>{const li=document.createElement("li");li.textContent=t;if(c)li.className=c;else li.onpointerdown=e=>{e.preventDefault();f()};ul.append(li)};
+TN.filter(c=>!q||c[0].toLowerCase().includes(q)||c[1].includes(q)).forEach(c=>add(L=="e"?c[0]:c[1],()=>pick(c[0],c[1],c[2],c[3],5.5)));
+if(SS=="load")add(T("Searching other places…","மற்ற இடங்களைத் தேடுகிறது…"),0,"gh");
+if(SS=="fail")add(T("Online search unavailable here. Pick from the list or enter coordinates.","இணையத் தேடல் இங்கு இயங்கவில்லை. பட்டியலிலிருந்து தேர்வு செய்யவும்."),0,"gh");
+if(EXT.length){add(T("Other places","மற்ற இடங்கள்"),0,"gh");EXT.forEach(x=>add([x.name,x.admin1,x.country].filter(Boolean).join(", "),()=>pick(x.name,x.name,x.latitude,x.longitude,off(x.timezone),x.timezone)))}
+ul.hidden=!ul.children.length}
+async function search(){const v=$("q").value.trim();SS="load";show();try{const j=await(await fetch("https://geocoding-api.open-meteo.com/v1/search?count=8&language="+(L=="e"?"en":"ta")+"&name="+encodeURIComponent(v))).json();if(v!=$("q").value.trim())return;EXT=(j.results||[]).filter(x=>!(x.admin1=="Tamil Nadu"&&TN.some(c=>c[0].toLowerCase().split(" ")[0]==x.name.toLowerCase().split(" ")[0])));SS=""}catch(e){EXT=[];SS="fail"}show()}
+const qi=$("q");qi.onfocus=()=>{qi.select();show()};qi.onblur=()=>{$("rs").hidden=true};
+qi.oninput=()=>{EXT=[];SS="";show();clearTimeout(tmr);if(qi.value.trim().length>=3)tmr=setTimeout(search,350)};
+qi.onkeydown=e=>{if(e.key=="Escape")$("rs").hidden=true;if(e.key=="Enter"){const f=$("rs").querySelector("li:not(.gh)");if(f){e.preventDefault();f.onpointerdown({preventDefault(){}})}}};
+["dt","tm"].forEach(id=>$(id).onchange=()=>{if(TZN)$("tz").value=off(TZN);auto()});
+$("tz").onchange=()=>{TZN=null;auto()};
+["la","lo"].forEach(id=>$(id).onchange=()=>{PS=null;auto()});
+$("nm").oninput=()=>{if(S){S.nm=$("nm").value.trim();draw()}};
+$("lg").onchange=()=>{I18();if(PS)$("q").value=L=="e"?PS[0]:PS[1];draw()};
+$("pr").onclick=()=>window.print();window.onbeforeprint=()=>document.querySelectorAll("details.cur").forEach(d=>d.open=true);
+const nw=new Date(),zz=x=>String(x).padStart(2,"0");$("dt").value=nw.getFullYear()+"-"+zz(nw.getMonth()+1)+"-"+zz(nw.getDate());$("tm").value=zz(nw.getHours())+":"+zz(nw.getMinutes());
+I18();pick("Chennai","சென்னை",13.0827,80.2707,5.5);
+</script></body></html>
