@@ -882,14 +882,15 @@ if(Q){
 const QN={Su:'Sun',Mo:'Moon',Ma:'Mars',Me:'Mercury',Ju:'Jupiter',Ve:'Venus',Sa:'Saturn',Ra:'Rahu',Ke:'Ketu'},QP=Object.keys(QN),QAS={Ma:[4,7,8],Ju:[5,7,9],Sa:[3,7,10],Ra:[5,7,9],Ke:[5,7,9]},FC={},
 getF=e=>{const key=kk(e)+e.t+e.la+e.lo+e.tz;if(FC[key])return FC[key];const [y,mo,d]=e.d.split('-').map(Number),[hh,mi]=e.t.split(':').map(Number),{P,asc}=calc(jd(y,mo,d,hh+mi/60-e.tz),e.la,e.lo),LS=Math.floor(asc/30),s={},H={};
 for(const k of QP){s[k]=Math.floor(P[k]/30);H[k]=(s[k]-LS+12)%12+1}
-let yo=[];try{yo=[...new Set([...YD(P,asc,QP,QN).matchAll(/<b>([^<]*(?:Yoga|Dosha|Bhanga)[^<]*)<\/b>/g)].map(m=>m[1].trim()))]}catch(x){}
-return FC[key]={s,H,LS,yo}},
-allYo=()=>[...new Set(L.flatMap(e=>getF(e).yo))].sort().map(y=>[y,y]),
+let yg=[];try{const hy=YD(P,asc,QP,QN).split('<h3>Doshas</h3>');[[hy[0],'Yoga'],[hy[1]||'','Dosha']].forEach(z=>{for(const m of z[0].matchAll(/<li>([\s\S]*?)<\/li>/g)){const nm=(m[1].match(/<b>([^<]*)<\/b>/)||[])[1];if(!nm)continue;const tx=m[1].replace(/<[^>]+>/g,'').trim(),ds=tx.includes(' — ')?tx.slice(tx.indexOf(' — ')+3):tx;yg.push({n:nm.trim(),k:/running now/.test(nm)?'Transit':z[1],d:ds,p:QP.filter(k=>new RegExp('\\b'+QN[k]+'\\b').test(ds))})}})}catch(x){}
+return FC[key]={s,H,LS,yg}},
+allYo=()=>[...new Set(L.flatMap(e=>getF(e).yg.map(y=>y.n)))].filter(n=>!/running now/.test(n)).sort().map(y=>[y,y]),
 ord1=h=>h+(['st','nd','rd'][h-1]||'th'),
-QT=[['cj','Conjunction (same sign)'],['as','Aspect (graha drishti)'],['ph','Planet in house'],['ps','Planet in sign'],['lg','Lagna sign'],['dg','Planet dignity'],['yo','Yoga or dosha present'],['gp','Group']],
-pl=QP.map(k=>[k,QN[k]]),pl7=pl.slice(0,7),hsl=[...Array(12)].map((_,i)=>[String(i+1),'House '+(i+1)]),sgs=SG.map((n,i)=>[String(i),n]),tg=pl.concat(hsl.map(h=>['H'+h[0],h[1]])),dgs=[['own','Own sign'],['exalted','Exalted'],['debilitated','Debilitated']],
-opts=(t,w)=>({cj:[pl,pl],as:[pl,tg],ph:[pl,hsl],ps:[pl,sgs],lg:[sgs,null],dg:[pl7,dgs],yo:[allYo(),null],gp:[GO.map(g=>[g,g]),null]})[t][w],
-dflt=t=>({cj:{t,a:'Su',b:'Me'},as:{t,a:'Ma',b:'H7'},ph:{t,a:'Su',b:'1'},ps:{t,a:'Su',b:'0'},lg:{t,a:'0'},dg:{t,a:'Su',b:'exalted'},yo:{t,a:(allYo()[0]||[''])[0]},gp:{t,a:'Politician'}})[t],
+QT=[['cj','Conjunction (same sign)'],['as','Aspect (graha drishti)'],['ph','Planet in house'],['ps','Planet in sign'],['lg','Lagna sign'],['dg','Planet dignity'],['hld','House lord: dignity'],['hlp','House lord: placed in house'],['hlc','House lord: conjunct planet'],['yo','Yoga or dosha (kind, name, planet, sign)'],['gp','Group']],
+pl=QP.map(k=>[k,QN[k]]),pl7=pl.slice(0,7),hsl=[...Array(12)].map((_,i)=>[String(i+1),'House '+(i+1)]),sgs=SG.map((n,i)=>[String(i),n]),tg=pl.concat(hsl.map(h=>['H'+h[0],h[1]])),dgs=[['own','Own sign'],['exalted','Exalted'],['debilitated','Debilitated']],hlo=[...Array(12)].map((_,i)=>[String(i+1),ord1(i+1)+' lord'+(i==0?' (Lagna lord)':'')]),
+yk=[['Any','Any natal yoga or dosha'],['Yoga','Yoga'],['Dosha','Dosha'],['Transit','Running now: Sade Sati / Dhaiya']],ypl=[['Any','Mentions any planet']].concat(pl),ysg=[['Any','In any sign']].concat(SG.map(n=>[n,n])),
+opts=(t,w)=>({cj:[pl,pl],as:[pl,tg],ph:[pl,hsl],ps:[pl,sgs],lg:[sgs,null],dg:[pl7,dgs],hld:[hlo,dgs],hlp:[hlo,hsl],hlc:[hlo,pl],yo:[yk,[['Any','Any name']].concat(allYo()),ypl,ysg],gp:[GO.map(g=>[g,g]),null]})[t][w],
+dflt=t=>({cj:{t,a:'Su',b:'Me'},as:{t,a:'Ma',b:'H7'},ph:{t,a:'Su',b:'1'},ps:{t,a:'Su',b:'0'},lg:{t,a:'0'},dg:{t,a:'Su',b:'exalted'},hld:{t,a:'10',b:'exalted'},hlp:{t,a:'10',b:'1'},hlc:{t,a:'9',b:'Ju'},yo:{t,a:'Any',b:'Any',c:'Any',d:'Any'},gp:{t,a:'Politician'}})[t],
 sel=(i,k,list,v)=>'<select data-i="'+i+'" data-k="'+k+'">'+list.map(o=>'<option value="'+ea(o[0])+'"'+(o[0]==v?' selected':'')+'>'+ea(o[1])+'</option>').join('')+'</select>',
 mt=(f,F,e)=>{const a=f.a,b=f.b;
 if(f.t=='cj')return a!=b&&F.s[a]==F.s[b]?QN[a]+' + '+QN[b]+' in '+SG[F.s[a]]:null;
@@ -898,10 +899,14 @@ if(f.t=='ph')return F.H[a]==+b?QN[a]+' in house '+b:null;
 if(f.t=='ps')return F.s[a]==+b?QN[a]+' in '+SG[+b]:null;
 if(f.t=='lg')return F.LS==+a?'Lagna '+SG[+a]:null;
 if(f.t=='dg'){const sg=F.s[a];return(b=='own'&&OWN[a]&&OWN[a].includes(sg)&&EX[a]!=sg||b=='exalted'&&EX[a]==sg||b=='debilitated'&&DB[a]===sg)?QN[a]+' '+b+' in '+SG[sg]:null}
-if(f.t=='yo')return F.yo.includes(a)?a:null;
+if(f.t=='hld'||f.t=='hlp'||f.t=='hlc'){const lp=LORD[(F.LS+ +a-1)%12],sg=F.s[lp],nm=ord1(+a)+' lord '+QN[lp];
+if(f.t=='hld')return(b=='own'&&OWN[lp]&&OWN[lp].includes(sg)&&EX[lp]!=sg||b=='exalted'&&EX[lp]==sg||b=='debilitated'&&DB[lp]===sg)?nm+' '+b+' in '+SG[sg]:null;
+if(f.t=='hlp')return F.H[lp]==+b?nm+' in house '+b:null;
+return b!=lp&&F.s[b]==sg?nm+' with '+QN[b]+' in '+SG[sg]:null}
+if(f.t=='yo'){const m=F.yg.filter(y=>(f.a=='Any'?y.k!='Transit':y.k==f.a)&&(f.b=='Any'||y.n==f.b)&&(f.c=='Any'||y.p.includes(f.c))&&(f.d=='Any'||y.d.includes(f.d)));return m.length?m.slice(0,2).map(y=>y.n+': '+y.d.slice(0,130)).join(' | ')+(m.length>2?' (+'+(m.length-2)+' more)':''):null}
 if(f.t=='gp')return(GO.includes(e.g)?e.g:'Common people')==a?'Group: '+a:null;return null};
 let QS_=[{t:'cj',a:'Su',b:'Me'}],QO=false,QR='';
-const rows=()=>QS_.map((f,i)=>'<div class="qr">'+sel(i,'t',QT,f.t)+sel(i,'a',opts(f.t,0),f.a)+(opts(f.t,1)?sel(i,'b',opts(f.t,1),f.b):'')+'<button type="button" data-q="del" data-i="'+i+'" aria-label="Remove filter">&times;</button></div>').join('');
+const rows=()=>QS_.map((f,i)=>'<div class="qr">'+sel(i,'t',QT,f.t)+['a','b','c','d'].map((k,w)=>opts(f.t,w)?sel(i,k,opts(f.t,w),f[k]):'').join('')+'<button type="button" data-q="del" data-i="'+i+'" aria-label="Remove filter">&times;</button></div>').join('');
 function qdraw(){Q.hidden=false;if(!QS_.length)QS_=[dflt('cj')];Q.innerHTML='<details class="qd"'+(QO?' open':'')+'><summary><span>Query horoscopes (conjunction, aspect, yoga and more)</span></summary><div class="qb">'+rows()+'<div class="qa"><button type="button" data-q="add">+ Add filter</button><button type="button" data-q="go">Search</button><button type="button" data-q="clr">Clear</button><span class="n">All filters must match.</span></div><div id="qres">'+QR+'</div></div></details>'}
 function qrun(){QO=true;const res=[];L.forEach((e,i)=>{const F=getF(e),rs=[];for(const f of QS_){const r=mt(f,F,e);if(!r)return;rs.push(r)}res.push([e,i,rs])});
 QR='<div class="gh2"><b>'+res.length+' of '+L.length+' match</b></div><div class="g">'+res.map(z=>`<div class="ar"><button type="button" class="ab" data-r="${z[1]}"><b>${ea(z[0].n||'(no name)')}</b> <i>${ea(GO.includes(z[0].g)?z[0].g:'Common people')}</i><br>${ea(z[2].join('; '))}</button></div>`).join('')+'</div>';qdraw()}
