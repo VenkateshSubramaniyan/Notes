@@ -93,6 +93,17 @@ details.oc[open]>summary{margin-bottom:8px}
 #adm details.ag>summary i{color:var(--mu);font-weight:normal;font-style:normal;margin-left:4px}
 #adm .ah button{margin-top:0}
 #adm select{width:auto;margin:0;padding:3px 6px;font-size:.78rem}
+#qry{padding:8px 10px}
+#qry details>summary,#qry details[open]>summary{display:block;min-width:0;grid-template-columns:none;background:none;border:0;padding:2px 0;font-size:.9rem;font-weight:bold;color:var(--ac);cursor:pointer}
+#qry .qr{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap;align-items:center}
+#qry select{width:auto;margin:0;padding:4px 6px;font-size:.82rem;max-width:46%}
+#qry button{width:auto;margin:0 6px 0 0;padding:4px 12px;font-size:.82rem}
+#qry .qa{margin:6px 0;display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+#qry .gh2{margin:6px 0 4px;font-size:.85rem}
+#qry .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:5px}
+#qry .ar{position:relative}
+#qry .ab{width:100%;margin:0;text-align:left;background:var(--bg);color:var(--fg);border:1px solid var(--bd);padding:4px 8px;font-weight:normal;font-size:.76rem;line-height:1.3}
+#qry .ab i{color:var(--mu);font-style:normal}
 /* chart peek */
 #pk{max-height:75vh;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;position:fixed;left:env(safe-area-inset-left,0px);top:50%;transform:translateY(-50%);width:26px;margin:0;padding:12px 0;border-radius:0 8px 8px 0;writing-mode:vertical-rl;letter-spacing:.06em;font-size:.85rem;z-index:60;box-shadow:2px 2px 8px rgba(0,0,0,.2)}
 #pk[aria-expanded=true]{background:var(--fg)}
@@ -109,6 +120,7 @@ details.oc[open]>summary{margin-bottom:8px}
 <h1>South Indian Chart Generator</h1>
 <p class="s">Rasi and Navamsa charts, sidereal (Lahiri), from date, time and place.</p>
 <div class="card" id="adm" hidden></div>
+<div class="card" id="qry" hidden></div>
 <div class="card"><div class="f">
 <div><label>Name (optional)</label><input id="nm"></div>
 <div><label>Birth year (type to search)</label><input id="yr" list="yl" inputmode="numeric" placeholder="e.g. 1990" autocomplete="off"></div>
@@ -864,5 +876,39 @@ else if(D.a=='save'){if(!$('dt').value){alert('Enter a date first');return}L.pus
 else if(D.a=='open'){GO.forEach(g=>OG.add(g));draw()}
 else if(D.a=='shut'){OG.clear();draw()}
 else if(D.a=='reset'){L=seed();G=[];sv();draw()}};
+function ld1(e){$('nm').value=e.n;$('dt').value=e.d;$('yr').value=e.d.slice(0,4);$('tm').value=e.t;const o=[...$('pl').options].find(x=>x.textContent==e.p);$('pl').value=o?o.value:'c';if($('pl').onchange)$('pl').onchange();$('la').value=e.la;$('lo').value=e.lo;$('tz').value=e.tz;gen();peek();vw();if($('out').scrollIntoView)$('out').scrollIntoView({behavior:'smooth'})}
+const Q=$('qry');
+if(Q){
+const QN={Su:'Sun',Mo:'Moon',Ma:'Mars',Me:'Mercury',Ju:'Jupiter',Ve:'Venus',Sa:'Saturn',Ra:'Rahu',Ke:'Ketu'},QP=Object.keys(QN),QAS={Ma:[4,7,8],Ju:[5,7,9],Sa:[3,7,10],Ra:[5,7,9],Ke:[5,7,9]},FC={},
+getF=e=>{const key=kk(e)+e.t+e.la+e.lo+e.tz;if(FC[key])return FC[key];const [y,mo,d]=e.d.split('-').map(Number),[hh,mi]=e.t.split(':').map(Number),{P,asc}=calc(jd(y,mo,d,hh+mi/60-e.tz),e.la,e.lo),LS=Math.floor(asc/30),s={},H={};
+for(const k of QP){s[k]=Math.floor(P[k]/30);H[k]=(s[k]-LS+12)%12+1}
+let yo=[];try{yo=[...new Set([...YD(P,asc,QP,QN).matchAll(/<b>([^<]*(?:Yoga|Dosha|Bhanga)[^<]*)<\/b>/g)].map(m=>m[1].trim()))]}catch(x){}
+return FC[key]={s,H,LS,yo}},
+allYo=()=>[...new Set(L.flatMap(e=>getF(e).yo))].sort().map(y=>[y,y]),
+ord1=h=>h+(['st','nd','rd'][h-1]||'th'),
+QT=[['cj','Conjunction (same sign)'],['as','Aspect (graha drishti)'],['ph','Planet in house'],['ps','Planet in sign'],['lg','Lagna sign'],['dg','Planet dignity'],['yo','Yoga or dosha present'],['gp','Group']],
+pl=QP.map(k=>[k,QN[k]]),pl7=pl.slice(0,7),hsl=[...Array(12)].map((_,i)=>[String(i+1),'House '+(i+1)]),sgs=SG.map((n,i)=>[String(i),n]),tg=pl.concat(hsl.map(h=>['H'+h[0],h[1]])),dgs=[['own','Own sign'],['exalted','Exalted'],['debilitated','Debilitated']],
+opts=(t,w)=>({cj:[pl,pl],as:[pl,tg],ph:[pl,hsl],ps:[pl,sgs],lg:[sgs,null],dg:[pl7,dgs],yo:[allYo(),null],gp:[GO.map(g=>[g,g]),null]})[t][w],
+dflt=t=>({cj:{t,a:'Su',b:'Me'},as:{t,a:'Ma',b:'H7'},ph:{t,a:'Su',b:'1'},ps:{t,a:'Su',b:'0'},lg:{t,a:'0'},dg:{t,a:'Su',b:'exalted'},yo:{t,a:(allYo()[0]||[''])[0]},gp:{t,a:'Politician'}})[t],
+sel=(i,k,list,v)=>'<select data-i="'+i+'" data-k="'+k+'">'+list.map(o=>'<option value="'+ea(o[0])+'"'+(o[0]==v?' selected':'')+'>'+ea(o[1])+'</option>').join('')+'</select>',
+mt=(f,F,e)=>{const a=f.a,b=f.b;
+if(f.t=='cj')return a!=b&&F.s[a]==F.s[b]?QN[a]+' + '+QN[b]+' in '+SG[F.s[a]]:null;
+if(f.t=='as'){const ts=b[0]=='H'?(F.LS+ +b.slice(1)-1)%12:F.s[b];if(b==a||ts==F.s[a])return null;const d=(ts-F.s[a]+12)%12+1;return(QAS[a]||[7]).includes(d)?QN[a]+' aspects '+(b[0]=='H'?'house '+b.slice(1):QN[b])+' ('+ord1(d)+' sight)':null}
+if(f.t=='ph')return F.H[a]==+b?QN[a]+' in house '+b:null;
+if(f.t=='ps')return F.s[a]==+b?QN[a]+' in '+SG[+b]:null;
+if(f.t=='lg')return F.LS==+a?'Lagna '+SG[+a]:null;
+if(f.t=='dg'){const sg=F.s[a];return(b=='own'&&OWN[a]&&OWN[a].includes(sg)&&EX[a]!=sg||b=='exalted'&&EX[a]==sg||b=='debilitated'&&DB[a]===sg)?QN[a]+' '+b+' in '+SG[sg]:null}
+if(f.t=='yo')return F.yo.includes(a)?a:null;
+if(f.t=='gp')return(GO.includes(e.g)?e.g:'Common people')==a?'Group: '+a:null;return null};
+let QS_=[{t:'cj',a:'Su',b:'Me'}],QO=false,QR='';
+const rows=()=>QS_.map((f,i)=>'<div class="qr">'+sel(i,'t',QT,f.t)+sel(i,'a',opts(f.t,0),f.a)+(opts(f.t,1)?sel(i,'b',opts(f.t,1),f.b):'')+'<button type="button" data-q="del" data-i="'+i+'" aria-label="Remove filter">&times;</button></div>').join('');
+function qdraw(){Q.hidden=false;if(!QS_.length)QS_=[dflt('cj')];Q.innerHTML='<details class="qd"'+(QO?' open':'')+'><summary><span>Query horoscopes (conjunction, aspect, yoga and more)</span></summary><div class="qb">'+rows()+'<div class="qa"><button type="button" data-q="add">+ Add filter</button><button type="button" data-q="go">Search</button><button type="button" data-q="clr">Clear</button><span class="n">All filters must match.</span></div><div id="qres">'+QR+'</div></div></details>'}
+function qrun(){QO=true;const res=[];L.forEach((e,i)=>{const F=getF(e),rs=[];for(const f of QS_){const r=mt(f,F,e);if(!r)return;rs.push(r)}res.push([e,i,rs])});
+QR='<div class="gh2"><b>'+res.length+' of '+L.length+' match</b></div><div class="g">'+res.map(z=>`<div class="ar"><button type="button" class="ab" data-r="${z[1]}"><b>${ea(z[0].n||'(no name)')}</b> <i>${ea(GO.includes(z[0].g)?z[0].g:'Common people')}</i><br>${ea(z[2].join('; '))}</button></div>`).join('')+'</div>';qdraw()}
+Q.onchange=ev=>{const el=ev.target,d=el.dataset;if(!d||d.k==null)return;const i=+d.i;if(d.k=='t')QS_[i]=dflt(el.value);else QS_[i][d.k]=el.value;qdraw()};
+Q.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const D=b.dataset;
+if(D.q=='add'){QS_.push(dflt('cj'));qdraw()}else if(D.q=='del'){QS_.splice(+D.i,1);qdraw()}else if(D.q=='clr'){QS_=[dflt('cj')];QR='';qdraw()}else if(D.q=='go')qrun();else if(D.r!=null)ld1(L[+D.r])};
+if(Q.addEventListener)Q.addEventListener('toggle',e=>{if(e.target.className=='qd')QO=e.target.open},true);
+qdraw()}
 draw()})();
 </script></body></html>
