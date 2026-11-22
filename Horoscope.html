@@ -35,7 +35,8 @@ details.cur{border-width:2px}details>.bk{padding:0 10px 10px}tr.cur td{backgroun
 .cb{position:relative;flex:2 1 280px}#rs{position:absolute;top:100%;left:0;right:0;z-index:20;max-height:260px;overflow:auto;list-style:none;margin:2px 0 0;padding:0;background:var(--card);border:1px solid var(--ln);border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 #rs li{padding:7px 10px;cursor:pointer;color:var(--ink);font-size:14px}#rs li:hover{background:var(--tint)}#rs li.gh{font-size:11.5px;color:var(--mut);background:var(--bg);cursor:default}
 .sx{margin-top:14px}.sx summary{display:block;font-weight:600;cursor:pointer}.sx p{font-size:14px;margin:8px 0}.sx fieldset{border:1px solid color-mix(in srgb,var(--ln) 40%,transparent);border-radius:8px;margin:8px 0;padding:4px 10px 6px}.sx legend{color:var(--ac);font-weight:600;font-size:13px;padding:0 4px}.op{display:flex;flex-direction:row;gap:8px;align-items:flex-start;flex:none;color:var(--ink);font-size:14px;padding:3px 0}.op input{margin-top:4px}#lqr{margin-top:8px;padding:10px;background:var(--tint);border-radius:8px;font-size:14px}#lqset{margin-top:6px}
-#pr{background:transparent;color:var(--ac);margin-left:8px}.ph{display:none}.dh2{display:none}.lb{font-style:normal}
+#st{font-size:13px;color:var(--mut);margin-left:8px}
+#pr,#im,#dl{background:transparent;color:var(--ac);margin-left:8px}.ph{display:none}.dh2{display:none}.lb{font-style:normal}
 .pc{padding:6px 10px}.pt{font-size:13px;table-layout:auto}.pt th,.pt td{white-space:normal;padding:6px 6px;vertical-align:top}.pt td:last-child{width:34%}
 .dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:8px}.dl details{margin:0}.po{display:none;grid-template-columns:1.3fr 1fr .8fr 1.1fr;gap:6px;padding:2px 10px 8px;font-size:13px}
 @media(max-width:640px){.pt{font-size:12px}.pt th,.pt td{padding:5px 3px}.dl{grid-template-columns:1fr}}
@@ -55,7 +56,7 @@ details.cur{border-width:2px}details>.bk{padding:0 10px 10px}tr.cur td{backgroun
 <label><span data-i="Latitude|அட்சரேகை"></span><input id="la" type="number" step="any"></label>
 <label><span data-i="Longitude|தீர்க்கரேகை"></span><input id="lo" type="number" step="any"></label>
 </div>
-<button id="go" type="button" data-i="Calculate|கணக்கிடு"></button> <button id="pr" type="button" data-i="Print|அச்சிடு"></button>
+<button id="go" type="button" data-i="Calculate|கணக்கிடு"></button> <button id="pr" type="button" data-i="Print|அச்சிடு"></button> <button id="im" type="button" data-i="Save as JPEG|JPEG ஆக சேமி"></button><button id="dl" type="button" data-i="Download HTML|HTML பதிவிறக்கு"></button><span id="st"></span>
 </section>
 <div id="out"></div>
 
@@ -180,5 +181,47 @@ $("go").onclick=()=>{if(ok())run();else $("out").textContent=T("Enter date, time
 const nw=new Date(),zz=x=>String(x).padStart(2,"0");$("dt").value=nw.getFullYear()+"-"+zz(nw.getMonth()+1)+"-"+zz(nw.getDate());$("tm").value=zz(nw.getHours())+":"+zz(nw.getMinutes());
 $("out").addEventListener("change",e=>{const m=/^q(\d)$/.exec(e.target.name||"");if(m){QA[+m[1]]=+e.target.value;lq()}});
 $("out").addEventListener("click",e=>{if(e.target.id=="lqset"){const x=new Date(+e.target.dataset.t+(+$("tz").value)*36e5).toISOString();$("dt").value=x.slice(0,10);$("tm").value=x.slice(11,16);if(TZN)$("tz").value=off(TZN);auto()}});
+async function jpg(){const sc=2,W=800,cv=document.createElement("canvas");cv.width=W*sc;cv.height=1800*sc;const ctx=cv.getContext("2d");ctx.scale(sc,sc);ctx.fillStyle="#fff";ctx.fillRect(0,0,W,1800);L=$("lg").value;
+const INK="#1d1a3a",MUT="#6a6688",LN="#a8902f",TINT="#efe3b8",COL={g:"#17724a",b:"#b3322e",n:MUT},F='"Noto Serif Tamil",Georgia,serif';
+if(document.fonts)try{await document.fonts.load('600 12px "Noto Serif Tamil"',"அஆ");await document.fonts.load('400 12px "Noto Serif Tamil"',"அஆ")}catch(e){}
+const fo=(z,w)=>(w||400)+" "+z+"px "+F,tw=(t,z,w)=>{ctx.font=fo(z,w);return ctx.measureText(t).width},tx=(t,x,y,z,w,c,a)=>{ctx.font=fo(z,w);ctx.fillStyle=c||INK;ctx.textAlign=a||"left";ctx.textBaseline="alphabetic";ctx.fillText(t,x,y)},hl=(x1,x2,y,c,w)=>{ctx.strokeStyle=c||LN;ctx.lineWidth=w||1;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke()};
+const lon=[...S.p,S.as],rs=lon.map(x=>Math.floor(x/30)),nv=lon.map(x=>Math.floor(x/(10/3))%12),cur=Date.now(),pl=L=="e"?S.pl[0]:S.pl[1],dd=$("dt").value.split("-").reverse().join("-"),tt=$("tm").value;
+function cc(x0,y0,z,sg,dgs,ttl){const k=z/400,by=[...Array(12)].map(()=>[]);sg.forEach((g,i)=>by[g].push(i));ctx.strokeStyle=LN;ctx.lineWidth=1.5*k;ctx.strokeRect(x0+100*k,y0+100*k,200*k,200*k);
+for(let g=0;g<12;g++){const[r,c]=POS[g],x=x0+c*100*k,y=y0+r*100*k;if(g==sg[9]){ctx.fillStyle=TINT;ctx.fillRect(x,y,100*k,100*k)}ctx.strokeStyle=LN;ctx.lineWidth=1.5*k;ctx.strokeRect(x,y,100*k,100*k);tx(SN(g),x+4*k,y+12*k,9*k,400,MUT);
+const nn=by[g].length,fs=[0,15,15,14,12.5,11.5,10.5,9.5,8.5,8,7.5][nn],st=Math.min(fs*1.25,(92-16-fs)/Math.max(nn-1,1));
+by[g].forEach((i,j)=>{const px=x+5*k,py=y+(16+fs+j*st)*k,w=i==9?700:600;tx(AB(i),px,py,fs*k,w,PC[i]);let ex=px+tw(AB(i),fs*k,w);if(i<9&&S.rt[i]){tx(T("R","வ"),ex,py-fs*.5*k,fs*.62*k,600,PC[i]);ex+=tw(T("R","வ"),fs*.62*k,600)}tx(dg(dgs[i]),ex+fs*.5*k,py,fs*.72*k,400,PC[i])})}
+tx(S.nm||"",x0+200*k,y0+165*k,15*k,700,INK,"center");tx(ttl,x0+200*k,y0+190*k,14*k,700,MUT,"center");tx(dd+" "+tt,x0+200*k,y0+212*k,11*k,400,MUT,"center");tx(pl,x0+200*k,y0+232*k,11*k,400,MUT,"center")}
+let y=34;tx(S.nm||"",20,y,17,700);tx(T("Date","தேதி")+": "+dd+"     "+T("Time","நேரம்")+": "+tt+"     "+T("Place","இடம்")+": "+pl,780,y,12,400,INK,"right");hl(20,780,y+8,LN,2);
+y+=26;tx(T("Charts","சக்கரங்கள்"),20,y,13,700);y+=8;cc(20,y,370,rs,lon.map(x=>x%30),T("Rasi","ராசி"));cc(410,y,370,nv,lon.map(x=>x%(10/3)*9),T("Navamsa","நவாம்சம்"));y+=370+24;
+tx(T("Planets & dignity","கிரக நிலை & பலம்"),20,y,13,700);y+=10;
+const cw=[115,50,95,65,150,95,190],cx=[];cw.reduce((a,w,i)=>(cx[i]=20+a,a+w),0);
+[T("Planet","கிரகம்"),T("House","பாவம்"),T("Rasi","ராசி"),T("Degree","பாகை"),T("Nakshatra · Pada","நட்சத்திரம் · பாதம்"),T("Navamsa","நவாம்சம்"),T("Dignity & conditions","பலம் & நிலைகள்")].forEach((h,i)=>tx(h,cx[i]+3,y+12,10.5,600,MUT));y+=18;hl(20,780,y,LN,1);
+const hs=g=>(g-rs[9]+12)%12+1,ord=[...Array(10).keys()].sort((a,b)=>hs(rs[a])-hs(rs[b])||(a==9?-1:b==9?1:0)||lon[a]%30-lon[b]%30);
+for(const i of ord){const s=rs[i],d=lon[i]%30,nk=Math.floor(lon[i]/NW),pd=Math.floor(lon[i]%NW/(NW/4))+1,di=i<9?dig(i,s,d):7,sg=[];
+if(i<9&&di!=7)sg.push([T(DG[di][0],DG[di][1]),COL[DG[di][2]]]);if(i<9&&s==nv[i])sg.push([T("Vargottama","வர்கோத்தமம்"),COL.g]);
+cond(i,lon,rs).replace(/class="b (\w)">([^<]*)</g,(m,c,t)=>sg.push([t,COL[c]]));
+let lx=cx[6]+3,ly=y+13,lines=1;sg.forEach((q,k)=>{const t=(k?"· ":"")+q[0],w=tw(t,10.5,600);if(lx+w>778&&lx>cx[6]+3){lx=cx[6]+3;ly+=13;lines++}tx(t,lx,ly,10.5,600,q[1]);lx+=w+5});
+if(!sg.length)tx("—",cx[6]+3,y+13,10.5,400,MUT);
+tx(N(i)+(i<9&&S.rt[i]?" ᴿ":""),cx[0]+3,y+13,11.5,700,PC[i]);tx(String(hs(s)),cx[1]+3,y+13,11);tx(SN(s),cx[2]+3,y+13,11);tx(dg(d),cx[3]+3,y+13,11);tx(T(NE[nk],NT[nk])+" "+pd,cx[4]+3,y+13,11);tx(SN(nv[i]),cx[5]+3,y+13,11);
+y+=lines*13+8;hl(20,780,y,"#e3dcc4",.6)}
+y+=24;tx(T("Vimsottari Dasa","விம்சோத்தரி தசை"),20,y,13,700);y+=10;
+const DS=dasa(lon[1],S.ms).filter(D=>D.e>S.ms),half=Math.ceil(DS.length/2);let ye=y;
+[DS.slice(0,half),DS.slice(half)].forEach((col,c)=>{const x=20+c*390;let yy=y;[T("Dasa","தசை"),T("Start","தொடக்கம்"),T("Age","வயது"),T("End","முடிவு")].forEach((h,i)=>tx(h,x+[4,125,215,285][i],yy+12,10,600,MUT));yy+=17;hl(x,x+370,yy,LN,1);
+col.forEach(D=>{const s0=Math.max(D.s,S.ms),on=cur>=D.s&&cur<D.e,cb=on&&D.b.find(b=>cur>=b.s&&cur<b.e),h=cb?38:21;if(on){ctx.fillStyle=TINT;ctx.fillRect(x,yy,370,h)}
+tx(N(D.p)+(D.s<S.ms?" "+T("(balance)","(இருப்பு)"):""),x+4,yy+14,11.5,700,PC[D.p]);tx(fd(s0),x+125,yy+14,11);tx(ag(s0),x+215,yy+14,11);tx(fd(D.e),x+285,yy+14,11);
+if(cb){const s1=Math.max(cb.s,S.ms);tx(T("Bhukti","புக்தி")+": "+N(cb.p),x+4,yy+31,10.5,600,PC[cb.p]);tx(fd(s1),x+125,yy+31,10.5);tx(ag(s1),x+215,yy+31,10.5)}
+yy+=h;hl(x,x+370,yy,"#e3dcc4",.6)});ye=Math.max(ye,yy)});
+const H=Math.ceil(ye+16),o=document.createElement("canvas");o.width=W*sc;o.height=H*sc;const oc=o.getContext("2d");oc.fillStyle="#fff";oc.fillRect(0,0,o.width,o.height);oc.drawImage(cv,0,0,W*sc,H*sc,0,0,W*sc,H*sc);
+return new Promise(r=>o.toBlob(r,"image/jpeg",.92))}
+$("im").onclick=async()=>{if(!S)return;const b=$("im"),st=$("st");b.disabled=true;st.textContent=T("Preparing image…","படம் தயாராகிறது…");
+try{const blob=await jpg(),fn="horoscope-"+(S.nm||"chart").replace(/[^\p{L}\p{N}_-]+/gu,"-")+".jpg",d=window.claude?await claude.use("downloads"):null;
+if(d)await d.save({filename:fn,data:blob});else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fn;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4e3)}
+st.textContent=""}catch(e){st.textContent=e&&e.code=="declined"?"":T("Could not create the image.","படம் உருவாக்க முடியவில்லை.")+(e&&(e.message||e.code)?" ("+(e.message||e.code)+")":"")}
+b.disabled=false};
+$("dl").onclick=async()=>{const st=$("st");try{const r=document.documentElement.cloneNode(true);r.querySelector("#out").innerHTML="";r.querySelector("#rs").innerHTML="";r.querySelector("#st").textContent="";
+r.querySelectorAll("meta[http-equiv],base").forEach(e=>e.remove());r.querySelectorAll("script").forEach(e=>{if(e.src?!/html2canvas/.test(e.src):!/const \$=/.test(e.textContent))e.remove()});r.querySelectorAll("[disabled]").forEach(e=>e.removeAttribute("disabled"));
+const blob=new Blob(["<!doctype html>\n"+r.outerHTML],{type:"text/html"}),d=window.claude?await claude.use("downloads"):null;
+if(d)await d.save({filename:"horoscope.html",data:blob});else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="horoscope.html";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4e3)}
+st.textContent=""}catch(e){st.textContent=e&&e.code=="declined"?"":T("Could not create the file.","கோப்பு உருவாக்க முடியவில்லை.")}};
 I18();pick("Chennai","சென்னை",13.0827,80.2707,5.5);
 </script></body></html>
