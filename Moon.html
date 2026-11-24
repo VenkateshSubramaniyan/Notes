@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moon: Tithi or Rasi – which matters more?</title>
+<style>
+:root{--bg:#ffffff;--card:#ffffff;--ink:#1e1233;--mute:#6b5d85;--line:#e1d6f3;--ind:#5b21b6;--gold:#a855f7;--good:#1f7a5a;--bad:#b23a48;--mid:#946200;--soft:#f4edfe}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:clamp(28px,6vw,44px);line-height:1.15;margin:.2em 0 .3em;letter-spacing:-.01em}
+h2{font-size:clamp(22px,4vw,28px);margin:1.8em 0 .4em;line-height:1.25}
+h3{font-size:18px;margin:.2em 0 .3em}
+p{margin:.5em 0}
+.lede{font-size:18px;color:var(--mute)}
+.sans,button,select,th,td,.tag{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+.two .card{margin:0}
+.tithi{border-top:4px solid var(--ind)}
+.rasi{border-top:4px solid var(--gold)}
+ul{padding-left:20px;margin:.4em 0}li{margin:.25em 0}
+.note{border-left:4px solid var(--gold);background:var(--soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px}
+.key{border-left:4px solid var(--ind)}
+/* explorer */
+.explorer{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.ctrl{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+@media(max-width:640px){.ctrl{grid-template-columns:1fr}}
+label{display:block;font:600 14px system-ui,sans-serif;margin-bottom:6px}
+select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:16px}
+input[type=range]{width:100%;accent-color:var(--ind)}
+.moonrow{display:flex;align-items:center;gap:14px}
+.moon{width:64px;height:64px;border-radius:50%;flex:none;background:#2a1a52;border:1px solid var(--line);position:relative;overflow:hidden}
+.moon svg{display:block}
+.out{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+@media(max-width:640px){.out{grid-template-columns:1fr}}
+.cell{background:var(--soft);border-radius:10px;padding:10px 12px}
+.cell small{display:block;font:600 12px system-ui,sans-serif;color:var(--mute);margin-bottom:2px}
+.cell b{font:600 17px system-ui,sans-serif}
+.bar{height:8px;background:var(--line);border-radius:4px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ind);width:0;transition:width .25s}
+.verdict{margin-top:12px;font-size:15px}
+/* table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap}
+.g{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.r{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.y{background:color-mix(in srgb,var(--mid) 20%,transparent);color:var(--mid)}
+.i{background:var(--soft);color:var(--ind)}
+/* 2x2 */
+.grid2{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;align-items:stretch;font-family:system-ui,sans-serif}
+.grid2 .h{font-size:13px;font-weight:600;color:var(--mute);display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+.grid2 .c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:14px}
+.grid2 .c b{display:block;margin-bottom:4px;font-size:15px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr 1fr}.grid2 .h.side{grid-column:1/-1;justify-content:flex-start}}
+/* quiz */
+.case{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.case h3{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pred{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+button{font-size:15px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--ind)}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--ind);outline-offset:2px}
+button.sel{background:var(--ind);color:#fff;border-color:var(--ind)}
+button.reveal{background:var(--ind);color:#fff;border-color:var(--ind)}
+.ans{display:none;margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;font-size:15px}
+.ans.on{display:block}
+.ans dl{margin:0;display:grid;grid-template-columns:130px 1fr;gap:4px 12px}
+.ans dt{font:600 13px system-ui,sans-serif;color:var(--mute);padding-top:2px}
+.ans dd{margin:0}
+@media(max-width:520px){.ans dl{grid-template-columns:1fr}.ans dd{margin-bottom:6px}}
+.fb{font:600 14px system-ui,sans-serif;margin-top:6px}
+/* flow */
+.flow{list-style:none;padding:0;margin:14px 0;counter-reset:s}
+.flow li{position:relative;margin:0 0 0 18px;padding:0 0 14px 28px;border-left:3px solid var(--line)}
+.flow li:last-child{border-left-color:transparent;padding-bottom:0}
+.flow li::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:0;width:27px;height:27px;border-radius:50%;background:var(--ind);color:#fff;font:700 13px/27px system-ui,sans-serif;text-align:center}
+.flow li.end::before{background:var(--gold)}
+.flow details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.flow summary{cursor:pointer;font:600 16px system-ui,sans-serif}
+.flow details p{font-size:14.5px;color:var(--mute);margin:.4em 0 .2em}
+.flow .tagline{font:12px system-ui,sans-serif;color:var(--mute);font-weight:400;margin-left:6px}
+
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:4px 0 12px}
+.seg button{border:0;border-radius:0;background:#fff}
+.seg button.sel{background:var(--ind);color:#fff}
+.pl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.res{background:var(--soft);border-radius:12px;padding:14px 16px}
+.res h3{margin:0 0 6px}
+.res .tag{margin-bottom:8px}
+footer{margin-top:40px;font-size:13px;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Moon: Tithi or Rasi – which matters more?</h1>
+  <p class="lede">Neither one alone. Tithi tells you <em>how much light and strength</em> the Moon carries. Rasi tells you <em>how comfortable it is where it sits</em>. A good reading needs both, then more.</p>
+</header>
+
+<section class="explorer" aria-labelledby="ex">
+  <h2 id="ex" style="margin-top:0">Try it: two dials, two different answers</h2>
+  <p>Move the Tithi slider and change the sign. Watch which results change with which dial.</p>
+  <div class="ctrl">
+    <div>
+      <label for="tithi">Tithi (phase of the Moon)</label>
+      <div class="moonrow">
+        <div class="moon" aria-hidden="true"><svg id="moonsvg" width="64" height="64" viewBox="0 0 64 64"></svg></div>
+        <div style="flex:1"><input id="tithi" type="range" min="1" max="30" value="15"><div id="tithiName" class="sans" style="font-size:14px;color:var(--mute)"></div></div>
+      </div>
+    </div>
+    <div>
+      <label for="sign">Rasi (Moon's sign)</label>
+      <select id="sign">
+        <option value="exalt">Taurus (Vrishabha)</option>
+        <option value="own">Cancer (Karka)</option>
+        <option value="deb">Scorpio (Vrischika)</option>
+        <option value="other">Any other sign</option>
+      </select>
+    </div>
+  </div>
+  <div class="out" aria-live="polite">
+    <div class="cell"><small>Sign dignity (from Rasi)</small><b id="oDig"></b></div>
+    <div class="cell"><small>Paksha Bala (from Tithi)</small><b id="oPb"></b><div class="bar"><i id="oBar"></i></div></div>
+    <div class="cell"><small>Natural nature (from Tithi)</small><b id="oNat"></b></div>
+  </div>
+  <p class="verdict" id="oVer"></p>
+</section>
+
+<h2>A. The two independent roles</h2>
+<div class="two">
+  <div class="card tithi">
+    <h3>Tithi / Paksha</h3>
+    <p class="sans" style="font-size:13px;color:var(--mute)">Depends on the Moon–Sun angle</p>
+    <ul>
+      <li>Sets the Moon's <b>Paksha Bala</b>, its phase-based strength.</li>
+      <li>Drives its <b>natural benefic or malefic</b> classification in Parashari astrology.</li>
+      <li>Waxing Moon: generally benefic.</li>
+      <li>Waning Moon: generally malefic.</li>
+      <li>Near <b>Amavasya</b>: the Moon is at its weakest.</li>
+      <li>Near <b>Purnima</b>: maximum Paksha Bala.</li>
+    </ul>
+  </div>
+  <div class="card rasi">
+    <h3>Rasi / sign placement</h3>
+    <p class="sans" style="font-size:13px;color:var(--mute)">Depends on where the Moon sits in the zodiac</p>
+    <ul>
+      <li>Sets <b>sign dignity</b> and positional strength.</li>
+      <li><b>Taurus:</b> exaltation.</li>
+      <li><b>Cancer:</b> own sign.</li>
+      <li><b>Scorpio:</b> debilitation.</li>
+      <li>Other signs: judge by the sign lord's relationship to the Moon (friend, neutral, enemy).</li>
+      <li>Shapes <em>how effectively</em> the Moon can express its significations: mind, emotion, mother, comfort.</li>
+    </ul>
+  </div>
+</div>
+<div class="note"><b>Quick check on Paksha Bala.</b> It is measured from the Moon–Sun angle: roughly angle ÷ 3 virupas (out of 60) up to 180°, then mirrored. So it is 0 at Amavasya and 60 at Purnima. That is why a young crescent has low Paksha Bala even though it is waxing.</div>
+
+<h2>B. Who decides benefic or malefic?</h2>
+<div class="card key">
+  <p><b>Short answer:</b> the phase decides the Moon's <em>natural</em> nature. The sign does not.</p>
+</div>
+<ol class="sans" style="padding-left:20px">
+  <li style="margin-bottom:8px"><b>Natural classification comes from waxing or waning.</b> An exalted Moon is not automatically benefic. A debilitated Moon is not automatically malefic.</li>
+  <li style="margin-bottom:8px"><b>Sign gives dignity and positional strength.</b> It answers "how well can this Moon perform?", not "is this Moon benefic?"</li>
+  <li style="margin-bottom:8px"><b>Functional nature is a separate layer.</b> It depends on your ascendant and which houses the Moon rules. A natural benefic can be functionally difficult for a given lagna.</li>
+  <li style="margin-bottom:8px"><b>Everything else modifies the result.</b> Aspects, conjunctions, combustion-related considerations (a Moon very close to the Sun is also a waning-phase issue), house placement and Neecha Bhanga all adjust the final reading.</li>
+</ol>
+<div class="note"><b>A common simplification.</b> Many texts do not call the Moon strongly benefic the instant it starts to wax. The widely used rule treats the Moon as <b>strong and benefic from Shukla Ashtami to Krishna Saptami</b>, and as <b>weak and malefic-leaning from Krishna Ashtami to Shukla Saptami</b>. Traditions differ on the exact cut-off, so the table and tool on this page follow this common rule and label young crescents as "weak".</div>
+
+<h2>C. The 2-D comparison</h2>
+<p>Same sign, different phase, different result. Same phase, different sign, different result.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Moon condition</th><th>Sign dignity</th><th>Paksha Bala</th><th>Natural nature</th></tr></thead>
+  <tbody>
+    <tr><td>Taurus + Waxing crescent</td><td><span class="tag g">Exalted</span></td><td><span class="tag r">Low</span></td><td><span class="tag y">Benefic tendency, weak</span></td></tr>
+    <tr><td>Taurus + Full Moon</td><td><span class="tag g">Exalted</span></td><td><span class="tag g">Maximum</span></td><td><span class="tag g">Benefic</span></td></tr>
+    <tr><td>Taurus + Waning crescent</td><td><span class="tag g">Exalted</span></td><td><span class="tag r">Low</span></td><td><span class="tag r">Malefic tendency</span></td></tr>
+    <tr><td>Scorpio + Waxing crescent</td><td><span class="tag r">Debilitated</span></td><td><span class="tag r">Low</span></td><td><span class="tag y">Benefic tendency, weak</span></td></tr>
+    <tr><td>Scorpio + Full Moon</td><td><span class="tag r">Debilitated</span></td><td><span class="tag g">Maximum</span></td><td><span class="tag g">Benefic</span></td></tr>
+    <tr><td>Scorpio + Waning crescent</td><td><span class="tag r">Debilitated</span></td><td><span class="tag r">Low</span></td><td><span class="tag r">Malefic tendency</span></td></tr>
+    <tr><td>Cancer + Full Moon</td><td><span class="tag g">Own sign</span></td><td><span class="tag g">Maximum</span></td><td><span class="tag g">Benefic</span></td></tr>
+    <tr><td>Cancer + Waning Moon</td><td><span class="tag g">Own sign</span></td><td><span class="tag y">Depends on phase</span></td><td><span class="tag r">Malefic tendency</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="sans" style="font-size:13px;color:var(--mute)">Look down the "Natural nature" column: it follows the phase, never the sign.</p>
+
+<h2>D. Which combination is better?</h2>
+<p>There is no universal ranking from Tithi and Rasi alone. Each pairing is strong in one dimension and weak in another.</p>
+<div class="grid2">
+  <div class="h"></div><div class="h">Strong by phase</div><div class="h">Weak by phase</div>
+  <div class="h side">Strong sign<br>(exalted)</div>
+  <div class="c"><b>Exalted + strong phase</b>Best on both counts. Still needs house, aspects and Shadbala checks.</div>
+  <div class="c"><b>Exalted + weak phase</b>Comfortable sign, thin light. The Moon can express itself well but lacks fuel.</div>
+  <div class="h side">Weak sign<br>(debilitated)</div>
+  <div class="c"><b>Debilitated + strong phase</b>Bright but uncomfortable. Check Neecha Bhanga and the dispositor before judging.</div>
+  <div class="c"><b>Debilitated + weak phase</b>Weak on both counts. Look for cancellation, supportive aspects and house context.</div>
+</div>
+<div class="note"><b>The honest conclusion:</b> you cannot rank these four boxes without the full chart. Shadbala adds five more strengths (Sthana, Dig, Kala, Cheshta, Naisargika) beyond Paksha Bala. Houses, aspects and conjunctions can lift or sink any box.</div>
+
+<h2>E. Predict first, then reveal</h2>
+<p>For each case, choose what you expect about the Moon, then reveal the answer.</p>
+
+<div id="cases"></div>
+
+<h2>F. How the Moon behaves with other planets</h2>
+<p>The Moon is the mind, so the planet that joins it colours how the mind works. A strong Moon absorbs and uses the other planet's energy. A weak Moon is more impressionable and gets pulled around by it.</p>
+<div class="card">
+  <label>Moon's strength (from Tithi, sign and chart)</label>
+  <div class="seg" role="group" aria-label="Moon strength">
+    <button id="mStrong" class="sel">Strong / benefic</button>
+    <button id="mWeak">Weak / malefic</button>
+  </div>
+  <label>Moon's sign dignity</label>
+  <div class="seg" role="group" aria-label="Moon sign dignity">
+    <button id="dNone" class="sel">Not specified</button>
+    <button id="dEx">Exalted (Taurus)</button>
+    <button id="dDeb">Debilitated (Scorpio)</button>
+  </div>
+  <label>Planet joining the Moon</label>
+  <div class="pl" id="plBtns"></div>
+  <div class="res" aria-live="polite" id="plRes"></div>
+</div>
+<div class="tw">
+<table>
+  <thead><tr><th>Planet with Moon</th><th>Strong or benefic Moon</th><th>Weak or malefic Moon</th></tr></thead>
+  <tbody id="plTable"></tbody>
+</table>
+</div>
+<h3 style="margin-top:22px;font-size:20px">When the Moon is exalted or debilitated</h3>
+<p>The planet decides <em>what</em> kind of influence arrives. The Moon's sign decides <em>how well the mind handles it</em>. Tithi then decides how much strength the Moon has to back it up.</p>
+<div class="two">
+  <div class="card tithi">
+    <h3>Exalted Moon (Taurus, peak near 3&deg;)</h3>
+    <ul>
+      <li>The mind stays steady and comfortable, so it absorbs the other planet without being overwhelmed.</li>
+      <li>Good pairings get better. Venus, Mercury and Jupiter give refined, practical, wise results.</li>
+      <li>Hard pairings are softened but not erased. Saturn is still heavy and Rahu still hungry, but both are more manageable.</li>
+      <li><b>Watch the phase.</b> An exalted Moon with the Sun is near Amavasya. The sign is dignified but the light is nearly gone.</li>
+    </ul>
+  </div>
+  <div class="card rasi">
+    <h3>Debilitated Moon (Scorpio, weakest near 3&deg;)</h3>
+    <ul>
+      <li>The mind is intense, sensitive and easily swayed, so the other planet's effect goes deeper and feels more extreme.</li>
+      <li>Good pairings still help, but less smoothly. Jupiter steadies and protects.</li>
+      <li>Hard pairings hit harder. Saturn can bring worry and heaviness, Rahu fear and confusion.</li>
+      <li><b>Check Neecha Bhanga.</b> It can turn this around (see below).</li>
+    </ul>
+  </div>
+</div>
+<div class="card key" style="margin-top:12px">
+  <h3>Neecha Bhanga checks for a Scorpio Moon</h3>
+  <ul>
+    <li><b>Mars</b> is the dispositor, since Scorpio is Mars's sign. Mars in a kendra from the lagna or Moon helps. Mars with the Moon in Scorpio counts as a kendra from the Moon.</li>
+    <li><b>Venus</b> is lord of Taurus, where the Moon is exalted. Venus in a kendra from the lagna or Moon helps.</li>
+    <li>Schools differ on how fully the cancellation applies, so always judge how strong the cancelling planet really is.</li>
+  </ul>
+</div>
+<div class="tw" style="margin-top:12px">
+<table>
+  <thead><tr><th>Situation</th><th>Likely feel</th></tr></thead>
+  <tbody>
+    <tr><td>Exalted + strong phase + benefic planet</td><td><span class="tag g">Stable, supported, easily expressed</span></td></tr>
+    <tr><td>Exalted + weak phase + any planet</td><td><span class="tag y">Dignified but low on fuel</span></td></tr>
+    <tr><td>Debilitated + strong phase + Jupiter or cancellation</td><td><span class="tag y">Bright, intense, recovers well</span></td></tr>
+    <tr><td>Debilitated + weak phase + Saturn or Rahu</td><td><span class="tag r">Most strained, needs real relief from elsewhere</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="two" style="margin-top:12px">
+  <div class="card tithi"><h3>Aspects</h3><p>Work like conjunctions, but gentler. Jupiter's aspect supports a weak Moon. Saturn's or Rahu's aspect adds pressure.</p></div>
+  <div class="card rasi"><h3>The Moon's effect on others</h3><p>A weak Moon behaves like a mild malefic for the planets it joins. It can dilute their results, especially when very close to the Sun.</p></div>
+</div>
+<div class="note">Sign and house still modify all of this. The same conjunction reads differently when the Moon is exalted, debilitated, or placed in a kendra or dusthana. Traditions differ on how strongly some yogas act, so use this as a starting point.</div>
+
+<h2>G. Decision framework</h2>
+<p>Use this order every time. Tap a step to see what to look for.</p>
+<ol class="flow" id="flow"></ol>
+
+<div class="note key"><b>Remember:</b> Tithi alone does not make the Moon good or bad. Rasi alone does not either. Tithi gives phase strength and natural nature. Rasi gives dignity. The chart as a whole gives the verdict.</div>
+
+<footer>Educational summary of traditional Parashari ideas. Cut-off tithis and strength weightings vary between schools and teachers, so verify against your own reference texts.</footer>
+</main>
+
+<script>
+const TN=["Pratipada","Dvitiya","Tritiya","Chaturthi","Panchami","Shashthi","Saptami","Ashtami","Navami","Dashami","Ekadashi","Dvadashi","Trayodashi","Chaturdashi","Purnima"];
+function tName(t){return t===30?"Amavasya":(t<=15?"Shukla ":"Krishna ")+TN[(t-1)%15]}
+function pb(t){let e=(t-0.5)*12;if(e>180)e=360-e;return Math.min(60,e/3)}
+function natural(t){return(t>=8&&t<=22)?"strong":"weak"}
+const DIG={exalt:["Exalted","g"],own:["Own sign","g"],deb:["Debilitated","r"],other:["Depends on sign lord","y"]};
+
+function moonSvg(t){
+  const e=(t-0.5)*12, f=(1-Math.cos(e*Math.PI/180))/2; // illuminated fraction
+  const waxing=e<=180, k=Math.cos(e*Math.PI/180);
+  const rx=Math.abs(k)*30;
+  let d;
+  if(waxing){ // lit on right
+    d=`M32 2 A30 30 0 0 1 32 62 A${rx} 30 0 0 ${k>0?0:1} 32 2`;
+  } else {
+    d=`M32 2 A30 30 0 0 0 32 62 A${rx} 30 0 0 ${k>0?1:0} 32 2`;
+  }
+  return `<circle cx="32" cy="32" r="32" fill="#2a1a52"/><path d="${d}" fill="#e9ecf5"/>`;
+}
+const $=id=>document.getElementById(id);
+function update(){
+  const t=+$("tithi").value, s=$("sign").value;
+  $("moonsvg").innerHTML=moonSvg(t);
+  $("tithiName").textContent=tName(t);
+  const p=pb(t), nat=natural(t), waxing=t<=15;
+  $("oDig").textContent=DIG[s][0];
+  $("oPb").textContent=Math.round(p)+" / 60 virupas";
+  $("oBar").style.width=(p/60*100)+"%";
+  $("oNat").textContent=(waxing?"Waxing":"Waning")+", "+(nat==="strong"?"benefic":"malefic-leaning");
+  const sg=(s==="exalt"||s==="own");
+  let v;
+  if(sg&&nat==="strong")v="Good on both dimensions. Next, check house, aspects and Shadbala.";
+  else if(sg)v="Comfortable sign, weak phase: the Moon is dignified but short on light.";
+  else if(s==="deb"&&nat==="strong")v="Strong phase, debilitated sign: bright but uncomfortable. Look for Neecha Bhanga.";
+  else if(s==="deb")v="Weak on both dimensions. Look for cancellation and supportive influences.";
+  else v=nat==="strong"?"Strong phase. Judge the sign by its lord's relationship to the Moon.":"Weak phase. Judge the sign by its lord's relationship to the Moon.";
+  $("oVer").textContent=v+" Neither dial alone gives the final verdict.";
+}
+$("tithi").addEventListener("input",update);
+$("sign").addEventListener("change",update);
+update();
+
+const CASES=[
+ {t:"Taurus, Shukla Panchami",opts:["Strong sign, weak phase","Strong sign, strong phase","Weak sign, strong phase","Weak sign, weak phase"],ok:0,
+  dig:"Exalted (Taurus).",pb:"Low to moderate. About 5 days after Amavasya, the Moon is roughly 48°–60° from the Sun, so roughly 16–20 of 60 virupas.",nat:"Waxing, but still a young Moon. By the common rule it is not yet in the strong band (from Shukla Ashtami), so treat it as a mild or weak benefic.",int:"Dignified Moon with limited light. Emotionally comfortable and stable in expression, but not at full power.",need:"House placement, aspects (especially benefic support), conjunctions, lagna-based functional nature, Shadbala total."},
+ {t:"Taurus, Purnima",opts:["Strong sign, weak phase","Strong sign, strong phase","Weak sign, strong phase","Weak sign, weak phase"],ok:1,
+  dig:"Exalted (Taurus).",pb:"Maximum, about 60 virupas (Moon opposite the Sun).",nat:"Waxing/full: natural benefic.",int:"The favourable corner of the grid: dignity and phase strength together. A promising Moon.",need:"Still check house, aspects (Saturn or Rahu can mar it), lordship for this lagna, and complete Shadbala. Note that Purnima Moon is opposite the Sun, so the Sun's house matters too."},
+ {t:"Scorpio, Purnima",opts:["Strong sign, weak phase","Strong sign, strong phase","Weak sign, strong phase","Weak sign, weak phase"],ok:2,
+  dig:"Debilitated (Scorpio).",pb:"Maximum, about 60 virupas.",nat:"Waxing/full: natural benefic. Debilitation does not change this.",int:"Mixed. The Moon is bright but positioned uncomfortably. Emotions can run deep and intense; support from other factors matters a lot.",need:"Neecha Bhanga conditions (e.g. dispositor Mars strong or well placed, exaltation lord of the sign in kendra from lagna or Moon), aspects, house, functional lordship, Shadbala."},
+ {t:"Scorpio, Krishna Chaturdashi",opts:["Strong sign, weak phase","Strong sign, strong phase","Weak sign, strong phase","Weak sign, weak phase"],ok:3,
+  dig:"Debilitated (Scorpio).",pb:"Low. About 1 day before Amavasya, the Moon is only about 36°–48° from the Sun on the waning side, so roughly 12–16 of 60 virupas.",nat:"Waning and very close to Amavasya: malefic tendency.",int:"Most challenging combination on the grid: weak by sign and by phase. Expect a sensitive, strained Moon unless the chart offers relief.",need:"Neecha Bhanga check, Sun conjunction or proximity, benefic aspects, house, lagna-based functional nature, Shadbala."}
+];
+const cw=$("cases");
+CASES.forEach((c,i)=>{
+  const d=document.createElement("div");d.className="case";
+  d.innerHTML=`<h3><span>${i+1}. ${c.t}</span></h3><p class="sans" style="font-size:14px;color:var(--mute);margin:0">What is your prediction?</p>
+  <div class="pred">${c.opts.map((o,j)=>`<button data-j="${j}">${o}</button>`).join("")}</div>
+  <button class="reveal">Reveal answer</button><div class="fb"></div>
+  <div class="ans"><dl>
+   <dt>Sign dignity</dt><dd>${c.dig}</dd>
+   <dt>Paksha Bala</dt><dd>${c.pb}</dd>
+   <dt>Natural nature</dt><dd>${c.nat}</dd>
+   <dt>Preliminary read</dt><dd>${c.int}</dd>
+   <dt>Still needed</dt><dd>${c.need}</dd></dl></div>`;
+  let pick=null;
+  d.querySelectorAll(".pred button").forEach(b=>b.onclick=()=>{
+    d.querySelectorAll(".pred button").forEach(x=>x.classList.remove("sel"));
+    b.classList.add("sel");pick=+b.dataset.j;
+  });
+  d.querySelector(".reveal").onclick=()=>{
+    const fb=d.querySelector(".fb");
+    if(pick===null){fb.textContent="Pick a prediction first, then reveal.";return}
+    fb.textContent=pick===c.ok?"Your prediction matches.":"Close the loop: the best fit is \""+c.opts[c.ok]+"\".";
+    fb.style.color=pick===c.ok?"var(--good)":"var(--bad)";
+    d.querySelector(".ans").classList.add("on");
+  };
+  cw.appendChild(d);
+});
+
+const STEPS=[
+ ["Moon assessment","Start by noting the Moon's sign, degree and Tithi. Nothing is judged yet."],
+ ["Identify waxing or waning","Shukla Paksha is waxing, Krishna Paksha is waning. This sets the natural benefic or malefic leaning."],
+ ["Assess Paksha Bala","Moon–Sun angle gives 0 to 60 virupas. Near Purnima is strong, near Amavasya is weak."],
+ ["Identify Rasi dignity","Exalted in Taurus, own in Cancer, debilitated in Scorpio. Otherwise check friendship with the sign lord."],
+ ["Assess house placement","Kendra, trikona, dusthana: where the Moon sits decides which life areas it activates and how easily."],
+ ["Examine conjunctions and aspects","Benefic support lifts the Moon. Saturn, Rahu or Ketu affliction and closeness to the Sun reduce it."],
+ ["Check functional lordship","For this ascendant, which houses does the Moon rule? That sets its functional nature, which can differ from its natural nature."],
+ ["Calculate Shadbala","Combine all six strengths: Sthana, Dig, Kala (includes Paksha), Cheshta, Naisargika, Drik. Compare with the required minimum."],
+ ["Evaluate Neecha Bhanga","If the Moon is debilitated, check cancellation conditions and how fully they apply."],
+ ["Reach final interpretation","Weigh every layer together. State what is strong, what is weak and what depends on other chart factors."]
+];
+const fl=$("flow");
+STEPS.forEach((s,i)=>{
+  const li=document.createElement("li");if(i===STEPS.length-1)li.className="end";
+  const tag=i===8?'<span class="tagline">where applicable</span>':"";
+  li.innerHTML=`<details><summary>${s[0]}${tag}</summary><p>${s[1]}</p></details>`;
+  fl.appendChild(li);
+});
+
+const PL=[
+ ["Sun","Rarely applies, because a strong Moon is far from the Sun.","Near Amavasya the Moon is lost in the Sun's light. Expect a dull or suppressed emotional life, with ego dominating feeling.",null,"Combustion-type"],
+ ["Mars","Chandra-Mangala yoga: drive, courage and earning ability.","Irritability, mood swings and impulsive reactions.","Chandra-Mangala"],
+ ["Mercury","Sharp, adaptable mind. Good for business and communication.","Overthinking, anxiety and scattered thoughts.",null],
+ ["Jupiter","Gaja Kesari yoga (when they sit in kendras from each other): wisdom, ethics and reputation.","Jupiter still protects and steadies the mind.","Gaja Kesari"],
+ ["Venus","Refined, artistic and comfort-loving.","Mood depends on relationships and pleasures, with a tendency to indulge.",null],
+ ["Saturn","Disciplined, mature and emotionally steady.","Vish yoga: heaviness, worry, delays and melancholy. Usually the hardest pairing.","Vish yoga"],
+ ["Rahu","Adds ambition and unusual ideas.","Obsession, fear and confusion (a \"Grahan\" effect).",null],
+ ["Ketu","Adds intuition and a contemplative streak.","Detachment and uncertainty.",null]
+];
+let strong=true,cur=0,dig="none";
+const HARD=["Sun","Mars","Saturn","Rahu","Ketu"];
+function showPl(){
+  const p=PL[cur];
+  const t=strong?p[1]:p[2];
+  const hard=HARD.includes(p[0]);
+  let m="";
+  if(dig==="ex"){
+    m=hard?"Exalted sign: the effect is softened but not erased. The mind copes better.":"Exalted sign: this good pairing gets better. Expect refined, steady results.";
+    if(p[0]==="Sun")m="Exalted sign with the Sun means the Moon is near Amavasya. The sign is dignified but the light is nearly gone, so do not treat it as strong.";
+    if(!strong)m+=" Weak phase means the Moon is dignified but short on fuel.";
+  } else if(dig==="deb"){
+    m=hard?"Debilitated sign: the effect hits harder and feels more extreme.":"Debilitated sign: the help still arrives, but less smoothly.";
+    m+=" Check Neecha Bhanga (Mars or Venus placed in a kendra, and their strength) before judging.";
+  }
+  $("plRes").innerHTML=`<h3>Moon + ${p[0]}</h3><span class="tag ${strong?"g":"r"}">${strong?"Strong / benefic Moon":"Weak / malefic Moon"}</span><p style="margin:0">${t}</p>${m?`<p style="margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line)"><b>Sign effect:</b> ${m}</p>`:""}`;
+  ["None","Ex","Deb"].forEach(k=>$("d"+k).classList.toggle("sel",(k==="None"&&dig==="none")||(k==="Ex"&&dig==="ex")||(k==="Deb"&&dig==="deb")));
+  document.querySelectorAll("#plBtns button").forEach((b,i)=>b.classList.toggle("sel",i===cur));
+  $("mStrong").classList.toggle("sel",strong);$("mWeak").classList.toggle("sel",!strong);
+}
+PL.forEach((p,i)=>{
+  const b=document.createElement("button");b.textContent=p[0];b.onclick=()=>{cur=i;showPl()};$("plBtns").appendChild(b);
+  const tr=document.createElement("tr");tr.innerHTML=`<td><b>${p[0]}</b></td><td>${p[1]}</td><td>${p[2]}</td>`;$("plTable").appendChild(tr);
+});
+$("mStrong").onclick=()=>{strong=true;showPl()};
+$("mWeak").onclick=()=>{strong=false;showPl()};
+$("dNone").onclick=()=>{dig="none";showPl()};
+$("dEx").onclick=()=>{dig="ex";showPl()};
+$("dDeb").onclick=()=>{dig="deb";showPl()};
+showPl();
+</script>
+</body>
+</html>
